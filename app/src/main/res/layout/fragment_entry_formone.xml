@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EntryFormoneFragment"
+    android:background="@drawable/appbg">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"/>
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="271dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/kin_of_facility"
+        android:textAlignment="center"
+        android:textColor="@color/blacky"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+
+    <RadioGroup
+        android:id="@+id/facility_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:divider="@drawable/mydivider"
+        android:showDividers="middle">
+
+
+            <RadioButton
+                android:id="@+id/facility_hostel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:text="@string/a_hostel"
+                android:textColor="@color/blacky"
+                android:layout_weight="2"
+                android:textSize="26sp"
+                android:layout_marginTop="20dp"
+                />
+
+
+
+
+        <RadioButton
+            android:id="@+id/facility_house"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="@string/a_house"
+            android:textColor="@color/blacky"
+            android:textSize="26sp"
+            android:layout_marginTop="20dp"/>
+
+
+
+        <RadioButton
+            android:id="@+id/facility_apartment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="@string/an_apartment"
+            android:textColor="@color/blacky"
+            android:textSize="26sp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="2"/>
+
+
+        <RadioButton
+            android:id="@+id/facility_hotel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="@string/a_hotel"
+            android:textColor="@color/blacky"
+            android:textSize="26sp"
+            android:layout_weight="2"/>
+
+
+
+    </RadioGroup>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/button_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="10dp"
+        android:elevation="6dp"
+        android:src="@drawable/ic_arrow_forward"
+        android:text="@string/next"
+        android:tint="@color/white"
+        app:backgroundTint="@color/colorAccent"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:maxImageSize="35dp"
+        app:pressedTranslationZ="12dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+        android:max="100"
+        android:indeterminate="false"
+        android:progress="1"/>
+
+
+
+
+
+</android.support.constraint.ConstraintLayout>

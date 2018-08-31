@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/appbg"
+    tools:context=".PlaceAvailability"
+    tools:layout_editor_absoluteY="25dp">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="369dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/when_will_your_place_be_available_for_booking"
+        android:textAlignment="center"
+        android:textColor="@color/blacky"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:divider="@drawable/mydivider"
+        android:orientation="vertical"
+        android:showDividers="middle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.25">
+
+        <LinearLayout
+            android:id="@+id/always"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp">
+
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/always"
+                android:textColor="@color/blacky"
+                android:textSize="28sp"
+                tools:layout_editor_absoluteX="178dp"
+                tools:layout_editor_absoluteY="272dp" />
+
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:src="@drawable/ic_event_available_black_24dp"
+                tools:layout_editor_absoluteX="170dp"
+                tools:layout_editor_absoluteY="222dp" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/one_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp">
+
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/one_time"
+                android:textColor="@color/blacky"
+                android:textSize="28sp"
+                tools:layout_editor_absoluteX="167dp"
+                tools:layout_editor_absoluteY="192dp" />
+
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:src="@drawable/ic_today_black_24dp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/range"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp">
+
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/range"
+                android:textColor="@color/blacky"
+                android:textSize="28sp" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:src="@drawable/ic_date_range"
+                tools:layout_editor_absoluteX="170dp"
+                tools:layout_editor_absoluteY="303dp" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/text_availability"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textAlignment="center"
+            android:textSize="28sp" />
+
+    </LinearLayout>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/button_next_place_avail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_arrow_forward"
+        android:text="@string/next"
+        android:tint="@color/white"
+        app:backgroundTint="@color/colorAccent"
+        app:fabSize="normal"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+        app:maxImageSize="35dp" />
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+
+</android.support.constraint.ConstraintLayout>

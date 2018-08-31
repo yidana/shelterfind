@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">#ea1535</color>
+
+
+    <color name="white">#fff</color>
+    <color name="black">#000000</color>
+    <color name="bottomnav">#442c2e</color>
+    <color name="blacky">#313335</color>
+
+    <color name="custom_date_text_selector">#ffffff</color>
+    <color name="custom_calendar_days_bar_background">#5e5e5e</color>
+    <color name="custom_calendar_days_bar_text_color">#fdfdfd</color>
+    <color name="custom_calendar_grid_color">#b71589</color>
+
+    <color name="custom_calendar_month_text_color">#cc1d9fca</color>
+
+
+    <color name="dark_blue">#180065</color>
+    <color name="light_blue">#334ee9ff</color>
+    <color name="medium_green">#3d853e</color>
+    <color name="light_green">#3c2ae668</color>
+
+    <color name="mt_red">#f34336</color>
+    <color name="mt_gray3">#bebebe</color>
+
+
+
+
+</resources>

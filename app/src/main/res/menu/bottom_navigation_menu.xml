@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@id/homeFragment"
+        android:title="@string/home"
+        android:icon="@drawable/ic_home"
+        />
+    <item
+        android:id="@id/placesFragment"
+        android:title="@string/places"
+        android:icon="@drawable/ic_location_searching"
+       />
+    <item
+        android:id="@id/exploreFragment"
+        android:title="@string/explore"
+        android:icon="@drawable/ic_compass"
+       />
+
+    <item
+        android:id="@id/inboxFragment"
+        android:title="@string/inbox"
+        android:icon="@drawable/ic_inbox"
+        
+         />
+
+    <item
+        android:id="@id/profileFragment"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_account_circle"
+  />
+
+
+
+
+</menu>

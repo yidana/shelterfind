@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp"
+    android:divider="@drawable/mydivider"
+    android:showDividers="middle"
+    tools:context=".BottonSheetCat"
+    android:id="@+id/linearLayout_btm_sheet">
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:textSize="20sp"
+        android:text="@string/choose_search_category"
+        android:gravity="center_vertical"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:showDividers="middle"/>
+
+    <LinearLayout
+        android:background="?attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:focusable="true"
+        android:clickable="true"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:id="@+id/search_location"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:src="@drawable/ic_sort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Location"
+            android:layout_marginStart="35dp"
+            android:clickable="false"/>
+
+
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:background="?attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:focusable="true"
+        android:clickable="true"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:id="@+id/search_date"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:src="@drawable/ic_sort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Date"
+            android:layout_marginStart="35dp"
+            android:clickable="false"/>
+
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

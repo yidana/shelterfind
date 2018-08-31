@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "984853994356",
+    "firebase_url": "https://shelter-find.firebaseio.com",
+    "project_id": "shelter-find",
+    "storage_bucket": "shelter-find.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984853994356:android:21a5a9ee6bfe6085",
+        "android_client_info": {
+          "package_name": "findhome.com.example.android.findhomeb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "984853994356-bcse61im6droh1alvsbk107a6ap3dvic.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "findhome.com.example.android.findhomeb",
+            "certificate_hash": "f318ed2a182b0b8a286d70692f3fc09b314922cc"
+          }
+        },
+        {
+          "client_id": "984853994356-50pe3gtg07bc0rnhsupt55b11mh3hnco.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAseAv9JjO3dsieYw5Y5nlco133iMxpAlw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "984853994356-50pe3gtg07bc0rnhsupt55b11mh3hnco.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

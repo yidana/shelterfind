@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <android.support.design.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_height="180dp"
+        android:elevation="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        style="@style/Widget.MaterialComponents.CardView"
+        android:minHeight="200dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="4dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/materialCardView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:foregroundGravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/card_imageview"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                app:srcCompat="@drawable/image2"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/card_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="8dp"
+                android:baselineAligned="true"
+                android:text="Flint Hostel"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-smallcaps"
+                style="@style/TextAppearance.AppCompat.Title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.075"
+                app:layout_constraintStart_toEndOf="@+id/card_imageview"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.design.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/view"
+                android:textSize="12sp"
+                style="@style/Widget.MaterialComponents.Button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/card_imageview" />
+
+
+            <RatingBar
+                android:id="@+id/card_rating_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:numStars="5"
+                android:isIndicator="true"
+                style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                android:rating="3.5"
+                android:stepSize="0.5"
+                app:layout_constraintStart_toEndOf="@+id/card_imageview"
+                app:layout_constraintTop_toBottomOf="@+id/card_name" />
+
+            <TextView
+                android:id="@+id/card_location_name"
+                android:layout_width="65dp"
+                android:layout_height="14dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="1dp"
+                android:text="Knust"
+                android:fontFamily="sans-serif-smallcaps"
+                style="@style/TextAppearance.Compat.Notification.Info"
+                app:layout_constraintStart_toEndOf="@+id/card_location_icon"
+                app:layout_constraintTop_toBottomOf="@+id/card_rating_bar" />
+
+            <ImageView
+                android:id="@+id/card_location_icon"
+                android:layout_width="17dp"
+                android:layout_height="14dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="3dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_location_on_black_24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/card_imageview"
+                app:layout_constraintTop_toBottomOf="@+id/card_rating_bar"
+                app:layout_constraintVertical_bias="0.0" />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+
+    </android.support.design.card.MaterialCardView>
+
+
+
+
+
+
+</RelativeLayout>

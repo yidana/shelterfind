@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".CheckConnectionFragment">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:navigationIcon="@drawable/ic_arrow_back_black_24dp"/>
+
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="170dp"
+        android:layout_height="158dp"
+        android:layout_gravity="top"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="false"
+        android:src="@drawable/ic_signal_wifi_off"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="114dp"
+        android:layout_marginEnd="113dp"
+        android:clickable="false"
+        android:text="@string/whoops"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="342dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:clickable="false"
+        android:text="@string/no_internet_connections_found_check_your_connection_or_try_again"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+
+    <android.support.design.button.MaterialButton
+        android:id="@+id/retry_connection"
+        android:layout_width="181dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="148dp"
+        android:layout_marginBottom="115dp"
+        android:text="@string/retry"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        app:layout_constraintVertical_bias="1.0" />
+
+
+
+
+
+</android.support.constraint.ConstraintLayout>
