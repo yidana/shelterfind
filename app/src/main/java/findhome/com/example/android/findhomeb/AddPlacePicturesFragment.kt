@@ -89,7 +89,7 @@ class AddPlacePicturesFragment : Fragment() {
 
 
 
-        val buttonnext: FloatingActionButton?= view.findViewById<FloatingActionButton>(R.id.button_next)
+        val buttonnext: FloatingActionButton?= view.findViewById(R.id.button_next)
 
         buttonnext?.setOnClickListener{ it ->
 
