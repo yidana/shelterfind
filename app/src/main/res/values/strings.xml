@@ -203,5 +203,6 @@
     <string name="create_a_new_facility">Create a new facility?</string>
     <string name="start">Start</string>
     <string name="manage">Manage</string>
+    <string name="payments">Payments</string>
 
 </resources>
