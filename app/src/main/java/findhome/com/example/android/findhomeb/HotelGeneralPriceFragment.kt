@@ -17,6 +17,7 @@ import androidx.navigation.Navigation
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import kotlinx.android.synthetic.main.fragment_hotel_general_price.*
+import kotlinx.android.synthetic.main.fragment_hotel_general_price.view.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 
@@ -42,6 +43,15 @@ class HotelGeneralPriceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+
+        val toolbar = view.findViewById<android.widget.Toolbar>(R.id.my_toolbar) as android.widget.Toolbar
+        toolbar.setNavigationOnClickListener {
+
+            Navigation.findNavController(it).navigate(R.id.placeAvailability, null)
+        }
+
 
 
         val progressBar: ProgressBar?=view.findViewById<ProgressBar>(R.id.progressBar)
@@ -82,7 +92,7 @@ class HotelGeneralPriceFragment : Fragment() {
 
                             val pricedb=HashMap<String,Any>()
                             pricedb["roomtypeprice"] =objdb
-                            Log.e("FailureCloud",pricedb.toString())
+                            pricedb["progress"]="40"
                             mFirebaseFirestore.collection("/user/facilities/homes")
                                     .document(task.result.last().id)
                                     .set(pricedb, SetOptions.merge())

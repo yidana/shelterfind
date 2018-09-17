@@ -5,7 +5,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="api_key">AIzaSyDkBbMU2HJ3FArzFL7wXDo-EvQFwdyF4IA</string>
     <string name="view">View</string>
-    <string name="places">Places</string>
+    <string name="Save">Save</string>
     <string name="inbox">Inbox</string>
     <string name="profile">Profile</string>
     <string name="kin_of_facility">Hello, What Kind of facility do you have?</string>
@@ -128,26 +128,9 @@
 
 
     <string-array name="rental_peroid_arrays">
-        <item>One Year</item>
-        <item>Two Years</item>
-        <item>Three Years</item>
-        <item>Four Years</item>
-        <item>Five Years</item>
-        <item>Six Years</item>
-        <item>Seven Years</item>
-        <item>Eight Years</item>
-        <item>Nine Years</item>
-        <item>Ten Years</item>
-    </string-array>
-
-
-    <string-array name="hostel_peroid_arrays">
-        <item>Academic Year</item>
-        <item>One Year</item>
-        <item>Two Years</item>
-        <item>Three Years</item>
-        <item>Four Years</item>
-        <item>Five Years</item>
+        <item>Per Month</item>
+        <item>Per Year</item>
+        <item>Per Night</item>
     </string-array>
 
 
@@ -164,7 +147,6 @@
     <string name="give_us_feedback">Give us feedback</string>
     <string name="lift_a_facility">Lift a Facility</string>
     <string name="explore">Explore</string>
-    <string name="country">Country</string>
     <string name="city">City</string>
     <string name="streed_address">Streed Address</string>
     <string name="search_country">Search country</string>
@@ -177,7 +159,6 @@
     <string name="permission_denied_explanation">Permission was denied, but is needed for core functionality.</string>
 
 
-
     <string name="place_details"> %1$s %2$s %3$s %4$s %5$s </string>
     <string name="loading">loading...</string>
     <string name="delete_image">Delete</string>
@@ -186,5 +167,41 @@
     <string name="img_progress_report">Uploading image to cloud… %1$s</string>
     <string name="room_type_title">Uploading Data</string>
     <string name="roomtype_progress_report">Uploading data to cloud. Please wait</string>
+    <string name="couldn_t_fetch_or_find_any_results">Couldn\'t Fetch or Find any Results</string>
+    <string name="no_results">No Results</string>
+    <string name="about">Description</string>
+    <string name="amenities">Amenities</string>
+    <string name="prices">Prices</string>
+    <string name="review">Review</string>
+    <string name="rate">Rate Facility</string>
+    <string name="cancel">Cancel</string>
+    <string name="rate_title">Rate This Facility</string>
+    <string name="reviews">Reviews</string>
+    <string name="similar_facility">Similar Facilities</string>
+    <string name="edit">Edit</string>
+    <string name="single_bed">Single Bed</string>
+    <string name="female_dorm">Female Dorm</string>
+    <string name="mixed_dorm">Mixed Dorm</string>
+    <string name="four_beds">Four Beds</string>
+    <string name="double_bed">Double Bed</string>
+    <string name="male_dorm">Male Dorm</string>
+    <string name="family_room">Family Room</string>
+    <string name="three_beds">Three Beds</string>
+    <string name="enter_price">Enter Price</string>
+    <string name="upload">Upload</string>
+    <string name="add_upload">Add/Upload</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="country">Country</string>
+    <string name="picture">Picture</string>
+    <string name="enable_users_see_your_profile_information">Enable Users see your profile Information</string>
+    <string name="how_would_you_like_to_start">How would you like to Start?</string>
+    <string name="progress">Progress</string>
+    <string name="continue_from_where_you_started">Would you like to continue for %1$s?</string>
+    <string name="continue_">Continue</string>
+    <string name="create_a_new_facility">Create a new facility?</string>
+    <string name="start">Start</string>
+    <string name="manage">Manage</string>
 
 </resources>

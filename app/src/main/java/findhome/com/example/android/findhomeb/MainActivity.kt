@@ -38,13 +38,12 @@ class MainActivity : AppCompatActivity() ,CalenderDialogFragment.CalenderInterac
 private val ROOM_AVB="roomavailability"
 
 
-
     val myKitchen:MyKitchen= MyKitchen()
 
-  public   lateinit var mFirebaseAuth: FirebaseAuth
-  public  lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
+   lateinit var mFirebaseAuth: FirebaseAuth
+   lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
     var mUsername= ANONYMUS
-  public  lateinit var mFirebaseFirestore:FirebaseFirestore
+  lateinit var mFirebaseFirestore:FirebaseFirestore
     var peroidavailable:List<CalendarDate>?=null
 
 
@@ -53,7 +52,7 @@ private val ROOM_AVB="roomavailability"
     override fun onDateInteraction(date: List<CalendarDate>) {
 
         peroidavailable=date
-        Log.v("TimeP", peroidavailable.toString())
+
     }
 
 
@@ -82,28 +81,14 @@ private val ROOM_AVB="roomavailability"
 
         setupBottomNavMenu(navController)
 
-        /*
-
-        navController.addOnNavigatedListener { _, destination ->
-            val dest: String = try {
-                resources.getResourceName(destination.id)
-            } catch (e: Resources.NotFoundException) {
-                Integer.toString(destination.id)
-            }
-
-            Toast.makeText(this@MainActivity, "Navigated to $dest",
-                    Toast.LENGTH_SHORT).show()
-            Log.d("NavigationActivity", "Navigated to $dest")
-        }
-
-*/
-
 
 
 
         mAuthStateListener=FirebaseAuth.AuthStateListener {auth->
 
             val user=auth.currentUser
+
+
 
             if (user!=null){
 
@@ -212,19 +197,11 @@ mFirebaseAuth.addAuthStateListener(mAuthStateListener)
 
     }
 
-    /*
-        @SuppressLint("PrivateResource")
-        private fun addFragment(fragment: Fragment) {
 
-            supportFragmentManager
-                    .beginTransaction()
-                    .setCustomAnimations(R.anim.design_bottom_sheet_slide_in, R.anim.design_bottom_sheet_slide_out)
-                    .replace(R.id.content_framelayout, fragment, fragment.javaClass.simpleName)
-                    .addToBackStack(null)
-                    .commit()
-        }
 
-    */
+
+
+
     companion object {
         const val  RC_SIGN_IN=1
         const val ANONYMUS="Anonymus"

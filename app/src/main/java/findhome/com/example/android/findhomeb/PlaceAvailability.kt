@@ -65,6 +65,27 @@ class PlaceAvailability : Fragment() {
         val destin = prefs.getString(preference_file_key,"none")
 
 
+        val toolbar = view.findViewById<android.widget.Toolbar>(R.id.my_toolbar) as android.widget.Toolbar
+
+
+
+
+        toolbar.setNavigationOnClickListener {
+
+            if (destin!!.toString()=="hostel"){
+
+                Navigation.findNavController(it).navigate(R.id.hostelRoomTypeFragment, null)
+            }else{
+
+                Navigation.findNavController(it).navigate(R.id.generalRoomTypeFragment, null)
+
+            }
+
+
+        }
+
+
+
         val buttonnext: FloatingActionButton?= view.findViewById<FloatingActionButton>(R.id.button_next_place_avail)
         val alwaysbtn:LinearLayout?= view.findViewById<LinearLayout>(R.id.always)
         val rangebtn: LinearLayout?= view.findViewById<LinearLayout>(R.id.range)

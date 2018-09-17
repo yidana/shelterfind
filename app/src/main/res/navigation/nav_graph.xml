@@ -172,6 +172,18 @@
         <action
             android:id="@+id/action_homeFragment_to_mainActivity"
             app:destination="@id/mainActivity" />
+        <action
+            android:id="@+id/action_homeFragment_to_hotelFragment"
+            app:destination="@id/hotelFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_homeFilterFragment"
+            app:destination="@id/homeFilterFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_hostelFragment"
+            app:destination="@id/hostelFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_viewFragment"
+            app:destination="@id/viewFragment" />
     </fragment>
     <fragment
         android:id="@+id/checkConnectionFragment"
@@ -186,12 +198,90 @@
             app:destination="@id/mainActivity" />
     </fragment>
     <fragment
-        android:id="@+id/exploreFragment"
-        android:name="findhome.com.example.android.findhomeb.ExploreFragment"
-        android:label="fragment_explore"
-        tools:layout="@layout/fragment_explore" >
+        android:id="@+id/saveFragment"
+        android:name="findhome.com.example.android.findhomeb.SaveFragment"
+        android:label="fragment_save"
+        tools:layout="@layout/fragment_save" >
         <action
-            android:id="@+id/action_exploreFragment_to_mainActivity"
+            android:id="@+id/action_saveFragment_to_mainActivity"
             app:destination="@id/mainActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewFragment"
+        android:name="findhome.com.example.android.findhomeb.ViewFragment"
+        android:label="fragment_view"
+        tools:layout="@layout/fragment_view" >
+        <action
+            android:id="@+id/action_viewFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/hotelFragment"
+        android:name="findhome.com.example.android.findhomeb.HotelFragment"
+        android:label="fragment_hotel"
+        tools:layout="@layout/fragment_hotel" />
+    <fragment
+        android:id="@+id/homeFilterFragment"
+        android:name="findhome.com.example.android.findhomeb.HomeFilterFragment"
+        android:label="fragment_home_filter"
+        tools:layout="@layout/fragment_home_filter" />
+    <fragment
+        android:id="@+id/hostelFragment"
+        android:name="findhome.com.example.android.findhomeb.HostelFragment"
+        android:label="fragment_hostel"
+        tools:layout="@layout/fragment_hostel" />
+    <fragment
+        android:id="@+id/accountSettingsFragment"
+        android:name="findhome.com.example.android.findhomeb.AccountSettingsFragment"
+        android:label="fragment_account_settings"
+        tools:layout="@layout/fragment_account_settings" >
+        <action
+            android:id="@+id/action_accountSettingsFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/liftingStatus"
+        android:name="findhome.com.example.android.findhomeb.LiftingStatus"
+        android:label="fragment_lifting_status"
+        tools:layout="@layout/fragment_lifting_status" >
+        <action
+            android:id="@+id/action_liftingStatus_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/feedBackFragment"
+        android:name="findhome.com.example.android.findhomeb.FeedBackFragment"
+        android:label="fragment_feed_back"
+        tools:layout="@layout/fragment_feed_back" >
+        <action
+            android:id="@+id/action_feedBackFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="findhome.com.example.android.findhomeb.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="findhome.com.example.android.findhomeb.NotificationFragment"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_notification" >
+        <action
+            android:id="@+id/action_notificationFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/manageFragment"
+        android:name="findhome.com.example.android.findhomeb.ManageFragment"
+        android:label="fragment_manage"
+        tools:layout="@layout/fragment_manage" >
+        <action
+            android:id="@+id/action_manageFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 </navigation>

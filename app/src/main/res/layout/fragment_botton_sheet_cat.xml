@@ -4,15 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="#ffffff"
-    android:paddingEnd="16dp"
-    android:paddingStart="16dp"
-    android:divider="@drawable/mydivider"
-    android:showDividers="middle"
     tools:context=".BottonSheetCat"
-    android:id="@+id/linearLayout_btm_sheet">
+    android:id="@+id/linearLayout_btm_sheet"
+    style="@style/FullscreenTheme">
+<android.support.design.widget.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:navigationIcon="@drawable/ic_close"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+
+</android.support.design.widget.AppBarLayout>
 
 
 

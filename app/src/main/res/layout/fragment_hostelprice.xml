@@ -13,6 +13,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
+        app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
@@ -35,263 +36,6 @@
         app:layout_constraintTop_toTopOf="@+id/progressBar" />
 
 
-    <LinearLayout
-        android:id="@+id/tableLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="8dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal"
-            android:id="@+id/ln_4"
-            android:visibility="gone">
-
-            <RadioButton
-                android:id="@+id/price_4_in_a_room"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif-smallcaps"
-                android:text="@string/_4_in_a_room"
-                android:textColor="@color/blacky"
-                android:textSize="15sp"
-                android:clickable="false"
-                android:checked="true"/>
-
-            <EditText
-                android:id="@+id/amount_4_in_a_room"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:gravity="bottom"
-                android:layout_weight="1"/>
-
-            <android.support.design.card.MaterialCardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
-                android:layout_gravity="bottom">
-
-                <Spinner
-                    android:id="@+id/peroid_4_in_a_room"
-                    android:layout_width="113dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:entries="@array/hostel_peroid_arrays" />
-            </android.support.design.card.MaterialCardView>
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:id="@+id/ln_3"
-            android:visibility="gone">
-
-            <RadioButton
-                android:id="@+id/price_3_in_a_room"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif-smallcaps"
-                android:text="@string/_3_in_a_room"
-                android:textColor="@color/blacky"
-                android:textSize="15sp"
-                android:clickable="false"
-                android:checked="true"/>
-
-            <EditText
-                android:id="@+id/amount_3_in_a_room"
-                android:layout_width="0dip"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom" />
-
-
-            <android.support.design.card.MaterialCardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
-                android:layout_gravity="bottom">
-
-                <Spinner
-                    android:id="@+id/peroid_3_in_a_room"
-                    android:layout_width="113dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:entries="@array/hostel_peroid_arrays" />
-
-            </android.support.design.card.MaterialCardView>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:id="@+id/ln_2"
-            android:visibility="gone">
-
-            <RadioButton
-                android:id="@+id/price_2_in_a_room"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif-smallcaps"
-                android:text="@string/_2_in_a_room"
-                android:textColor="@color/blacky"
-                android:textSize="15sp"
-                android:clickable="false"
-                android:checked="true"/>
-
-            <EditText
-                android:id="@+id/amount_2_in_a_room"
-                android:layout_width="0dip"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom" />
-
-
-            <android.support.design.card.MaterialCardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
-                android:layout_gravity="bottom">
-
-
-                <Spinner
-                    android:id="@+id/peroid_2_in_a_room"
-                    android:layout_width="113dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:entries="@array/hostel_peroid_arrays" />
-
-            </android.support.design.card.MaterialCardView>
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/ln_1"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <RadioButton
-                android:id="@+id/price_1_in_a_room"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:checked="true"
-                android:clickable="false"
-                android:fontFamily="sans-serif-smallcaps"
-                android:text="@string/single_room"
-                android:textColor="@color/blacky"
-                android:textSize="15sp" />
-
-            <EditText
-                android:id="@+id/amount_1_in_a_room"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom"
-                android:layout_weight="1" />
-
-
-            <android.support.design.card.MaterialCardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="4dp">
-
-
-                <Spinner
-                    android:id="@+id/peroid_1_in_a_room"
-                    android:layout_width="113dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:entries="@array/hostel_peroid_arrays" />
-
-            </android.support.design.card.MaterialCardView>
-
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:text="@string/room_type"
-        android:textColor="@color/blacky"
-        android:textSize="18sp"
-
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:text="@string/price"
-        android:textColor="@color/blacky"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.239"
-        app:layout_constraintStart_toEndOf="@+id/textView9" />
-
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:text="@string/rental_peroid"
-        android:textColor="@color/blacky"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.843"
-        app:layout_constraintStart_toEndOf="@+id/textView10" />
 
 
     <ProgressBar
@@ -307,6 +51,68 @@
         android:max="100"
         android:indeterminate="false"
         android:progress="0"/>
+
+
+    <android.support.design.widget.TabLayout
+        android:elevation="2dp"
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.065">
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Price Per Night" />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Peroid" />
+
+
+    </android.support.design.widget.TabLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="331dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include android:id="@+id/per_night_lt" layout="@layout/price_per_night_layout" />
+
+            <include android:id="@+id/peroid_lt" layout="@layout/peroid_layout" />
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+
+
+
+
+
+
+
+
 
 
     <android.support.design.widget.FloatingActionButton

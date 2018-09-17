@@ -62,6 +62,35 @@ class OverviewFragment : Fragment() {
 
         val destin = prefs.getString(preference_file_key,"none")
 
+
+
+
+
+
+
+
+        val toolbar = view.findViewById<Toolbar>(R.id.my_toolbar) as Toolbar
+
+
+
+        toolbar.setNavigationOnClickListener {
+
+            when(destin!!.toString()) {
+                "hostel" -> Navigation.findNavController(it).navigate(R.id.priceHostelFragment, null)
+                "hotel" -> Navigation.findNavController(it).navigate(R.id.hotelGeneralPriceFragment, null)
+                "house" -> Navigation.findNavController(it).navigate(R.id.generalPriceFragment, null)
+                "apartment" -> Navigation.findNavController(it).navigate(R.id.generalPriceFragment, null)
+            }
+
+
+        }
+
+
+
+
+
+
+
         val buttonnext: FloatingActionButton?= view.findViewById<FloatingActionButton>(R.id.button_next)
 
         buttonnext?.setOnClickListener{
@@ -101,7 +130,7 @@ class OverviewFragment : Fragment() {
 
                                     val overviewdb=HashMap<String,Any>()
                                     overviewdb["overview"] =objdb
-                                    Log.e("FailureCloud",overviewdb.toString())
+                                    overviewdb["progress"]="50"
                                     mFirebaseFirestore.collection("/user/facilities/homes")
                                             .document(task.result.last().id)
                                             .set(overviewdb, SetOptions.merge())
@@ -134,7 +163,7 @@ class OverviewFragment : Fragment() {
 
                                     val overviewdb=HashMap<String,Any>()
                                     overviewdb["overview"] =objdb
-                                    Log.e("FailureCloud",overviewdb.toString())
+                                    overviewdb["progress"]="50"
                                     mFirebaseFirestore.collection("/user/facilities/apartments")
                                             .document(task.result.last().id)
                                             .set(overviewdb, SetOptions.merge())
@@ -165,7 +194,7 @@ class OverviewFragment : Fragment() {
 
                                     val overviewdb=HashMap<String,Any>()
                                     overviewdb["overview"] =objdb
-                                    Log.e("FailureCloud",overviewdb.toString())
+                                    overviewdb["progress"]="50"
                                     mFirebaseFirestore.collection("/user/facilities/hotels")
                                             .document(task.result.last().id)
                                             .set(overviewdb, SetOptions.merge())
@@ -197,7 +226,7 @@ class OverviewFragment : Fragment() {
 
                                     val overviewdb=HashMap<String,Any>()
                                     overviewdb["overview"] =objdb
-                                    Log.e("FailureCloud",overviewdb.toString())
+                                    overviewdb["progress"]="50"
                                     mFirebaseFirestore.collection("/user/facilities/hostels")
                                             .document(task.result.last().id)
                                             .set(overviewdb, SetOptions.merge())

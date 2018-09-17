@@ -1,40 +1,34 @@
 package findhome.com.example.android.findhomeb
 
 import android.Manifest
-import android.app.Dialog
-import android.app.ProgressDialog
 import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
-import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.Toolbar
 import androidx.navigation.Navigation
 import androidx.work.*
 import androidx.work.Data
 import kotlinx.android.synthetic.main.fragment_add_place_pictures.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import findhome.com.example.android.findhomeb.GridImageAdaptor.Companion.imgList
+import findhome.com.example.android.findhomeb.adaptors.GridImageAdaptor
+import findhome.com.example.android.findhomeb.adaptors.GridImageAdaptor.Companion.imgList
 import findhome.com.example.android.findhomeb.workers.CompressAndUploadWorker
-import java.io.ByteArrayOutputStream
 
 
 class AddPlacePicturesFragment : Fragment() {
@@ -45,10 +39,11 @@ class AddPlacePicturesFragment : Fragment() {
     lateinit var mFirebaseStorage: FirebaseStorage
     lateinit var mStorageRef: StorageReference
     lateinit var mImageRef: StorageReference
-    lateinit var imagesAdapter:GridImageAdaptor
+    lateinit var imagesAdapter: GridImageAdaptor
     lateinit var mFirebaseFirestore: FirebaseFirestore
     val preference_file_key="MYDESTINATION"
     val KEY_IMG_PATH = "IMG_PATH"
+    val PHOTO_URL="MYURLS"
 
     val REQUEST_LOCATION_PERMISSION = 200
 
@@ -78,6 +73,15 @@ class AddPlacePicturesFragment : Fragment() {
 
 
 
+        val toolbar = view.findViewById<Toolbar>(R.id.my_toolbar) as Toolbar
+
+        toolbar.setNavigationOnClickListener {
+
+            Navigation.findNavController(it).navigate(R.id.profilePictureFragment, null)
+        }
+
+
+
         if (ActivityCompat.checkSelfPermission(this.context!!, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this.context!!, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED   ) {
 
@@ -92,7 +96,7 @@ class AddPlacePicturesFragment : Fragment() {
         val buttonnext: FloatingActionButton?= view.findViewById(R.id.button_next)
 
         buttonnext?.setOnClickListener{ it ->
-
+            myPuturls.clear()
 
             if (imgList.isEmpty()) {
 
@@ -138,92 +142,15 @@ class AddPlacePicturesFragment : Fragment() {
                 WorkManager.getInstance().getStatusById(work.id)
                         .observe(this, Observer {workStatus->
 
-                            val isWorkActive = !workStatus?.state!!.isFinished
-                            if (isWorkActive){
+                            val isWorkFinished = !workStatus?.state!!.isFinished
 
+                            if (isWorkFinished){
 
-
-
-
-                                when(destin!!.toString()){
-                                    "home"->{
-                                        val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes")
-                                        myCollectionReference.get().addOnCompleteListener {task ->
-                                            if (task.isSuccessful){
-                                                val amenitiesdb=HashMap<String,Any>()
-                                                amenitiesdb["amenities"] =myurls
-                                                mFirebaseFirestore.collection("/user/facilities/homes")
-                                                        .document(task.result.last().id)
-                                                        .set( amenitiesdb, SetOptions.merge())
-                                                        .addOnFailureListener { failure->
-
-                                                        }.addOnSuccessListener {
-
-                                                        }
-                                            }
-                                        }
-                                    }
-                                    "hostel"->{
-
-                                        val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hostels")
-                                        myCollectionReference.get().addOnCompleteListener {task ->
-                                            if (task.isSuccessful){
-                                                val amenitiesdb=HashMap<String,Any>()
-                                                amenitiesdb["amenities"] =myurls
-                                                mFirebaseFirestore.collection("/user/facilities/hostels")
-                                                        .document(task.result.last().id)
-                                                        .set(amenitiesdb, SetOptions.merge())
-                                                        .addOnFailureListener { failure->
-
-                                                            Log.e("FailureCloud",failure.toString())
-                                                        }.addOnSuccessListener {
-
-                                                        }
-                                            }
-                                        }
-                                    }
-                                    "hotel"->{
-                                        val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hotels")
-                                        myCollectionReference.get().addOnCompleteListener {task ->
-                                            if (task.isSuccessful){
-                                                val amenitiesdb=HashMap<String,Any>()
-                                                amenitiesdb["amenities"] =myurls
-                                                mFirebaseFirestore.collection("/user/facilities/hotels")
-                                                        .document(task.result.last().id)
-                                                        .set(amenitiesdb, SetOptions.merge())
-                                                        .addOnFailureListener { failure->
-
-                                                        }.addOnSuccessListener {
-
-                                                        }
-                                            }
-                                        }
-                                    }
-                                    "apartment"->{
-                                        val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/apartments")
-                                        myCollectionReference.get().addOnCompleteListener {task ->
-                                            if (task.isSuccessful){
-                                                val amenitiesdb=HashMap<String,Any>()
-                                                amenitiesdb["amenities"] =myurls
-                                                mFirebaseFirestore.collection("/user/facilities/apartments")
-                                                        .document(task.result.last().id)
-                                                        .set(amenitiesdb, SetOptions.merge())
-                                                        .addOnFailureListener { failure->
-
-                                                        }.addOnSuccessListener {
-
-                                                        }
-                                            }
-                                        }
-                                    }
-
-                                }
 
                                 dialog.dismiss()
 
 
-                                Navigation.findNavController(it).navigate(R.id.amenitiesFragment, null)
-
+                                Navigation.findNavController(view).navigate(R.id.amenitiesFragment, null)
 
                             }else{
                                 Log.v("WORKM","It is Still in Progress")
@@ -308,7 +235,6 @@ class AddPlacePicturesFragment : Fragment() {
     }
 
 
-    // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
@@ -325,7 +251,6 @@ class AddPlacePicturesFragment : Fragment() {
 
 
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
     }
 
@@ -333,5 +258,7 @@ class AddPlacePicturesFragment : Fragment() {
         @JvmStatic
         fun newInstance() =
                 AddPlacePicturesFragment()
+
+        var myPuturls=ArrayList<String>()
     }
 }

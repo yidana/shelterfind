@@ -17,6 +17,7 @@ import android.widget.Filter
 import com.google.android.gms.common.data.DataBufferUtils
 import android.widget.Toast
 import com.google.android.gms.location.places.Places
+import findhome.com.example.android.findhomeb.AddressFragment.Companion.mcountry_record
 import java.util.concurrent.TimeUnit
 
 
@@ -129,6 +130,12 @@ class PlaceAutocompleteAdapter : ArrayAdapter<AutocompletePrediction>, Filterabl
                     .getAutocompletePredictions(mGoogleApiClient, constraint.toString(),
                             mBounds, mPlaceFilter)
 
+            if (mcountry_record!=""){
+
+
+
+
+            }
             // This method should have been called off the main UI thread. Block and wait for at most 60s
             // for a result from the API.
             val autocompletePredictions = results
@@ -137,8 +144,8 @@ class PlaceAutocompleteAdapter : ArrayAdapter<AutocompletePrediction>, Filterabl
             // Confirm that the query completed successfully, otherwise return null
             val status = autocompletePredictions.status
             if (!status.isSuccess) {
-                Toast.makeText(context, "Error contacting API: " + status.toString(),
-                        Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Error Searching Place, Make Sure you are conneced  ",
+                        Toast.LENGTH_LONG).show()
                 Log.e(TAG, "Error getting autocomplete prediction API call: " + status.toString())
                 autocompletePredictions.release()
                 return null

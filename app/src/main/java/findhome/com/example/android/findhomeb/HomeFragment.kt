@@ -1,44 +1,41 @@
 package findhome.com.example.android.findhomeb
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.chip.ChipGroup
+import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import findhome.com.example.android.findhomeb.R.drawable.image2
-import findhome.com.example.android.findhomeb.R.drawable.image_1
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.FirebaseFirestore
 import findhome.com.example.android.findhomeb.R.layout.fragment_home
+import findhome.com.example.android.findhomeb.adaptors.CustomPagerAdaptor
+import findhome.com.example.android.findhomeb.adaptors.HomeRecyclerViewAdaptor
+import findhome.com.example.android.findhomeb.model.CloudData
+import findhome.com.example.android.findhomeb.viewmodel.MyViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
-class HomeFragment : Fragment(), HomeRecyclerViewAdaptor.OnItemClickListener {
+class HomeFragment : Fragment() {
 
 
     private var listener: OnFragmentInteractionListener? = null
 
-    override fun onItemClick(data: Data) {
-
-
-        Toast.makeText(this.context,"I was Clicked",Toast.LENGTH_SHORT).show()
-    }
-
-
-
-
-    private var dataRecyclerView: RecyclerView?=null
-    private var recyclerViewAdapter: HomeRecyclerViewAdaptor? = null
-
-    private var listmyData:ArrayList<Data>?=ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
 
 
@@ -54,25 +51,13 @@ class HomeFragment : Fragment(), HomeRecyclerViewAdaptor.OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dataRecyclerView= rvData
-        listmyData?.add(Data("Ian Hostl","354fdAvenue", 1.4F, image_1    ))
-        listmyData?.add(Data("KGR Hostl","354fdAvenue", 4.4F,image2 ))
-        listmyData?.add(Data("RFW Hostl","354fdAvenue", 2.4F,image_1 ))
-        listmyData?.add(Data("DER Hostl","354fdAvenue", 3.4F,image2 ))
-        listmyData?.add(Data("FEW Hostl","354fdAvenue", 5.4F,image_1 ))
-        listmyData?.add(Data("WRF Hostl","354fdAvenue", 0.4F,image2 ))
-        listmyData?.add(Data("WRW Hostl","354fdAvenue", 2.9F,image_1 ))
-        listmyData?.add(Data("GHYT Hostl","354fdAvenue", 5.0F,image2 ))
-        listmyData?.add(Data("JYE Hostl","354fdAvenue", 0.7F,image_1 ))
-        listmyData?.add(Data("CVB Hostl","354fdAvenue", 3.8F,image2 ))
-        listmyData?.add(Data("XSD Hostl","354fdAvenue", 4.7F,image_1 ))
-        listmyData?.add(Data("WER Hostl","354fdAvenue", 4.4F,image2 ))
 
 
-        recyclerViewAdapter = HomeRecyclerViewAdaptor(listmyData!!, this)
-        dataRecyclerView?.layoutManager = LinearLayoutManager(this.context)
-        dataRecyclerView?.adapter = recyclerViewAdapter
+      val  adapterViewPager = CustomPagerAdaptor(childFragmentManager)
 
+        vpPager.adapter=adapterViewPager
+
+        view_pager_tab.setupWithViewPager(vpPager)
 
         category.setOnClickListener {
 
@@ -82,6 +67,16 @@ class HomeFragment : Fragment(), HomeRecyclerViewAdaptor.OnItemClickListener {
             categoryBottomSheet.show(fragmentManager,"CategoryBottomSheet")
         }
 
+
+
+        places_fab.setOnClickListener {
+
+           // Navigation.findNavController(view).navigate(R.id.placesFragment, null)
+
+        }
+
+
+
     }
 
     fun onButtonPressed(uri: Uri) {
@@ -90,6 +85,18 @@ class HomeFragment : Fragment(), HomeRecyclerViewAdaptor.OnItemClickListener {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
+    }
+
+
+
+    override fun onResume() {
+        super.onResume()
+
+
+
+
+
 
     }
 
@@ -109,5 +116,8 @@ class HomeFragment : Fragment(), HomeRecyclerViewAdaptor.OnItemClickListener {
 
         @JvmStatic
         fun newInstance() = HomeFragment()
+
+        lateinit var passingDataCloudData:CloudData
+
     }
 }

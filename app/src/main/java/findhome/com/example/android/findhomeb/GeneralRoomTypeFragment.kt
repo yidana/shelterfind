@@ -18,6 +18,7 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.SetOptions
+import kotlinx.android.synthetic.main.fragment_account_settings.*
 import kotlinx.android.synthetic.main.fragment_general_room_type.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
@@ -48,6 +49,16 @@ class GeneralRoomTypeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
+        val toolbar = view.findViewById<android.widget.Toolbar>(R.id.my_toolbar) as android.widget.Toolbar
+
+
+        toolbar.setNavigationOnClickListener {
+
+            Navigation.findNavController(it).navigate(R.id.entryFormoneFragment, null)
+
+        }
 
         val progressBar: ProgressBar?=view.findViewById<ProgressBar>(R.id.progressBar)
 
@@ -125,6 +136,7 @@ class GeneralRoomTypeFragment : Fragment() {
 
                           val roomdb=HashMap<String,Any>()
                           roomdb["roomtype"] =objdb
+                          roomdb["progress"]="10"
                           Log.e("FailureCloud",roomdb.toString())
                           mFirebaseFirestore.collection("/user/facilities/homes")
                                   .document(task.result.last().id)
@@ -163,6 +175,7 @@ class GeneralRoomTypeFragment : Fragment() {
 
                             val roomdb=HashMap<String,Any>()
                             roomdb["roomtype"] =objdb
+                            roomdb["progress"]="10"
                             Log.e("FailureCloud",roomdb.toString())
                             mFirebaseFirestore.collection("/user/facilities/apartments")
                                     .document(task.result.last().id)
@@ -200,7 +213,7 @@ class GeneralRoomTypeFragment : Fragment() {
                             objdb["mainhall"]=mainhallstatus
                             val roomdb=HashMap<String,Any>()
                             roomdb["roomtype"] =objdb
-
+                            roomdb["progress"]="10"
                             mFirebaseFirestore.collection("/user/facilities/hotels")
                                     .document(task.result.last().id)
                                     .set(roomdb, SetOptions.merge())

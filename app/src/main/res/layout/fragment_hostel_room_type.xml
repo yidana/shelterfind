@@ -13,6 +13,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
+        app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"/>
 
@@ -24,6 +25,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="88dp"
         android:layout_marginEnd="8dp"
+        android:textAlignment="center"
         android:fontFamily="sans-serif-smallcaps"
         android:text="@string/select_the_room_types_available_in_your_hostel"
         android:textColor="@color/blacky"
@@ -34,130 +36,158 @@
 
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:divider="@drawable/mydivider"
-        android:orientation="vertical"
-        android:showDividers="middle"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="345dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.338">
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
 
-        <LinearLayout
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="211dp">
 
 
-            <CheckBox
-                android:id="@+id/checkbox_four_in_a_room"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="2"
-                android:fontFamily="sans-serif-smallcaps"
-                android:text="@string/four_in_a_room"
-                android:textColor="@color/blacky"
-                android:textSize="18sp" />
+            <TableRow>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="50dp"
-                android:src="@drawable/fourbeds" />
+                <ToggleButton
+                    android:id="@+id/single_bed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/toggke_bck"
+                    android:elevation="4dp"
+                    android:textColor="@color/blacky"
+                    android:textOff="@string/single_bed"
+                    android:textOn="@string/single_bed"
+                    tools:layout_editor_absoluteX="10dp"
+                    tools:layout_editor_absoluteY="203dp" />
 
-        </LinearLayout>
+                <ToggleButton
+                    android:id="@+id/female_dorm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/toggke_bck"
+                    android:elevation="4dp"
+                    android:textColor="@color/blacky"
+                    android:textOff="@string/female_dorm"
+                    android:textOn="@string/female_dorm"
+                    tools:layout_editor_absoluteX="217dp"
+                    tools:layout_editor_absoluteY="396dp" />
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-
-            <CheckBox
-                android:id="@+id/checkbox_three_in_a_room"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="2"
-                android:fontFamily="sans-serif-smallcaps"
-                android:text="@string/three_in_a_room"
-                android:textColor="@color/blacky"
-                android:textSize="18sp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="50dp"
-                android:src="@drawable/threebeds" />
-
-        </LinearLayout>
+                <ToggleButton
+                    android:id="@+id/mixed_dorm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/toggke_bck"
+                    android:elevation="4dp"
+                    android:textColor="@color/blacky"
+                    android:textOff="@string/mixed_dorm"
+                    android:textOn="@string/mixed_dorm"
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="309dp" />
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/checkbox_two_in_a_room"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="2"
-                android:fontFamily="sans-serif-smallcaps"
-                android:text="@string/two_in_a_room"
-                android:textColor="@color/blacky"
-                android:textSize="18sp" />
-
-            <ImageView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="50dp"
-                android:src="@drawable/twobeds" />
+            </TableRow>
 
 
-        </LinearLayout>
+            <TableRow>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/checkbox_one_in_a_room"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="2"
-                android:fontFamily="sans-serif-smallcaps"
-                android:text="@string/one_in_a_room"
-                android:textColor="@color/blacky"
-                android:textSize="18sp" />
-
-            <ImageView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="50dp"
-                android:src="@drawable/singlebed" />
+                <ToggleButton
+                    android:id="@+id/four_beds"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/toggke_bck"
+                    android:elevation="4dp"
+                    android:textColor="@color/blacky"
+                    android:textOff="@string/four_beds"
+                    android:textOn="@string/four_beds"
+                    tools:layout_editor_absoluteX="288dp"
+                    tools:layout_editor_absoluteY="203dp" />
 
 
-        </LinearLayout>
+                <ToggleButton
+                    android:id="@+id/double_bed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/toggke_bck"
+                    android:elevation="4dp"
+                    android:textColor="@color/blacky"
+                    android:textOff="@string/double_bed"
+                    android:textOn="@string/double_bed"
+                    tools:layout_editor_absoluteX="153dp"
+                    tools:layout_editor_absoluteY="203dp" />
+
+
+                <ToggleButton
+                    android:id="@+id/male_dorm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/toggke_bck"
+                    android:elevation="4dp"
+                    android:textColor="@color/blacky"
+                    android:textOff="@string/male_dorm"
+                    android:textOn="@string/male_dorm"
+                    tools:layout_editor_absoluteX="280dp"
+                    tools:layout_editor_absoluteY="309dp" />
+
+
+            </TableRow>
+
+
+            <TableRow>
+
+
+                <ToggleButton
+                    android:id="@+id/family_room"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/toggke_bck"
+                    android:elevation="4dp"
+                    android:textColor="@color/blacky"
+                    android:textOff="@string/family_room"
+                    android:textOn="@string/family_room"
+                    tools:layout_editor_absoluteX="82dp"
+                    tools:layout_editor_absoluteY="396dp" />
+
+
+                <ToggleButton
+                    android:id="@+id/three_beds"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/toggke_bck"
+                    android:elevation="4dp"
+                    android:textColor="@color/blacky"
+                    android:textOff="@string/three_beds"
+                    android:textOn="@string/three_beds"
+                    tools:layout_editor_absoluteX="148dp"
+                    tools:layout_editor_absoluteY="309dp" />
+
+            </TableRow>
+
+
+        </TableLayout>
+
 
     </LinearLayout>
+
 
 
     <android.support.design.widget.FloatingActionButton

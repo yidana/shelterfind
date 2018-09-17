@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_account_circle_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_mode_edit_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -34,9 +34,9 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_share" />
-                            <entry key="sourceFile" value="C:\Users\IAN CECIL AKOTO\Downloads\Compressed\149086-essential-set\svg\share.svg" />
+                            <entry key="color" value="ff3a3d" />
+                            <entry key="outputName" value="ic_key" />
+                            <entry key="sourceFile" value="C:\Users\IAN CECIL AKOTO\Downloads\Compressed\149086-essential-set\svg\key.svg" />
                           </map>
                         </option>
                       </PersistentState>

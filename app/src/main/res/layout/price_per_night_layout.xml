@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+
+
+
+    <TableLayout
+        android:id="@+id/price_rooms"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/single_room_price">
+
+         <TextView android:layout_height="wrap_content"
+             android:layout_width="wrap_content"
+             android:text="@string/single_bed"
+             android:layout_marginStart="40dp"
+             android:textSize="15sp"
+             android:textColor="@color/blacky"
+             android:layout_gravity="bottom"/>
+
+
+            <EditText
+                android:id="@+id/single_room_enter_amount"
+                android:layout_height="wrap_content"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:inputType="number"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="30dp"
+                android:hint="@string/enter_amount"    />
+
+
+        </TableRow>
+
+
+        <TableRow
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/double_room_price">
+
+            <TextView
+                android:textColor="@color/blacky"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/double_bed"
+                android:layout_marginStart="40dp"
+                android:textSize="15sp"
+                android:layout_gravity="bottom"/>
+
+
+            <EditText
+                android:id="@+id/double_room_enter_amount"
+                android:layout_height="wrap_content"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:inputType="number"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="30dp"
+                android:hint="@string/enter_amount"    />
+
+
+        </TableRow>
+
+
+        <TableRow
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/three_room_price">
+
+            <TextView android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/three_beds"
+                android:layout_marginStart="40dp"
+                android:textSize="15sp"
+                android:textColor="@color/blacky"
+                android:layout_gravity="bottom"/>
+
+
+            <EditText
+                android:id="@+id/three_beds_room_enter_amount"
+                android:layout_height="wrap_content"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:inputType="number"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="30dp"
+                android:hint="@string/enter_amount"    />
+
+
+        </TableRow>
+
+
+        <TableRow
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/four_room_price">
+
+            <TextView android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/four_beds"
+                android:layout_marginStart="40dp"
+                android:textSize="15sp"
+                android:textColor="@color/blacky"
+                android:layout_gravity="bottom"/>
+
+
+            <EditText
+                android:id="@+id/four_beds_enter_amount"
+                android:layout_height="wrap_content"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:inputType="number"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="30dp"
+                android:hint="@string/enter_amount"    />
+
+
+        </TableRow>
+
+
+        <TableRow
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/femal_room_price">
+
+            <TextView android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/female_dorm"
+                android:layout_marginStart="40dp"
+                android:textSize="15sp"
+                android:textColor="@color/blacky"
+                android:layout_gravity="bottom"/>
+
+
+            <EditText
+                android:id="@+id/femal_room_enter_amount"
+                android:layout_height="wrap_content"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:inputType="number"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="30dp"
+                android:hint="@string/enter_amount"    />
+
+
+        </TableRow>
+
+
+        <TableRow
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/mixed_room_price">
+
+            <TextView android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/mixed_dorm"
+                android:layout_marginStart="40dp"
+                android:textSize="15sp"
+                android:textColor="@color/blacky"
+                android:layout_gravity="bottom"/>
+
+
+            <EditText
+                android:id="@+id/mixed_room_enter_amount"
+                android:layout_height="wrap_content"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:inputType="number"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="30dp"
+                android:hint="@string/enter_amount"    />
+
+
+        </TableRow>
+
+
+        <TableRow
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/family_room_price">
+
+            <TextView android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/family_room"
+                android:layout_marginStart="40dp"
+                android:textSize="15sp"
+                android:textColor="@color/blacky"
+                android:layout_gravity="bottom"/>
+
+
+            <EditText
+                android:id="@+id/family_room_enter_amount"
+                android:layout_height="wrap_content"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:inputType="number"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="30dp"
+                android:hint="@string/enter_amount"    />
+
+
+        </TableRow>
+
+        <TableRow
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/male_room_price">
+
+            <TextView android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/male_dorm"
+                android:layout_marginStart="40dp"
+                android:textSize="15sp"
+                android:textColor="@color/blacky"
+                android:layout_gravity="bottom"/>
+
+
+            <EditText
+                android:id="@+id/male_room_enter_amount"
+                android:layout_height="wrap_content"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:inputType="number"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="30dp"
+                android:hint="@string/enter_amount"    />
+
+
+        </TableRow>
+
+
+
+
+    </TableLayout>
+
+</android.support.constraint.ConstraintLayout>

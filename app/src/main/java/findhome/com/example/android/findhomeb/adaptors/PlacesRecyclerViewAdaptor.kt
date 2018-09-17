@@ -1,10 +1,11 @@
-package findhome.com.example.android.findhomeb
+package findhome.com.example.android.findhomeb.adaptors
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.squareup.picasso.Picasso
+import findhome.com.example.android.findhomeb.Data
 import findhome.com.example.android.findhomeb.R.layout.places_card_view
 import kotlinx.android.synthetic.main.places_card_view.view.*
 

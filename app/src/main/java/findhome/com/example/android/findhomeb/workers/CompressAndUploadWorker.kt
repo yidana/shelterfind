@@ -4,12 +4,15 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
+import androidx.work.Data
 import androidx.work.Worker
+import com.google.android.gms.flags.IFlagProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import findhome.com.example.android.findhomeb.GridImageAdaptor
+import findhome.com.example.android.findhomeb.AddPlacePicturesFragment.Companion.myPuturls
+import findhome.com.example.android.findhomeb.adaptors.GridImageAdaptor
 import java.io.ByteArrayOutputStream
 
 class CompressAndUploadWorker:Worker() {
@@ -21,7 +24,8 @@ class CompressAndUploadWorker:Worker() {
     lateinit var imagesAdapter: GridImageAdaptor
     lateinit var mFirebaseFirestore: FirebaseFirestore
     val preference_file_key="MYDESTINATION"
-    val myurls=ArrayList<String>()
+    val PHOTO_URL="MYURLS"
+    private val myListuri=ArrayList<String>()
 
 
 
@@ -38,86 +42,7 @@ class CompressAndUploadWorker:Worker() {
 
         myCompressThenUpload(imgArray!!,destination!!)
 
-        if (!myurls.isEmpty()){
 
-
-            when(destination){
-                "home"->{
-                    val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes")
-                    myCollectionReference.get().addOnCompleteListener {task ->
-                        if (task.isSuccessful){
-                            val photosdb=HashMap<String,Any>()
-                            photosdb["photourl"] =myurls
-                            mFirebaseFirestore.collection("/user/facilities/homes")
-                                    .document(task.result.last().id)
-                                    .set( photosdb, SetOptions.merge())
-                                    .addOnFailureListener { failure->
-
-                                    }.addOnSuccessListener {
-
-                                    }
-                        }
-                    }
-                }
-                "hostel"->{
-
-                    val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hostels")
-                    myCollectionReference.get().addOnCompleteListener {task ->
-                        if (task.isSuccessful){
-                            val photosdb=HashMap<String,Any>()
-                            photosdb["photourl"] =myurls
-                            mFirebaseFirestore.collection("/user/facilities/hostels")
-                                    .document(task.result.last().id)
-                                    .set(photosdb, SetOptions.merge())
-                                    .addOnFailureListener { failure->
-
-                                        Log.e("FailureCloud",failure.toString())
-                                    }.addOnSuccessListener {
-
-                                    }
-                        }
-                    }
-                }
-                "hotel"->{
-                    val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hotels")
-                    myCollectionReference.get().addOnCompleteListener {task ->
-                        if (task.isSuccessful){
-                            val photosdb=HashMap<String,Any>()
-                            photosdb["photourl"] =myurls
-                            mFirebaseFirestore.collection("/user/facilities/hotels")
-                                    .document(task.result.last().id)
-                                    .set(photosdb, SetOptions.merge())
-                                    .addOnFailureListener { failure->
-
-                                    }.addOnSuccessListener {
-
-                                    }
-                        }
-                    }
-                }
-                "apartment"->{
-                    val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/apartments")
-                    myCollectionReference.get().addOnCompleteListener {task ->
-                        if (task.isSuccessful){
-                            val photosdb=HashMap<String,Any>()
-                            photosdb["photourl"] =myurls
-                            mFirebaseFirestore.collection("/user/facilities/apartments")
-                                    .document(task.result.last().id)
-                                    .set(photosdb, SetOptions.merge())
-                                    .addOnFailureListener { failure->
-
-                                    }.addOnSuccessListener {
-
-                                    }
-                        }
-                    }
-                }
-
-            }
-
-
-
-        }
 
 
         Result.SUCCESS
@@ -129,12 +54,15 @@ class CompressAndUploadWorker:Worker() {
 
 
 
-    private fun myCompressThenUpload(uris: Array<String>,destin:String) {
+    private fun myCompressThenUpload(uris: Array<String>,destin:String){
 
 
-        uris.map { myUri->
 
-            val uri= Uri.parse(myUri)
+        for (mUri:String in uris){
+
+
+
+            val uri= Uri.parse(mUri)
 
             val uriPath=uri.lastPathSegment
             mStorageRef=mFirebaseStorage.reference
@@ -148,22 +76,114 @@ class CompressAndUploadWorker:Worker() {
             val imgdata:ByteArray=   baos.toByteArray()
             val path:String  = MediaStore.Images.Media.insertImage(this.applicationContext.contentResolver, bitmap, uriPath, null)
 
-           val compressedImg= Uri.parse(path)
+            val compressedImg= Uri.parse(path)
 
 
             mImageRef.putFile(compressedImg).addOnSuccessListener { taskSnapshot ->
 
-                myurls.add( taskSnapshot.storage.downloadUrl.toString())
 
-            }
+                mImageRef.downloadUrl.addOnSuccessListener { uri ->
+
+                    val duri=uri.toString()
+                    Log.v("MURI",duri)
+                    myListuri.add( duri)
+                    Log.v("MURIDD", myListuri.toString())
+
+
+                    if (myListuri.size==uris.size){
+
+
+                          when(destin){
+                              "house"->{
+                                  val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes")
+                                  myCollectionReference.get().addOnCompleteListener {task ->
+                                      if (task.isSuccessful){
+                                          val photodb=HashMap<String,Any>()
+                                          photodb["photourl"] =myListuri.toList()
+                                          photodb["progress"]="70"
+                                          mFirebaseFirestore.collection("/user/facilities/homes")
+                                                  .document(task.result.last().id)
+                                                  .set( photodb, SetOptions.merge())
+                                                  .addOnFailureListener { failure->
+
+                                                  }.addOnSuccessListener {
+
+
+                                                  }
+                                      }
+                                  }
+                              }
+                              "hostel"->{
+
+                                  val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hostels")
+                                  myCollectionReference.get().addOnCompleteListener {task ->
+                                      if (task.isSuccessful){
+                                          val photodb=HashMap<String,Any>()
+                                          photodb["photourl"] =myListuri.toList()
+                                          mFirebaseFirestore.collection("/user/facilities/hostels")
+                                                  .document(task.result.last().id)
+                                                  .set(photodb, SetOptions.merge())
+                                                  .addOnFailureListener { failure->
+
+                                                      Log.e("FailureCloud",failure.toString())
+                                                  }.addOnSuccessListener {
+
+                                                  }
+                                      }
+                                  }
+                              }
+                              "hotel"->{
+                                  val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hotels")
+                                  myCollectionReference.get().addOnCompleteListener {task ->
+                                      if (task.isSuccessful){
+                                          val photodb=HashMap<String,Any>()
+                                          photodb["photourl"] =myListuri.toList()
+                                          mFirebaseFirestore.collection("/user/facilities/hotels")
+                                                  .document(task.result.last().id)
+                                                  .set(photodb, SetOptions.merge())
+                                                  .addOnFailureListener { failure->
+
+                                                  }.addOnSuccessListener {
+
+                                                  }
+                                      }
+                                  }
+                              }
+                              "apartment"->{
+                                  val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/apartments")
+                                  myCollectionReference.get().addOnCompleteListener {task ->
+                                      if (task.isSuccessful){
+                                          val photodb=HashMap<String,Any>()
+                                          photodb["photourl"] =myListuri.toList()
+                                          mFirebaseFirestore.collection("/user/facilities/apartments")
+                                                  .document(task.result.last().id)
+                                                  .set(photodb, SetOptions.merge())
+                                                  .addOnFailureListener { failure->
+
+                                                  }.addOnSuccessListener {
+
+
+                                                  }
+                                      }
+                                  }
+                              }
+
+                          }
+
+
+
+                      }
+
+
+
+
+                    }
+
+
+                }
 
 
         }
-
-
-
-
-
 
 
 
@@ -172,6 +192,8 @@ class CompressAndUploadWorker:Worker() {
     companion object {
         private const val KEY_IMG_PATH = "IMG_PATH"
         private const val LOG_TAG = "UploadWorker"
+
+
     }
 
 

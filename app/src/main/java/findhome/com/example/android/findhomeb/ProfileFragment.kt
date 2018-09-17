@@ -36,16 +36,39 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Picasso.get().load(roompic).resize(800,800).centerCrop().into(app_bar_image)
 
+        profile_facility.setOnClickListener {
+
+            Navigation.findNavController(it).navigate(R.id.entryFormoneFragment,null)
+
+        }
 
         profile_account.setOnClickListener {
 
-            Toast.makeText(this.context,"It is Clicked",Toast.LENGTH_SHORT).show()
+            Navigation.findNavController(it).navigate(R.id.accountSettingsFragment,null)
+
+        }
+
+        profile_feedback.setOnClickListener {
 
 
-             Navigation.findNavController(it).navigate(R.id.entryFormoneFragment,null)
+            Navigation.findNavController(it).navigate(R.id.feedBackFragment, null)
 
+        }
+
+        profile_settings.setOnClickListener {
+
+            Navigation.findNavController(it).navigate(R.id.settingsFragment, null)
+        }
+
+         profile_notification.setOnClickListener {
+
+            Navigation.findNavController(it).navigate(R.id.notificationFragment, null)
+        }
+
+       profile_manange.setOnClickListener {
+
+            Navigation.findNavController(it).navigate(R.id.manageFragment, null)
         }
 
 

@@ -1,11 +1,13 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'androidx.navigation.safeargs'
 
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 28
@@ -25,6 +27,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    dataBinding{
+        enabled=true
     }
 }
 
@@ -55,21 +60,28 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:15.0.1'
     implementation 'com.google.android.gms:play-services-places:15.0.1'
     implementation 'ru.cleverpumpkin:crunchycalendar:1.0.0'
-
+    implementation 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
 
 
     //firebase
-    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.google.firebase:firebase-core:16.0.3'
     implementation 'com.google.firebase:firebase-firestore:17.1.0'
-    implementation 'com.google.firebase:firebase-storage:16.0.1'
+    implementation 'com.google.firebase:firebase-storage:16.0.2'
     implementation 'com.google.firebase:firebase-auth:16.0.3'
-    implementation 'com.google.firebase:firebase-messaging:17.3.0'
+    implementation 'com.google.firebase:firebase-messaging:17.3.1'
     implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
+
 
     implementation 'com.afollestad.material-dialogs:core:2.0.0-alpha05'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 
+
+    implementation  'com.alespero:expandable-cardview:0.8'
     //jetpack
     implementation "android.arch.work:work-runtime:1.0.0-alpha08"
+    implementation "android.arch.lifecycle:viewmodel:1.1.1"
+    implementation "android.arch.lifecycle:livedata:1.1.1"
 }
 apply plugin: 'com.google.gms.google-services'
 kotlin {

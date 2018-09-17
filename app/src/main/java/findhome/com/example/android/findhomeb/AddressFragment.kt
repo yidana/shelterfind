@@ -4,17 +4,14 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
+import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.graphics.drawable.VectorDrawable
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -22,7 +19,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.design.button.MaterialButton
 import android.support.v4.app.Fragment
-import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,26 +28,26 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
 import android.os.Build
-import android.os.Handler
-import android.os.ResultReceiver
 import android.provider.Settings
 import android.support.annotation.ColorInt
 import android.support.annotation.DrawableRes
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.text.Html
 import android.text.Spanned
 import android.util.Log
-import android.widget.AutoCompleteTextView
 import android.widget.LinearLayout
 import android.widget.Toast
+import android.widget.Toolbar
+import androidx.work.Constraints
+import androidx.work.Data
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.PendingResult
@@ -60,13 +56,19 @@ import com.google.android.gms.location.*
 import com.google.android.gms.location.places.*
 import com.google.android.gms.location.places.ui.PlaceAutocomplete
 import com.google.android.gms.maps.model.*
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.android.gms.tasks.Task
 import findhome.com.example.android.findhomeb.MyKitchen.Companion.TAG
+import findhome.com.example.android.findhomeb.workers.CompressAndUploadWorker
+import findhome.com.example.android.findhomeb.workers.LocationWorker
 import kotlinx.android.synthetic.main.fragment_address.view.*
 import kotlinx.android.synthetic.main.search_on_map_fragment.view.*
-
-class AddressFragment : Fragment(), OnMapReadyCallback,GoogleMap.OnMyLocationClickListener, GoogleApiClient.OnConnectionFailedListener,GoogleMap.OnMarkerDragListener {
+const val LOCATION_AD="converted_address"
+const val COUNTRY_NAME="country_name"
+const val CITY_NAME="city_name"
+const val PLACE_ADDRESS="place_address"
+class AddressFragment : Fragment(), OnMapReadyCallback,
+        GoogleMap.OnMyLocationClickListener,
+        GoogleApiClient.OnConnectionFailedListener,
+        GoogleMap.OnMarkerDragListener {
 
 
 
@@ -87,7 +89,6 @@ class AddressFragment : Fragment(), OnMapReadyCallback,GoogleMap.OnMyLocationCli
     private lateinit var  mPlaceDetailsText:String
     private lateinit var  mPlaceDetailsAttribution:String
     private lateinit var  mPlaceDatialsAddres:String
-    private  var  mcountry_record:String=""
     private var  mcity_record:String=""
 
 
@@ -156,7 +157,6 @@ private fun drawMarker(location:Location ) {
 
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this@AddressFragment.context!!)
-
 
 
     }
@@ -240,6 +240,17 @@ private fun drawMarker(location:Location ) {
 
 
 
+        val toolbar = view.findViewById<Toolbar>(R.id.my_toolbar) as Toolbar
+
+
+
+        toolbar.setNavigationOnClickListener {
+
+            Navigation.findNavController(it).navigate(R.id.amenitiesFragment, null)
+        }
+
+
+
         view.place_search_dialog_country_ET.setOnItemClickListener { parent, view, position, id ->
 
 
@@ -274,7 +285,7 @@ private fun drawMarker(location:Location ) {
                 // Display the third party attributions if set.
                 val thirdPartyAttribution: CharSequence? = it.attributions
                 if (thirdPartyAttribution == null) {
-                    mcountry_record=place.name.toString()
+                    mcountry_record =place.name.toString()
                 } else {
 
                 }
@@ -295,7 +306,7 @@ private fun drawMarker(location:Location ) {
 
 
         val typeFilter: AutocompleteFilter = AutocompleteFilter.Builder()
-                .setTypeFilter(Place.TYPE_COUNTRY)
+                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_REGIONS)
                 .build()
 
 
@@ -375,7 +386,7 @@ private fun drawMarker(location:Location ) {
 
 
         val typfiltercity:AutocompleteFilter= AutocompleteFilter.Builder()
-                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES).setCountry(mcountry_record)
+                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES)
                 .build()
 
 
@@ -514,9 +525,7 @@ private fun drawMarker(location:Location ) {
 
                 try {
 
-                    val list: List<Address> = gc.getFromLocationName(view.place_search_dialog_street_ET.text.toString().trim(), 5)
-
-                    if (list.isEmpty() || list.size<0){
+                    if (view.place_search_dialog_street_ET.text.isEmpty()){
 
                         Snackbar.make(view,
                                 "Couldn't find location. Make sure search result is entered correctly",
@@ -525,27 +534,62 @@ private fun drawMarker(location:Location ) {
 
 
 
-
-                        val mlocation: Address = list[0]
-
-                        val latitude = mlocation.latitude
-                        val longitude = mlocation.longitude
+                        val myConstraints = Constraints.Builder()
+                                .setRequiredNetworkType(NetworkType.CONNECTED)
+                                .build()
 
 
-                        val gps  =LatLng(latitude,longitude)
+                        val builder = Data.Builder()
+                        builder.putString(PLACE_ADDRESS,view.place_search_dialog_street_ET.text.toString().trim() )
 
-                        val mymarker: Marker = mMap.addMarker(MarkerOptions()
-                                .position(gps).title("Drag to your place if not properly located"))
-                        mymarker.showInfoWindow()
-
-                        mymarker.isDraggable=true
-
-
-
-                        mymarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_icon))
+                        val work: OneTimeWorkRequest =
+                                OneTimeWorkRequest.Builder(LocationWorker::class.java)
+                                        .setInputData(builder.build())
+                                        .setConstraints(myConstraints)
+                                        .build()
+                        WorkManager.getInstance().enqueue(work)
 
 
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(gps, 18f))
+                        WorkManager.getInstance().getStatusById(work.id)
+                                .observe(this, Observer { workStatus ->
+
+                                    val isWorkActive = !workStatus?.state!!.isFinished
+
+                                    if (isWorkActive){
+
+                                    val myLatlong= workStatus.outputData.getDoubleArray(LOCATION_AD)
+
+                                        val lat=myLatlong!![0]
+                                        val long=myLatlong[1]
+
+
+                                    val myCountry=workStatus.outputData.getString(COUNTRY_NAME)
+                                    val myCity=workStatus.outputData.getString(CITY_NAME)
+
+
+                                        val gps  =LatLng(lat,long)
+
+                                        val mymarker: Marker = mMap.addMarker(MarkerOptions()
+                                                .position(gps).title("Drag to your place if not properly located"))
+                                        mymarker.showInfoWindow()
+
+                                        mymarker.isDraggable=true
+
+
+
+                                        mymarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_icon))
+
+
+                                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(gps, 18f))
+
+
+
+                                    }
+
+
+                                })
+
+
 
 
 
@@ -563,7 +607,7 @@ private fun drawMarker(location:Location ) {
             }else{
 
                 Snackbar.make(view,
-                        "Fill out the form to continue",
+                        "Fill out the search form to continue",
                         Snackbar.LENGTH_LONG).show()
             }
 
@@ -625,6 +669,8 @@ private fun drawMarker(location:Location ) {
 
     override fun onPause() {
         mMapView.onPause()
+        mGoogleApiClient.stopAutoManage(this.activity!!)
+        mGoogleApiClient.disconnect()
         super.onPause()
     }
 
@@ -641,9 +687,6 @@ private fun drawMarker(location:Location ) {
 
 
 
-
-
-    // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
@@ -669,6 +712,8 @@ private fun drawMarker(location:Location ) {
         @JvmStatic
         fun newInstance() =
                 AddressFragment()
+
+         var mcountry_record:String=""
 
     }
 

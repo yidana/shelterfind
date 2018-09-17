@@ -16,6 +16,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import findhome.com.example.android.findhomeb.R.drawable.image2
 import findhome.com.example.android.findhomeb.R.drawable.image_1
 import findhome.com.example.android.findhomeb.R.layout.fragment_places
+import findhome.com.example.android.findhomeb.adaptors.PlacesRecyclerViewAdaptor
 
 import kotlinx.android.synthetic.main.fragment_places.*
 

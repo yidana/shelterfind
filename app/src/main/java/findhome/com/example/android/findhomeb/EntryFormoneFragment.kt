@@ -1,5 +1,6 @@
 package findhome.com.example.android.findhomeb
 
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
@@ -9,16 +10,21 @@ import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.RadioGroup
 import androidx.navigation.Navigation
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import findhome.com.example.android.findhomeb.viewmodel.HomeViewModel
+import kotlinx.android.synthetic.main.fragment_account_settings.*
+import kotlinx.android.synthetic.main.fragment_entry_formone.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
@@ -30,9 +36,16 @@ class EntryFormoneFragment : Fragment() {
 
     val preference_file_key="MYDESTINATION"
     val myKitchen:MyKitchen=MyKitchen()
+    lateinit var mFirebaseFirestore: FirebaseFirestore
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mFirebaseFirestore= FirebaseFirestore.getInstance()
+
+
+
 
     }
 
@@ -44,6 +57,16 @@ class EntryFormoneFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+
+        val toolbar = view.findViewById<android.widget.Toolbar>(R.id.my_toolbar) as android.widget.Toolbar
+
+
+
+          toolbar.setNavigationOnClickListener {
+                      Navigation.findNavController(it).navigate(R.id.profileFragment, null)
+                }
 
 
 
@@ -74,7 +97,9 @@ class EntryFormoneFragment : Fragment() {
 
             }else{
 
-
+                FirebaseAuth.AuthStateListener {firebaseAuth ->
+                    myuserID=firebaseAuth.uid!!
+                }
                 when (radioGroup?.checkedRadioButtonId) {
 
                     R.id.facility_hostel -> {
@@ -88,7 +113,37 @@ class EntryFormoneFragment : Fragment() {
 
 
 
-                        Navigation.findNavController(it).navigate(R.id.hostelRoomTypeFragment, null)
+
+
+
+
+                        val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hostels")
+                        myCollectionReference.get().addOnCompleteListener {task ->
+
+                            if (task.isSuccessful){
+
+                                val objdb=HashMap<String,Any?>()
+                                objdb["type"]="hostels"
+                                objdb["userID"]=myuserID
+                                objdb["progress"]="1"
+                                mFirebaseFirestore.collection("/user/facilities/hostels")
+                                        .document(task.result.last().id)
+                                        .set(objdb, SetOptions.merge())
+                                        .addOnSuccessListener {succes->
+
+                                            Navigation.findNavController(it).navigate(R.id.hostelRoomTypeFragment, null)
+                                        }.addOnFailureListener { failure->
+                                            Log.e("FailureCloud",failure.toString())
+                                        }
+
+
+                            }
+                        }
+
+
+
+
+
                     }
 
                     R.id.facility_house -> {
@@ -101,8 +156,30 @@ class EntryFormoneFragment : Fragment() {
                             apply()
                         }
 
+                        val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes")
+                        myCollectionReference.get().addOnCompleteListener {task ->
 
-                        Navigation.findNavController(it).navigate(R.id.generalRoomTypeFragment, null)
+                            if (task.isSuccessful){
+
+                                val objdb=HashMap<String,Any?>()
+                                objdb["type"]="homes"
+                                objdb["userID"]=myuserID
+                                objdb["progress"]="1"
+                                mFirebaseFirestore.collection("/user/facilities/homes")
+                                        .document(task.result.last().id)
+                                        .set(objdb, SetOptions.merge())
+                                        .addOnSuccessListener {succes->
+
+                                            Navigation.findNavController(it).navigate(R.id.generalRoomTypeFragment, null)
+
+                                        }.addOnFailureListener { failure->
+                                            Log.e("FailureCloud",failure.toString())
+                                        }
+
+
+                            }
+                        }
+
                     }
 
                     R.id.facility_apartment -> {
@@ -114,7 +191,35 @@ class EntryFormoneFragment : Fragment() {
                             apply()
                         }
 
-                        Navigation.findNavController(it).navigate(R.id.generalRoomTypeFragment, null)
+
+
+                        val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/apartments")
+                        myCollectionReference.get().addOnCompleteListener {task ->
+
+                            if (task.isSuccessful){
+
+                                val objdb=HashMap<String,Any?>()
+                                objdb["type"]="apartments"
+                                objdb["userID"]=myuserID
+                                objdb["progress"]="1"
+                                mFirebaseFirestore.collection("/user/facilities/apartments")
+                                        .document(task.result.last().id)
+                                        .set(objdb, SetOptions.merge())
+                                        .addOnSuccessListener {succes->
+
+                                            Navigation.findNavController(it).navigate(R.id.generalRoomTypeFragment, null)
+
+                                        }.addOnFailureListener { failure->
+                                            Log.e("FailureCloud",failure.toString())
+                                        }
+
+
+                            }
+                        }
+
+
+
+
                     }
 
                     R.id.facility_hotel -> {
@@ -127,7 +232,34 @@ class EntryFormoneFragment : Fragment() {
                         }
 
 
-                        Navigation.findNavController(it).navigate(R.id.generalRoomTypeFragment, null)
+
+                        val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hotels")
+                        myCollectionReference.get().addOnCompleteListener {task ->
+
+                            if (task.isSuccessful){
+
+                                val objdb=HashMap<String,Any?>()
+                                objdb["type"]="hotels"
+                                objdb["userID"]=myuserID
+                                objdb["progress"]="1"
+                                mFirebaseFirestore.collection("/user/facilities/hotels")
+                                        .document(task.result.last().id)
+                                        .set(objdb, SetOptions.merge())
+                                        .addOnSuccessListener {succes->
+
+                                            Navigation.findNavController(it).navigate(R.id.generalRoomTypeFragment, null)
+
+                                        }.addOnFailureListener { failure->
+                                            Log.e("FailureCloud",failure.toString())
+                                        }
+
+
+                            }
+                        }
+
+
+
+
                     }
 
 
@@ -165,5 +297,7 @@ class EntryFormoneFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance() =EntryFormoneFragment()
+
+        var myuserID=""
     }
 }

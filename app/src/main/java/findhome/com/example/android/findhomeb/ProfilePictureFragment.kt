@@ -15,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.Toolbar
 import androidx.navigation.Navigation
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.firebase.firestore.FirebaseFirestore
@@ -22,7 +23,7 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
-import findhome.com.example.android.findhomeb.GridImageAdaptor.Companion.imgList
+import findhome.com.example.android.findhomeb.adaptors.GridImageAdaptor.Companion.imgList
 import kotlinx.android.synthetic.main.fragment_profile_picture.*
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -60,7 +61,12 @@ class ProfilePictureFragment : Fragment() {
 
         val uploadPhoto:MaterialButton=view.findViewById<MaterialButton>(R.id.addphoto)
 
+        val toolbar = view.findViewById<Toolbar>(R.id.my_toolbar) as Toolbar
 
+        toolbar.setNavigationOnClickListener {
+
+            Navigation.findNavController(it).navigate(R.id.overviewFragment, null)
+        }
 
         uploadPhoto.setOnClickListener {
 
@@ -124,7 +130,7 @@ class ProfilePictureFragment : Fragment() {
 
                     imageuri=data.data!!
 
-                    Picasso.get().load(imageuri).resize(2800,2800).centerCrop().into(profile_pic)
+                    Picasso.get().load(imageuri).fit().into(profile_pic)
 
                 }catch (e:IOException){
                     e.printStackTrace()
@@ -157,94 +163,7 @@ class ProfilePictureFragment : Fragment() {
 
         mImageRef.putBytes(compressedImg).addOnProgressListener {
 
-        }.addOnSuccessListener {taskSnapshot ->
-
-
-            val prefs= activity?.getPreferences(Context.MODE_PRIVATE)
-
-
-            val destin = prefs!!.getString(preference_file_key,"none")
-
-
-            when(destin!!.toString()){
-                "home"->{
-                    val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes")
-                    myCollectionReference.get().addOnCompleteListener {task ->
-                        if (task.isSuccessful){
-                            val photosdb=HashMap<String,Any>()
-                            photosdb["captionurl"]=mImageRef.downloadUrl.toString()
-                            mFirebaseFirestore.collection("/user/facilities/homes")
-                                    .document(task.result.last().id)
-                                    .set( photosdb, SetOptions.merge())
-                                    .addOnFailureListener { failure->
-
-                                    }.addOnSuccessListener {
-
-                                    }
-                        }
-                    }
-                }
-                "hostel"->{
-
-                    val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hostels")
-                    myCollectionReference.get().addOnCompleteListener {task ->
-                        if (task.isSuccessful){
-                            val photosdb=HashMap<String,Any>()
-                            photosdb["captionurl"] =mImageRef.downloadUrl.toString()
-                            mFirebaseFirestore.collection("/user/facilities/hostels")
-                                    .document(task.result.last().id)
-                                    .set(photosdb, SetOptions.merge())
-                                    .addOnFailureListener { failure->
-
-                                        Log.e("FailureCloud",failure.toString())
-                                    }.addOnSuccessListener {
-
-                                    }
-                        }
-                    }
-                }
-                "hotel"->{
-                    val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hotels")
-                    myCollectionReference.get().addOnCompleteListener {task ->
-                        if (task.isSuccessful){
-                            val photosdb=HashMap<String,Any>()
-                            photosdb["captionurl"] =mImageRef.downloadUrl.toString()
-                            mFirebaseFirestore.collection("/user/facilities/hotels")
-                                    .document(task.result.last().id)
-                                    .set(photosdb, SetOptions.merge())
-                                    .addOnFailureListener { failure->
-
-                                    }.addOnSuccessListener {
-
-                                    }
-                        }
-                    }
-                }
-                "apartment"->{
-                    val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/apartments")
-                    myCollectionReference.get().addOnCompleteListener {task ->
-                        if (task.isSuccessful){
-                            val photosdb=HashMap<String,Any>()
-                            photosdb["captionurl"] =mImageRef.downloadUrl.toString()
-                            mFirebaseFirestore.collection("/user/facilities/apartments")
-                                    .document(task.result.last().id)
-                                    .set(photosdb, SetOptions.merge())
-                                    .addOnFailureListener { failure->
-
-                                    }.addOnSuccessListener {
-
-                                    }
-                        }
-                    }
-                }
-
-            }
-
-
-            Navigation.findNavController(this@ProfilePictureFragment.view!!)
-                    .navigate(R.id.addPlacePicturesFragment, null)
-        }.addOnProgressListener { taskSnapshot ->
-
+        } .addOnProgressListener { taskSnapshot ->
             val sessionUri=  taskSnapshot.uploadSessionUri
 
             val progress = 100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount
@@ -255,7 +174,121 @@ class ProfilePictureFragment : Fragment() {
             }
 
         }
+                .addOnCompleteListener {taskSnapshot->
 
+
+                    val prefs= activity?.getPreferences(Context.MODE_PRIVATE)
+
+
+                    val destin = prefs!!.getString(preference_file_key,"none")
+
+                    mImageRef.downloadUrl.addOnSuccessListener { uri ->
+
+
+                        val duri=uri.toString()
+
+                        Log.v("DURIN",duri)
+
+                        when(destin!!.toString()){
+                            "house"->{
+                                val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes")
+                                myCollectionReference.get().addOnCompleteListener {task ->
+                                    if (task.isSuccessful){
+                                        Log.v("pVGF","Good")
+                                        val photosdb=HashMap<String,Any>()
+                                        photosdb["captionurl"]= duri
+                                        photosdb["progress"]="60"
+                                        mFirebaseFirestore.collection("/user/facilities/homes")
+                                                .document(task.result.last().id)
+                                                .set( photosdb, SetOptions.merge())
+                                                .addOnFailureListener { failure->
+                                                    Log.v("STURI", "FAIl")
+                                                }.addOnSuccessListener {
+                                                    Log.v("STURI", "SUCCESS")
+
+                                                    dialog.dismiss()
+
+                                                    Navigation.findNavController(this@ProfilePictureFragment.view!!)
+                                                            .navigate(R.id.addPlacePicturesFragment, null)
+                                                }
+                                    }
+                                }
+                            }
+                            "hostel"->{
+
+                                val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hostels")
+                                myCollectionReference.get().addOnCompleteListener {task ->
+                                    if (task.isSuccessful){
+                                        val photosdb=HashMap<String,Any>()
+                                        photosdb["captionurl"] =duri
+                                        photosdb["progress"]="60"
+                                        mFirebaseFirestore.collection("/user/facilities/hostels")
+                                                .document(task.result.last().id)
+                                                .set(photosdb, SetOptions.merge())
+                                                .addOnFailureListener { failure->
+
+                                                    Log.e("FailureCloud",failure.toString())
+                                                }.addOnSuccessListener {
+
+                                                    dialog.dismiss()
+
+                                                    Navigation.findNavController(this@ProfilePictureFragment.view!!)
+                                                            .navigate(R.id.addPlacePicturesFragment, null)
+                                                }
+                                    }
+                                }
+                            }
+                            "hotel"->{
+                                val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hotels")
+                                myCollectionReference.get().addOnCompleteListener {task ->
+                                    if (task.isSuccessful){
+                                        val photosdb=HashMap<String,Any>()
+                                        photosdb["captionurl"] =duri
+                                        photosdb["progress"]="60"
+                                        mFirebaseFirestore.collection("/user/facilities/hotels")
+                                                .document(task.result.last().id)
+                                                .set(photosdb, SetOptions.merge())
+                                                .addOnFailureListener { failure->
+
+                                                }.addOnSuccessListener {
+                                                    dialog.dismiss()
+
+                                                    Navigation.findNavController(this@ProfilePictureFragment.view!!)
+                                                            .navigate(R.id.addPlacePicturesFragment, null)
+                                                }
+                                    }
+                                }
+                            }
+                            "apartment"->{
+                                val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/apartments")
+                                myCollectionReference.get().addOnCompleteListener {task ->
+                                    if (task.isSuccessful){
+                                        val photosdb=HashMap<String,Any>()
+                                        photosdb["captionurl"] = duri
+                                        photosdb["progress"]="60"
+                                        mFirebaseFirestore.collection("/user/facilities/apartments")
+                                                .document(task.result.last().id)
+                                                .set(photosdb, SetOptions.merge())
+                                                .addOnFailureListener { failure->
+
+                                                }.addOnSuccessListener {
+                                                    dialog.dismiss()
+
+                                                    Navigation.findNavController(this@ProfilePictureFragment.view!!)
+                                                            .navigate(R.id.addPlacePicturesFragment, null)
+                                                }
+                                    }
+                                }
+                            }
+
+                        }
+
+
+                    }
+
+
+
+                }
 
 
     }

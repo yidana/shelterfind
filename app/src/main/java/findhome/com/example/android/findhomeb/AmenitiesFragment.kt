@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.navigation.Navigation
+import com.afollestad.materialdialogs.MaterialDialog
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import findhome.com.example.android.findhomeb.AmenitiesListAdaptor.Companion.myAmenities
@@ -35,7 +36,7 @@ class AmenitiesFragment : Fragment() {
 
 
         mFirebaseFirestore= FirebaseFirestore.getInstance()
-
+        myAmenities.clear()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +48,17 @@ class AmenitiesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+
+        val toolbar = view.findViewById<Toolbar>(R.id.my_toolbar) as Toolbar
+
+
+
+        toolbar.setNavigationOnClickListener {
+
+            Navigation.findNavController(it).navigate(R.id.addPlacePicturesFragment, null)
+        }
 
 
         val progressBar: ProgressBar?=view.findViewById<ProgressBar>(R.id.progressBar)
@@ -76,7 +88,6 @@ class AmenitiesFragment : Fragment() {
         listmyData?.add("Football Pitch")
         listmyData?.add("Disability Friendly")
         listmyData?.add("Gass")
-        listmyData?.add("Gym")
         listmyData?.add("Parking Space")
         listmyData?.add("Essentials(towels,bed sheets,toilet papers, pillows)")
         listmyData?.add("24 Hours Security")
@@ -95,7 +106,7 @@ class AmenitiesFragment : Fragment() {
 
         val buttonnext: FloatingActionButton?= view.findViewById(R.id.button_next)
 
-        buttonnext?.setOnClickListener{
+        buttonnext?.setOnClickListener{ button ->
 
 
             if (myAmenities.isEmpty()){
@@ -104,7 +115,11 @@ class AmenitiesFragment : Fragment() {
                         "Select your Amenities to continue",
                         Snackbar.LENGTH_LONG).show()
             }else{
+                val dialog = MaterialDialog(this@AmenitiesFragment.context!!)
+                        .title(R.string.room_type_title)
+                        .message(R.string.roomtype_progress_report)
 
+                dialog.show()
 
                 val prefs= activity?.getPreferences(Context.MODE_PRIVATE)
 
@@ -112,21 +127,23 @@ class AmenitiesFragment : Fragment() {
                 val destin = prefs!!.getString(preference_file_key,"none")
 
 
-
                 when(destin!!.toString()){
-                    "home"->{
+                    "house"->{
                         val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes")
                         myCollectionReference.get().addOnCompleteListener {task ->
                             if (task.isSuccessful){
-                                val photosdb=HashMap<String,Any>()
-                                photosdb["photourl"] =myAmenities
+                                val amenitiesdb=HashMap<String,Any>()
+                                amenitiesdb["amenities"] =myAmenities
+                                amenitiesdb["progress"]="80"
                                 mFirebaseFirestore.collection("/user/facilities/homes")
                                         .document(task.result.last().id)
-                                        .set( photosdb, SetOptions.merge())
+                                        .set( amenitiesdb, SetOptions.merge())
                                         .addOnFailureListener { failure->
-
+                                        dialog.dismiss()
                                         }.addOnSuccessListener {
-
+                                            myAmenities.clear()
+                                            dialog.dismiss()
+                                            Navigation.findNavController(view).navigate(R.id.addressFragment, null)
                                         }
                             }
                         }
@@ -136,16 +153,18 @@ class AmenitiesFragment : Fragment() {
                         val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hostels")
                         myCollectionReference.get().addOnCompleteListener {task ->
                             if (task.isSuccessful){
-                                val photosdb=HashMap<String,Any>()
-                                photosdb["photourl"] =myAmenities
+                                val amenitiesdb=HashMap<String,Any>()
+                                amenitiesdb["amenities"] =myAmenities
                                 mFirebaseFirestore.collection("/user/facilities/hostels")
                                         .document(task.result.last().id)
-                                        .set(photosdb, SetOptions.merge())
+                                        .set(amenitiesdb, SetOptions.merge())
                                         .addOnFailureListener { failure->
 
                                             Log.e("FailureCloud",failure.toString())
                                         }.addOnSuccessListener {
-
+                                            myAmenities.clear()
+                                            dialog.dismiss()
+                                            Navigation.findNavController(view).navigate(R.id.addressFragment, null)
                                         }
                             }
                         }
@@ -154,15 +173,17 @@ class AmenitiesFragment : Fragment() {
                         val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hotels")
                         myCollectionReference.get().addOnCompleteListener {task ->
                             if (task.isSuccessful){
-                                val photosdb=HashMap<String,Any>()
-                                photosdb["photourl"] =myAmenities
+                                val amenitiesdb=HashMap<String,Any>()
+                                amenitiesdb["amenities"] =myAmenities
                                 mFirebaseFirestore.collection("/user/facilities/hotels")
                                         .document(task.result.last().id)
-                                        .set(photosdb, SetOptions.merge())
+                                        .set(amenitiesdb, SetOptions.merge())
                                         .addOnFailureListener { failure->
 
                                         }.addOnSuccessListener {
-
+                                            myAmenities.clear()
+                                            dialog.dismiss()
+                                            Navigation.findNavController(view).navigate(R.id.addressFragment, null)
                                         }
                             }
                         }
@@ -171,15 +192,17 @@ class AmenitiesFragment : Fragment() {
                         val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/apartments")
                         myCollectionReference.get().addOnCompleteListener {task ->
                             if (task.isSuccessful){
-                                val photosdb=HashMap<String,Any>()
-                                photosdb["photourl"] =myAmenities
+                                val amenitiesdb=HashMap<String,Any>()
+                                amenitiesdb["amenities"] =myAmenities
                                 mFirebaseFirestore.collection("/user/facilities/apartments")
                                         .document(task.result.last().id)
-                                        .set(photosdb, SetOptions.merge())
+                                        .set(amenitiesdb, SetOptions.merge())
                                         .addOnFailureListener { failure->
 
                                         }.addOnSuccessListener {
-
+                                            myAmenities.clear()
+                                            dialog.dismiss()
+                                            Navigation.findNavController(view).navigate(R.id.addressFragment, null)
                                         }
                             }
                         }
@@ -189,7 +212,7 @@ class AmenitiesFragment : Fragment() {
 
 
 
-                Navigation.findNavController(it).navigate(R.id.addressFragment, null)
+               
             }
 
 

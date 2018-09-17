@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".ManageFragment">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        app:layout_collapseMode="pin"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:background="@android:color/transparent"
+        android:elevation="0dp"
+        app:navigationIcon="@drawable/ic_arrow_back_black_24dp"/>
+
+<android.support.v7.widget.RecyclerView
+    android:layout_marginTop="60dp"
+    android:id="@+id/recycle_manage_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="6dp"
+        android:id="@+id/add_facility_fab"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/white"
+        app:fabSize="normal"
+        app:maxImageSize="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="20dp"
+        android:layout_gravity="bottom|right"/>
+
+
+</FrameLayout>

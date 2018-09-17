@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/backgrounds/scenic[12]" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="Flint Hostel"
+        android:textColor="@color/blacky"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.063"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/edit"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/button2"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="56dp"
+        android:text="@string/delete_image"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+
+    <LinearLayout
+        android:id="@+id/edit_ll"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            android:elevation="0dp"
+            app:layout_collapseMode="pin"
+            app:navigationIcon="@drawable/ic_close"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+
+
+        <ScrollView
+            android:id="@+id/mscroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Overview"
+                        android:textColor="@color/blacky"
+                        android:textSize="15sp" />
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/inputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:errorEnabled="true"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginEnd="15dp" >
+
+
+                        <EditText
+                            android:id="@+id/title"
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-smallcaps"
+                            android:hint="@string/write_a_title"
+                            android:inputType="text"
+                            android:textColor="@color/blacky"
+                            android:textSize="15sp"
+                            android:textColorHint="@color/blacky"
+                            />
+
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/inputLayout1"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        app:counterMaxLength="140"
+                        app:errorEnabled="true">
+
+
+                        <EditText
+                            android:id="@+id/description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-smallcaps"
+                            android:hint="@string/write_a_short_description_of_your_place"
+                            android:inputType="textMultiLine"
+                            android:lines="8"
+                            android:maxLines="10"
+                            android:textSize="15sp"
+                            android:minLines="6"
+                            android:scrollbars="vertical"
+                            android:textColor="@color/blacky"
+                            android:textColorHint="@color/blacky" />
+
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/inputLayout2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        app:errorEnabled="true" >
+
+                        <EditText
+                            android:id="@+id/phonenumber"
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:hint="@string/enter_phone_number"
+                            android:inputType="phone"
+                            android:textSize="15sp"
+                            android:textColorHint="@color/blacky" />
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="@string/Save"
+                        android:textColor="#2646d7"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
+
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Roomtype"
+                        android:textColor="@color/blacky"
+                        android:textSize="15sp" />
+
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:layout_editor_absoluteX="8dp"
+                        tools:layout_editor_absoluteY="211dp">
+
+                        <TableRow >
+
+
+                            <ToggleButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/toggke_bck"
+                                android:elevation="4dp"
+                                android:id="@+id/single_bed"
+                                android:textOff="@string/single_bed"
+                                android:textOn="@string/single_bed"
+                                android:textColor="@color/blacky"
+                                tools:layout_editor_absoluteX="10dp"
+                                tools:layout_editor_absoluteY="203dp" />
+
+                            <ToggleButton
+                                android:id="@+id/female_dorm"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/toggke_bck"
+                                android:elevation="4dp"
+                                android:textOff="@string/female_dorm"
+                                android:textOn="@string/female_dorm"
+                                android:textColor="@color/blacky"
+                                tools:layout_editor_absoluteX="217dp"
+                                tools:layout_editor_absoluteY="396dp" />
+
+                            <ToggleButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/toggke_bck"
+                                android:elevation="4dp"
+                                android:id="@+id/mixed_dorm"
+                                android:textOff="@string/mixed_dorm"
+                                android:textOn="@string/mixed_dorm"
+                                android:textColor="@color/blacky"
+                                tools:layout_editor_absoluteX="8dp"
+                                tools:layout_editor_absoluteY="309dp" />
+
+                        </TableRow>
+
+
+                        <TableRow>
+
+    <ToggleButton
+        android:id="@+id/four_beds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/toggke_bck"
+        android:elevation="4dp"
+        android:textOff="@string/four_beds"
+        android:textOn="@string/four_beds"
+        android:textColor="@color/blacky"
+        tools:layout_editor_absoluteX="288dp"
+        tools:layout_editor_absoluteY="203dp" />
+
+
+    <ToggleButton
+        android:id="@+id/double_bed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/toggke_bck"
+        android:elevation="4dp"
+        android:textOff="@string/double_bed"
+        android:textOn="@string/double_bed"
+        android:textColor="@color/blacky"
+        tools:layout_editor_absoluteX="153dp"
+        tools:layout_editor_absoluteY="203dp" />
+
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/toggke_bck"
+        android:elevation="4dp"
+        android:id="@+id/male_dorm"
+        android:textOff="@string/male_dorm"
+        android:textOn="@string/male_dorm"
+        android:textColor="@color/blacky"
+        tools:layout_editor_absoluteX="280dp"
+        tools:layout_editor_absoluteY="309dp" />
+
+
+</TableRow>
+
+                        <TableRow>
+
+
+                            <ToggleButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/toggke_bck"
+                                android:elevation="4dp"
+                                android:textOff="@string/family_room"
+                                android:textOn="@string/family_room"
+                                android:textColor="@color/blacky"
+                                android:id="@+id/family_room"
+                                tools:layout_editor_absoluteX="82dp"
+                                tools:layout_editor_absoluteY="396dp" />
+
+
+                            <ToggleButton
+                                android:id="@+id/three_beds"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/toggke_bck"
+                                android:elevation="4dp"
+                                android:textOff="@string/three_beds"
+                                android:textOn="@string/three_beds"
+                                android:textColor="@color/blacky"
+                                tools:layout_editor_absoluteX="148dp"
+                                tools:layout_editor_absoluteY="309dp" />
+
+
+                        </TableRow>
+
+
+
+
+                    </TableLayout>
+
+
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="@string/Save"
+                        android:textColor="#2646d7"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Price"
+                        android:textColor="@color/blacky"
+                        android:textSize="15sp" />
+
+
+                    <LinearLayout
+                        android:id="@+id/hostel_price_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="10dp">
+
+                        <include android:id="@+id/for_edit_hotel_price" layout="@layout/edit_hotel_price"/>
+
+                        <include android:id="@+id/for_edit_apartment_price" layout="@layout/edit_apartment_home"/>
+                        <android.support.v7.widget.AppCompatButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:text="@string/Save"
+                            android:textColor="#2646d7"
+                            style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/amenities"
+                        android:textColor="@color/blacky"
+                        android:textSize="15sp" />
+
+                    <ListView
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/edit_amenities"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Caption Picture"
+                        android:textColor="@color/blacky"
+                        android:textSize="15sp" />
+
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/upload"
+                        android:textColor="@color/colorAccent"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+                    <ImageView
+                        android:id="@+id/edit_caption"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:scaleType="centerCrop"
+                        tools:srcCompat="@tools:sample/backgrounds/scenic[11]" />
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="@string/Save"
+                        android:textColor="#2646d7"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Place Pictures"
+                        android:textColor="@color/blacky"
+                        android:textSize="15sp" />
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/add_upload"
+                        android:textColor="@color/colorAccent"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
+                    <GridView
+                        android:id="@+id/grid_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:columnWidth="150dp"
+                        android:horizontalSpacing="15dp"
+                        android:numColumns="auto_fit"
+                        android:orientation="horizontal"
+                        android:verticalSpacing="15dp" />
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="@string/Save"
+                        android:textColor="#2646d7"
+                        style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+
+
+
+
+        </ScrollView>
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+</android.support.constraint.ConstraintLayout>

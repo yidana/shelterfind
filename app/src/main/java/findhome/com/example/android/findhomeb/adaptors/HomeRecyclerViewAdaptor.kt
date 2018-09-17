@@ -1,25 +1,33 @@
-package findhome.com.example.android.findhomeb
+package findhome.com.example.android.findhomeb.adaptors
+import android.net.Uri
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.squareup.picasso.Picasso
+import findhome.com.example.android.findhomeb.R
 import findhome.com.example.android.findhomeb.R.layout.item_card_view
+import findhome.com.example.android.findhomeb.model.CloudData
 import kotlinx.android.synthetic.main.item_card_view.view.*
 
-  class HomeRecyclerViewAdaptor(data: ArrayList<Data>, listener: OnItemClickListener):
+
+
+  class HomeRecyclerViewAdaptor(data: ArrayList<CloudData>, listener: OnItemClickListener):
         RecyclerView.Adapter<HomeRecyclerViewAdaptor.RecyclerViewHolder>() {
 
 
-    private var listData: List<Data> = data
+    private var listData: List<CloudData> = data
 
     private var listenerData: OnItemClickListener = listener
 
 
     interface OnItemClickListener {
-        fun onItemClick(data: Data)
+        fun onItemClick(data: CloudData)
     }
+
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
 
@@ -27,23 +35,33 @@ import kotlinx.android.synthetic.main.item_card_view.view.*
 
     }
 
+
+
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
 
-        var currentData: Data = listData[position]
-        Log.v("LIST SIZE", position.toString() )
-
-        var nameData = currentData.name
-        var ratingData = currentData.rating
-        var locationData = currentData.location
-        var imageData = currentData.image
+        val currentData: CloudData = listData[position]
 
 
-        holder.mName.text = nameData
-        Picasso.get().load(imageData).resize(300,300).centerCrop().into(holder.mImage)
+
+
+        val nameData = currentData.overview
+
+        val moverview=nameData as HashMap<String,String>
+
+        val ratingData = 5.0f
+        val locationData = "Hello"
+        val imageData = Uri.parse(currentData.captionurl)
+        Log.v("GUT",imageData.toString())
+
+        holder.mName.text = moverview["title"]
+        Picasso.get().load(imageData) .fit().into(holder.mImage)
         holder.mLocation.text = locationData
         holder.mRating.rating = ratingData
 
         holder.bind(currentData, listenerData)
+
+
+
 
 
     }
@@ -54,6 +72,11 @@ import kotlinx.android.synthetic.main.item_card_view.view.*
         return listData.size
     }
 
+
+
+
+
+
     class RecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var mName = itemView.card_name!!
@@ -62,12 +85,16 @@ import kotlinx.android.synthetic.main.item_card_view.view.*
         var mImage = itemView.card_imageview!!
 
 
-        fun bind(data: Data, listener: OnItemClickListener) {
-            itemView.setOnClickListener {
+        fun bind(data: CloudData, listener: OnItemClickListener) {
+
+            itemView.view_btn.setOnClickListener {
                 listener.onItemClick(data)
+
+            }
+
             }
         }
 
 
-    }
+
 }

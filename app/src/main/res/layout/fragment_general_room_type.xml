@@ -14,6 +14,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
+        app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light" />
 
@@ -171,10 +172,7 @@
                 android:fontFamily="sans-serif-smallcaps"
                 android:scrollbarSize="30dp"
                 android:text="@string/balcony"
-                android:textColor="@color/blacky"
-                android:textSize="20sp"
-
-                android:thumbTint="@color/blacky" />
+                android:textSize="20sp" />
 
 
         </LinearLayout>
@@ -190,9 +188,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-smallcaps"
                 android:text="@string/main_hall"
-                android:textColor="@color/blacky"
                 android:textSize="20sp"
-                android:thumbTint="@color/blacky"
                 tools:layout_editor_absoluteX="129dp"
                 tools:layout_editor_absoluteY="459dp" />
 

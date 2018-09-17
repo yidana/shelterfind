@@ -1,19 +1,16 @@
-package findhome.com.example.android.findhomeb
+package findhome.com.example.android.findhomeb.adaptors
 
 import android.annotation.SuppressLint
-import android.content.ClipData
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.Toast
 import com.squareup.picasso.Picasso
+import findhome.com.example.android.findhomeb.R
 import kotlinx.android.synthetic.main.gridadaptorview.view.*
-import kotlinx.coroutines.experimental.launch
 
 
 class GridImageAdaptor(context: Context?) : BaseAdapter() {
@@ -25,8 +22,8 @@ class GridImageAdaptor(context: Context?) : BaseAdapter() {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
 
-        Log.v("YESO", imgList.toString())
-        val img=imgList[position]
+
+        val img= imgList[position]
 
         val inflator = mContext!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 

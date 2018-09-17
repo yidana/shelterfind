@@ -18,6 +18,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import kotlinx.android.synthetic.main.fragment_general_price.*
+import kotlinx.android.synthetic.main.fragment_general_price.view.*
 import kotlinx.android.synthetic.main.fragment_general_room_type.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
@@ -145,6 +146,16 @@ class GeneralPriceFragment : Fragment() {
 
 
 
+
+        val toolbar = view.findViewById<android.widget.Toolbar>(R.id.my_toolbar) as android.widget.Toolbar
+
+
+     toolbar.setNavigationOnClickListener {
+
+            Navigation.findNavController(it).navigate(R.id.placeAvailability, null)
+        }
+
+
         val progressBar: ProgressBar?=view.findViewById<ProgressBar>(R.id.progressBar)
 
 
@@ -192,6 +203,7 @@ class GeneralPriceFragment : Fragment() {
 
                                     val roompricedb=HashMap<String,Any>()
                                     roompricedb["roomtypeprice"] =objdb
+                                    roompricedb["progress"]="40"
                                     mFirebaseFirestore.collection("/user/facilities/homes")
                                             .document(task.result.last().id)
                                             .set(roompricedb, SetOptions.merge())
@@ -224,6 +236,7 @@ class GeneralPriceFragment : Fragment() {
 
                                     val roompricedb=HashMap<String,Any>()
                                     roompricedb["roomtypeprice"] = objdb
+                                    roompricedb["progress"]="40"
                                     mFirebaseFirestore.collection("/user/facilities/apartments")
                                             .document(task.result.last().id)
                                             .set(roompricedb, SetOptions.merge())

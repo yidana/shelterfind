@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.alespero.expandablecardview.ExpandableCardView
+        android:id="@+id/yearly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:title="Yearly"
+        app:inner_view="@layout/yearly_layout"
+        app:expandOnClick="true"
+        app:animationDuration="300"
+        app:startExpanded="false"
+        android:elevation="4dp"
+        android:layout_margin="15dp"/>
+
+
+
+    <com.alespero.expandablecardview.ExpandableCardView
+        android:id="@+id/monthly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:title="Monthly"
+        android:layout_margin="15dp"
+        app:inner_view="@layout/monthly_layout"
+        app:expandOnClick="true"
+        android:elevation="4dp"
+        app:animationDuration="300"
+        app:startExpanded="false"/>
+
+
+</LinearLayout>

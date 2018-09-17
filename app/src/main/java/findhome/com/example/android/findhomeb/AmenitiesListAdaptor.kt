@@ -30,13 +30,33 @@ class AmenitiesListAdaptor(context: Context?, amenityname: ArrayList<String>): B
 
         itemamenities.switch_amentities.text=item
 
+        if (myAmenities.isNotEmpty() ){
 
-        if(itemamenities.switch_amentities.isChecked){
+            myAmenities.map { myitem->
 
-            myAmenities.add(mamenities[position])
-        }else{
+             if(   myitem==itemamenities.switch_amentities.text ) itemamenities.switch_amentities.isChecked=true
 
-            if (!myAmenities[position].isEmpty())myAmenities.remove(mamenities[position])
+            }
+        }
+
+
+
+
+
+        itemamenities.switch_amentities.setOnCheckedChangeListener { buttonView, isChecked ->
+
+
+            if (isChecked){
+                myAmenities.add(mamenities[position])
+
+            }else{
+
+            }
+
+            if (!isChecked){
+                myAmenities.remove(mamenities[position])
+            }
+
         }
 
 
