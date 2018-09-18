@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toolbar
+import androidx.navigation.Navigation
 
 
 class NotificationFragment : Fragment() {
@@ -23,8 +25,19 @@ class NotificationFragment : Fragment() {
     }
 
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val toolbar = view.findViewById<Toolbar>(R.id.my_toolbar) as Toolbar
+
+        toolbar.setNavigationOnClickListener {
+
+            Navigation.findNavController(it).navigate(R.id.profileFragment, null)
+        }
 
 
+
+    }
 
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

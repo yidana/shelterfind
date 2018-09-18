@@ -204,5 +204,7 @@
     <string name="start">Start</string>
     <string name="manage">Manage</string>
     <string name="payments">Payments</string>
+    <string name="no_notifications_available">No Notifications available</string>
+    <string name="notifications_sent_wold_be_displayed_here">Notifications sent wold be displayed here</string>
 
 </resources>
