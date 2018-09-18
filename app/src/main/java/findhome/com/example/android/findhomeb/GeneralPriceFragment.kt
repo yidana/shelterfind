@@ -147,7 +147,7 @@ class GeneralPriceFragment : Fragment() {
 
 
 
-        val toolbar = view.findViewById<android.widget.Toolbar>(R.id.my_toolbar) as android.widget.Toolbar
+        val toolbar = view.findViewById<android.widget.Toolbar>(R.id.my_toolbar) as Toolbar
 
 
      toolbar.setNavigationOnClickListener {

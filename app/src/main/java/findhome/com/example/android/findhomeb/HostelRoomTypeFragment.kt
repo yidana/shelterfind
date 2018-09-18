@@ -15,6 +15,7 @@ import androidx.navigation.Navigation
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import android.support.v7.widget.Toolbar
 import kotlinx.android.synthetic.main.fragment_account_settings.*
 import kotlinx.android.synthetic.main.fragment_hostel_room_type.*
 
@@ -44,7 +45,7 @@ class HostelRoomTypeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val toolbar = view.findViewById<android.widget.Toolbar>(R.id.my_toolbar) as android.widget.Toolbar
+        val toolbar = view.findViewById<android.widget.Toolbar>(R.id.my_toolbar) as Toolbar
 
 
         toolbar.setNavigationOnClickListener {
