@@ -62,7 +62,7 @@ class NotificationFragment : Fragment() {
 
             recyclerViewAdapter =NotificationAdaptor(listdata!!)
             dataRecyclerView?.layoutManager = LinearLayoutManager(this.context)
-            dataRecyclerView?.setEmptyView(R.layout.notification_empty_view as View)
+            dataRecyclerView?.setEmptyView(View.inflate(context, R.layout.notification_empty_view, null ))
             dataRecyclerView?.adapter = recyclerViewAdapter
 
 
