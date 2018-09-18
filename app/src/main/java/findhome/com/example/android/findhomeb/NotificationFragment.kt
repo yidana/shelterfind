@@ -10,10 +10,10 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toolbar
 import androidx.navigation.Navigation
 import findhome.com.example.android.findhomeb.R.layout.notification_empty_view
 import findhome.com.example.android.findhomeb.adaptors.NotificationAdaptor
