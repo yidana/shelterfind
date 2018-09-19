@@ -1,5 +1,7 @@
 package findhome.com.example.android.findhomeb
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -16,6 +18,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import findhome.com.example.android.findhomeb.adaptors.HomeRecyclerViewAdaptor
 import findhome.com.example.android.findhomeb.adaptors.ProgressLiftingAdaptor
 import findhome.com.example.android.findhomeb.model.CloudData
+import findhome.com.example.android.findhomeb.viewmodel.MyViewModel
+import findhome.com.example.android.findhomeb.viewmodel.ProgressViewModel
 import kotlinx.android.synthetic.main.fragment_account_settings.*
 import kotlinx.android.synthetic.main.fragment_all.*
 import kotlinx.android.synthetic.main.fragment_lifting_status.*
@@ -26,19 +30,47 @@ class LiftingStatus : Fragment(),ProgressLiftingAdaptor.OnItemClickListener {
 
 
     override fun onItemClick(data: CloudData) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+
+
+        when( data.progress){
+
+            "1"->{ Navigation.findNavController(view!!).navigate(R.id.entryFormoneFragment, null) }
+            "10"->{
+                if (data.type=="home" || data.type=="apartment" || data.type=="hotel") Navigation.findNavController(view!!).navigate(R.id.generalRoomTypeFragment, null)
+                else Navigation.findNavController(view!!).navigate(R.id.hostelRoomTypeFragment, null)
+            }
+            "30"->{ Navigation.findNavController(view!!).navigate(R.id.placeAvailability, null) }
+            "40"->{
+                if (data.type=="home" || data.type=="apartment") Navigation.findNavController(view!!).navigate(R.id.generalPriceFragment, null)
+                else if (data.type=="hotel")  Navigation.findNavController(view!!).navigate(R.id.hotelGeneralPriceFragment, null)
+                else if (data.type=="hostel")  Navigation.findNavController(view!!).navigate(R.id.priceHostelFragment, null)
+            }
+            "50"->{ Navigation.findNavController(view!!).navigate(R.id.overviewFragment, null) }
+            "60"->{ Navigation.findNavController(view!!).navigate(R.id.profilePictureFragment, null) }
+            "70"->{ Navigation.findNavController(view!!).navigate(R.id.addPlacePicturesFragment, null) }
+            "80"->{ Navigation.findNavController(view!!).navigate(R.id.amenitiesFragment, null) }
+            "95"->{ Navigation.findNavController(view!!).navigate(R.id.addressFragment, null) }
+
+        }
+
+
+
     }
 
     var  lift_userID=""
     lateinit var mFirebaseFirestore: FirebaseFirestore
-    var liftprogress=""
-    var lifttype=""
     private var dataRecyclerView:RecyclerView?=null
     private var recyclerViewAdapter: ProgressLiftingAdaptor? = null
+    lateinit var mViewModel: ProgressViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mFirebaseFirestore= FirebaseFirestore.getInstance()
+        mViewModel= ViewModelProviders.of(this).get(ProgressViewModel::class.java)
+
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -54,8 +86,6 @@ class LiftingStatus : Fragment(),ProgressLiftingAdaptor.OnItemClickListener {
 
         FirebaseAuth.AuthStateListener { firebaseAuth ->
             lift_userID=firebaseAuth.uid!!
-
-
 
             dataRecyclerView= progress_recycleview
             val dbcloud:ArrayList<CloudData>?= ArrayList()
@@ -111,7 +141,7 @@ class LiftingStatus : Fragment(),ProgressLiftingAdaptor.OnItemClickListener {
                                                                                 recyclerViewAdapter = ProgressLiftingAdaptor(cloudata!!, this)
                                                                                 dataRecyclerView?.layoutManager = LinearLayoutManager(this.context)
                                                                                 dataRecyclerView?.adapter = recyclerViewAdapter
-                                                                                dataRecyclerView?.setEmptyView(empty_view)
+
 
 
 
@@ -186,40 +216,6 @@ class LiftingStatus : Fragment(),ProgressLiftingAdaptor.OnItemClickListener {
         }
 
 
-        btn_continue.setOnClickListener {
-
-
-            when( liftprogress){
-
-                "1"->{ Navigation.findNavController(it).navigate(R.id.entryFormoneFragment, null) }
-                "10"->{
-                    if (lifttype=="home" || lifttype=="apartment" || lifttype=="hotel") Navigation.findNavController(it).navigate(R.id.generalRoomTypeFragment, null)
-                    else Navigation.findNavController(it).navigate(R.id.hostelRoomTypeFragment, null)
-                }
-                "30"->{ Navigation.findNavController(it).navigate(R.id.placeAvailability, null) }
-                "40"->{
-                    if (lifttype=="home" || lifttype=="apartment") Navigation.findNavController(it).navigate(R.id.generalPriceFragment, null)
-                    else if (lifttype=="hotel")  Navigation.findNavController(it).navigate(R.id.hotelGeneralPriceFragment, null)
-                    else if (lifttype=="hostel")  Navigation.findNavController(it).navigate(R.id.priceHostelFragment, null)
-                }
-                "50"->{ Navigation.findNavController(it).navigate(R.id.overviewFragment, null) }
-                "60"->{ Navigation.findNavController(it).navigate(R.id.profilePictureFragment, null) }
-                "70"->{ Navigation.findNavController(it).navigate(R.id.addPlacePicturesFragment, null) }
-                "80"->{ Navigation.findNavController(it).navigate(R.id.amenitiesFragment, null) }
-                "95"->{ Navigation.findNavController(it).navigate(R.id.addressFragment, null) }
-
-            }
-
-
-
-
-
-
-
-
-
-
-        }
     }
 
     companion object {
