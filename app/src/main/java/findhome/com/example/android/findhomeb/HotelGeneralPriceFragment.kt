@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.navigation.Navigation
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import kotlinx.android.synthetic.main.fragment_hotel_general_price.*
@@ -80,36 +81,45 @@ class HotelGeneralPriceFragment : Fragment() {
 
             val destin = prefs.getString(preference_file_key,"none")
 
-            when(destin!!){
-                "hotel"->{
-                    val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes")
-                    myCollectionReference.get().addOnCompleteListener {task ->
 
-                        if (task.isSuccessful){
+            FirebaseAuth.AuthStateListener { usrID ->
 
-                            val objdb=HashMap<String,Any?>()
-                            objdb["amount"]=hotelPrice
+                when(destin!!){
+                    "hotel"->{
+                        val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes/"
+                                +usrID.currentUser!!.uid+"/"+"homes")
+                        myCollectionReference.get().addOnCompleteListener {task ->
 
-                            val pricedb=HashMap<String,Any>()
-                            pricedb["roomtypeprice"] =objdb
-                            pricedb["progress"]="40"
-                            mFirebaseFirestore.collection("/user/facilities/homes")
-                                    .document(task.result.last().id)
-                                    .set(pricedb, SetOptions.merge())
-                                    .addOnSuccessListener {succes->
-                                        Navigation.findNavController(it).navigate(R.id.overviewFragment, null)
-                                    }.addOnFailureListener { failure->
+                            if (task.isSuccessful){
 
-                                        Log.e("FailureCloud",failure.toString())
-                                    }
+                                val objdb=HashMap<String,Any?>()
+                                objdb["amount"]=hotelPrice
+
+                                val pricedb=HashMap<String,Any>()
+                                pricedb["roomtypeprice"] =objdb
+                                pricedb["progress"]="40"
+                                mFirebaseFirestore.collection("/user/facilities/homes/"
+                                        +usrID.currentUser!!.uid+"/"+"homes")
+                                        .document(task.result.last().id)
+                                        .set(pricedb, SetOptions.merge())
+                                        .addOnSuccessListener {succes->
+                                            Navigation.findNavController(it).navigate(R.id.overviewFragment, null)
+                                        }.addOnFailureListener { failure->
+
+                                            Log.e("FailureCloud",failure.toString())
+                                        }
 
 
+                            }
                         }
+
                     }
 
                 }
 
+
             }
+
 
 
         }

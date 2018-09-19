@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.navigation.Navigation
 import com.afollestad.materialdialogs.MaterialDialog
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import kotlinx.android.synthetic.main.fragment_overview.*
@@ -116,134 +117,153 @@ class OverviewFragment : Fragment() {
                     mphonenumber=phonenumber.text.toString()
                     mdescription=description.text.toString()
 
-                    when((destin!!)){
-                        "house"->{
-                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes")
-                            myCollectionReference.get().addOnCompleteListener {task ->
 
-                                if (task.isSuccessful){
-
-                                    val objdb=HashMap<String,Any?>()
-                                    objdb["title"]=mtitle
-                                    objdb["description"]= mdescription
-                                    objdb["phonenumber"]=mphonenumber
-
-                                    val overviewdb=HashMap<String,Any>()
-                                    overviewdb["overview"] =objdb
-                                    overviewdb["progress"]="50"
-                                    mFirebaseFirestore.collection("/user/facilities/homes")
-                                            .document(task.result.last().id)
-                                            .set(overviewdb, SetOptions.merge())
-                                            .addOnSuccessListener {succes->
-                                                dialog.dismiss()
-                                                Navigation.findNavController(it).navigate(R.id.profilePictureFragment, null)
-                                            }.addOnFailureListener { failure->
-                                                dialog.dismiss()
-                                                Log.e("FailureCloud",failure.toString())
-                                            }
+                    FirebaseAuth.AuthStateListener { usrID ->
 
 
+                        when((destin!!)){
+                            "house"->{
+                                val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes/"
+                                        +usrID.currentUser!!.uid+"/"+"homes")
+                                myCollectionReference.get().addOnCompleteListener {task ->
+
+                                    if (task.isSuccessful){
+
+                                        val objdb=HashMap<String,Any?>()
+                                        objdb["title"]=mtitle
+                                        objdb["description"]= mdescription
+                                        objdb["phonenumber"]=mphonenumber
+
+                                        val overviewdb=HashMap<String,Any>()
+                                        overviewdb["overview"] =objdb
+                                        overviewdb["progress"]="50"
+                                        mFirebaseFirestore.collection("/user/facilities/homes/"
+                                                +usrID.currentUser!!.uid+"/"+"homes")
+                                                .document(task.result.last().id)
+                                                .set(overviewdb, SetOptions.merge())
+                                                .addOnSuccessListener {succes->
+                                                    dialog.dismiss()
+                                                    Navigation.findNavController(it).navigate(R.id.profilePictureFragment, null)
+                                                }.addOnFailureListener { failure->
+                                                    dialog.dismiss()
+                                                    Log.e("FailureCloud",failure.toString())
+                                                }
+
+
+                                    }
                                 }
+
                             }
+                            "apartment"->{
 
-                        }
-                        "apartment"->{
+                                val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/apartments/"
+                                        +usrID.currentUser!!.uid+"/"+"apartments")
 
-                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/apartments")
+                                myCollectionReference.get().addOnCompleteListener {task ->
 
-                            myCollectionReference.get().addOnCompleteListener {task ->
-
-                                if (task.isSuccessful){
-
-
-                                    val objdb=HashMap<String,Any?>()
-                                    objdb["title"]=mtitle
-                                    objdb["description"]= mdescription
-                                    objdb["phonenumber"]=mphonenumber
-
-                                    val overviewdb=HashMap<String,Any>()
-                                    overviewdb["overview"] =objdb
-                                    overviewdb["progress"]="50"
-                                    mFirebaseFirestore.collection("/user/facilities/apartments")
-                                            .document(task.result.last().id)
-                                            .set(overviewdb, SetOptions.merge())
-                                            .addOnSuccessListener {succes->
-                                                Navigation.findNavController(it).navigate(R.id.profilePictureFragment, null)
-                                            }.addOnFailureListener { failure->
-
-                                                Log.e("FailureCloud",failure.toString())
-                                            }
+                                    if (task.isSuccessful){
 
 
+                                        val objdb=HashMap<String,Any?>()
+                                        objdb["title"]=mtitle
+                                        objdb["description"]= mdescription
+                                        objdb["phonenumber"]=mphonenumber
+
+                                        val overviewdb=HashMap<String,Any>()
+                                        overviewdb["overview"] =objdb
+                                        overviewdb["progress"]="50"
+                                        mFirebaseFirestore.collection("/user/facilities/apartments/"
+                                                +usrID.currentUser!!.uid+"/"+"apartments")
+                                                .document(task.result.last().id)
+                                                .set(overviewdb, SetOptions.merge())
+                                                .addOnSuccessListener {succes->
+                                                    Navigation.findNavController(it).navigate(R.id.profilePictureFragment, null)
+                                                }.addOnFailureListener { failure->
+
+                                                    Log.e("FailureCloud",failure.toString())
+                                                }
+
+
+                                    }
                                 }
+
                             }
+                            "hotel"->{
+                                val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hotels/"
+                                        +usrID.currentUser!!.uid+"/"+"hotels")
 
-                        }
-                        "hotel"->{
-                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hotels")
+                                myCollectionReference.get().addOnCompleteListener {task ->
 
-                            myCollectionReference.get().addOnCompleteListener {task ->
-
-                                if (task.isSuccessful){
-
-
-                                    val objdb=HashMap<String,Any?>()
-                                    objdb["title"]=mtitle
-                                    objdb["description"]= mdescription
-                                    objdb["phonenumber"]=mphonenumber
-
-                                    val overviewdb=HashMap<String,Any>()
-                                    overviewdb["overview"] =objdb
-                                    overviewdb["progress"]="50"
-                                    mFirebaseFirestore.collection("/user/facilities/hotels")
-                                            .document(task.result.last().id)
-                                            .set(overviewdb, SetOptions.merge())
-                                            .addOnSuccessListener {succes->
-                                                Navigation.findNavController(it).navigate(R.id.profilePictureFragment, null)
-                                            }.addOnFailureListener { failure->
-
-                                                Log.e("FailureCloud",failure.toString())
-                                            }
+                                    if (task.isSuccessful){
 
 
+                                        val objdb=HashMap<String,Any?>()
+                                        objdb["title"]=mtitle
+                                        objdb["description"]= mdescription
+                                        objdb["phonenumber"]=mphonenumber
+
+                                        val overviewdb=HashMap<String,Any>()
+                                        overviewdb["overview"] =objdb
+                                        overviewdb["progress"]="50"
+                                        mFirebaseFirestore.collection("/user/facilities/hotels/"
+                                                +usrID.currentUser!!.uid+"/"+"hotels")
+                                                .document(task.result.last().id)
+                                                .set(overviewdb, SetOptions.merge())
+                                                .addOnSuccessListener {succes->
+                                                    Navigation.findNavController(it).navigate(R.id.profilePictureFragment, null)
+                                                }.addOnFailureListener { failure->
+
+                                                    Log.e("FailureCloud",failure.toString())
+                                                }
+
+
+                                    }
                                 }
+
+
                             }
+                            "hostel"->{
+                                val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hostels/"
+                                        +usrID.currentUser!!.uid+"/"+"hostels")
+
+                                myCollectionReference.get().addOnCompleteListener {task ->
+
+                                    if (task.isSuccessful){
 
 
-                        }
-                        "hostel"->{
-                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hostels")
+                                        val objdb=HashMap<String,Any?>()
+                                        objdb["title"]=mtitle
+                                        objdb["description"]= mdescription
+                                        objdb["phonenumber"]=mphonenumber
 
-                            myCollectionReference.get().addOnCompleteListener {task ->
+                                        val overviewdb=HashMap<String,Any>()
+                                        overviewdb["overview"] =objdb
+                                        overviewdb["progress"]="50"
+                                        mFirebaseFirestore.collection("/user/facilities/hostels/"
+                                                +usrID.currentUser!!.uid+"/"+"hostels")
+                                                .document(task.result.last().id)
+                                                .set(overviewdb, SetOptions.merge())
+                                                .addOnSuccessListener {succes->
+                                                    Navigation.findNavController(it).navigate(R.id.profilePictureFragment, null)
+                                                }.addOnFailureListener { failure->
 
-                                if (task.isSuccessful){
-
-
-                                    val objdb=HashMap<String,Any?>()
-                                    objdb["title"]=mtitle
-                                    objdb["description"]= mdescription
-                                    objdb["phonenumber"]=mphonenumber
-
-                                    val overviewdb=HashMap<String,Any>()
-                                    overviewdb["overview"] =objdb
-                                    overviewdb["progress"]="50"
-                                    mFirebaseFirestore.collection("/user/facilities/hostels")
-                                            .document(task.result.last().id)
-                                            .set(overviewdb, SetOptions.merge())
-                                            .addOnSuccessListener {succes->
-                                                Navigation.findNavController(it).navigate(R.id.profilePictureFragment, null)
-                                            }.addOnFailureListener { failure->
-
-                                                Log.e("FailureCloud",failure.toString())
-                                            }
+                                                    Log.e("FailureCloud",failure.toString())
+                                                }
 
 
+                                    }
                                 }
+
+
                             }
-
-
                         }
+
+
+
                     }
+
+
+
 
                 }
 

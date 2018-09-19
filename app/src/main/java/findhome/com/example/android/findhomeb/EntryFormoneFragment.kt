@@ -114,21 +114,23 @@ class EntryFormoneFragment : Fragment() {
                             }
 
 
-                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hostels")
+                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hostels/"
+                                    +usrID.currentUser!!.uid+"/"+"hostels")
                             myCollectionReference.get().addOnCompleteListener {task ->
 
                                 if (task.isSuccessful){
 
                                     val dbcount=    task.result.size()
 
-                                    if (dbcount==0||dbcount==null ){
+                                    if (dbcount==0){
 
                                         val objdb=HashMap<String,Any?>()
                                         objdb["type"]="hostels"
                                         objdb["userID"]=usrID.currentUser!!.uid
                                         objdb["progress"]="1"
-                                        mFirebaseFirestore.collection("/user/facilities/hostels")
-                                                .document("hostel1"+usrID.currentUser!!.uid)
+                                        mFirebaseFirestore.collection("/user/facilities/hostels/"
+                                                +usrID.currentUser!!.uid+"/"+"hostels")
+                                                .document("hostel1")
                                                 .set(objdb, SetOptions.merge())
                                                 .addOnSuccessListener {succes->
 
@@ -143,8 +145,8 @@ class EntryFormoneFragment : Fragment() {
                                         objdb["type"]="hostels"
                                         objdb["userID"]=usrID.currentUser!!.uid
                                         objdb["progress"]="1"
-                                        mFirebaseFirestore.collection("/user/facilities/hostels")
-                                                .document("hostel"+dbcount.toString()+ usrID.currentUser!!.uid)
+                                        mFirebaseFirestore.collection("/user/facilities/hostels/"+usrID.currentUser!!.uid+"/"+"hostels")
+                                                .document("hostel"+dbcount.toString())
                                                 .set(objdb, SetOptions.merge())
                                                 .addOnSuccessListener {succes->
 
@@ -174,7 +176,8 @@ class EntryFormoneFragment : Fragment() {
                                 apply()
                             }
 
-                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes")
+                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes/"
+                                    +usrID.currentUser!!.uid+"/"+"homes")
                             myCollectionReference.get().addOnCompleteListener {task ->
 
                                 if (task.isSuccessful){
@@ -182,15 +185,16 @@ class EntryFormoneFragment : Fragment() {
 
                                     val dbcount=    task.result.size()
 
-                                    if (dbcount==0||dbcount==null ) {
+                                    if (dbcount==0 ) {
 
 
                                         val objdb=HashMap<String,Any?>()
                                         objdb["type"]="homes"
                                         objdb["userID"]=usrID.currentUser!!.uid
                                         objdb["progress"]="1"
-                                        mFirebaseFirestore.collection("/user/facilities/homes")
-                                                .document("home1"+usrID.currentUser!!.uid)
+                                        mFirebaseFirestore.collection("/user/facilities/homes/"
+                                                +usrID.currentUser!!.uid+"/"+"homes")
+                                                .document("home1")
                                                 .set(objdb, SetOptions.merge())
                                                 .addOnSuccessListener {succes->
 
@@ -208,8 +212,9 @@ class EntryFormoneFragment : Fragment() {
                                         objdb["type"]="homes"
                                         objdb["userID"]=usrID.currentUser!!.uid
                                         objdb["progress"]="1"
-                                        mFirebaseFirestore.collection("/user/facilities/homes")
-                                                .document("home"+dbcount.toString()+ usrID.currentUser!!.uid)
+                                        mFirebaseFirestore.collection("/user/facilities/homes/"
+                                                +usrID.currentUser!!.uid+"/"+"homes")
+                                                .document("home"+dbcount.toString())
                                                 .set(objdb, SetOptions.merge())
                                                 .addOnSuccessListener {succes->
 
@@ -241,7 +246,8 @@ class EntryFormoneFragment : Fragment() {
 
 
 
-                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/apartments")
+                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/apartments/"
+                                    +usrID.currentUser!!.uid+"/"+"apartments")
                             myCollectionReference.get().addOnCompleteListener {task ->
 
                                 if (task.isSuccessful){
@@ -249,15 +255,16 @@ class EntryFormoneFragment : Fragment() {
 
                                     val dbcount=    task.result.size()
 
-                                    if (dbcount==0||dbcount==null ) {
+                                    if (dbcount==0 ) {
 
 
                                         val objdb=HashMap<String,Any?>()
                                         objdb["type"]="apartments"
                                         objdb["userID"]=usrID.currentUser!!.uid
                                         objdb["progress"]="1"
-                                        mFirebaseFirestore.collection("/user/facilities/apartments")
-                                                .document("apartment1"+usrID.currentUser!!.uid)
+                                        mFirebaseFirestore.collection("/user/facilities/apartments/"
+                                                +usrID.currentUser!!.uid+"/"+"apartments")
+                                                .document("apartment1")
                                                 .set(objdb, SetOptions.merge())
                                                 .addOnSuccessListener {succes->
 
@@ -279,8 +286,9 @@ class EntryFormoneFragment : Fragment() {
                                         objdb["type"]="apartments"
                                         objdb["userID"]=usrID.currentUser!!.uid
                                         objdb["progress"]="1"
-                                        mFirebaseFirestore.collection("/user/facilities/apartments")
-                                                .document("apartment"+dbcount.toString()+ usrID.currentUser!!.uid)
+                                        mFirebaseFirestore.collection("/user/facilities/apartments/"
+                                                +usrID.currentUser!!.uid+"/"+"apartments")
+                                                .document("apartment"+dbcount.toString())
                                                 .set(objdb, SetOptions.merge())
                                                 .addOnSuccessListener {succes->
 
@@ -315,7 +323,8 @@ class EntryFormoneFragment : Fragment() {
 
 
 
-                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hotels")
+                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hotels/"
+                                    +usrID.currentUser!!.uid+"/"+"hotels")
                             myCollectionReference.get().addOnCompleteListener {task ->
 
                                 if (task.isSuccessful){
@@ -323,7 +332,7 @@ class EntryFormoneFragment : Fragment() {
 
                                     val dbcount=    task.result.size()
 
-                                    if (dbcount==0||dbcount==null ) {
+                                    if (dbcount==0 ) {
 
 
 
@@ -331,8 +340,9 @@ class EntryFormoneFragment : Fragment() {
                                         objdb["type"]="hotels"
                                         objdb["userID"]=usrID.currentUser!!.uid
                                         objdb["progress"]="1"
-                                        mFirebaseFirestore.collection("/user/facilities/hotels")
-                                                .document("hotel1"+usrID.currentUser!!.uid)
+                                        mFirebaseFirestore.collection("/user/facilities/hotels/"
+                                                +usrID.currentUser!!.uid+"/"+"hotels")
+                                                .document("hotel1")
                                                 .set(objdb, SetOptions.merge())
                                                 .addOnSuccessListener {succes->
 
@@ -354,8 +364,9 @@ class EntryFormoneFragment : Fragment() {
                                         objdb["type"]="hotels"
                                         objdb["userID"]=usrID.currentUser!!.uid
                                         objdb["progress"]="1"
-                                        mFirebaseFirestore.collection("/user/facilities/hotels")
-                                                .document("hotel"+dbcount.toString()+ usrID.currentUser!!.uid)
+                                        mFirebaseFirestore.collection("/user/facilities/hotels"
+                                                +usrID.currentUser!!.uid+"/"+"hotels")
+                                                .document("hotel"+dbcount.toString())
                                                 .set(objdb, SetOptions.merge())
                                                 .addOnSuccessListener {succes->
 

@@ -97,10 +97,6 @@ class ProfileFragment : Fragment() {
 
                                                                 for (basedocumentChange: DocumentChange in basequerySnapshot!!.documentChanges) {
 
-
-
-
-
                                                                     itemcount+=1
 
                                                                     if (basedocumentChange.document.exists()){
@@ -116,7 +112,7 @@ class ProfileFragment : Fragment() {
 
                                                                     if ( itemcount== basequerySnapshot.documentChanges.size && checkifAnyExist>0 ){
 
-                                                                        Navigation.findNavController(it).navigate(R.id.manageFragment,null)
+                                                                        Navigation.findNavController(it).navigate(R.id.liftingStatus,null)
 
                                                                     }else{
 

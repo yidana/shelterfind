@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import android.support.v7.widget.Toolbar
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_account_settings.*
 import kotlinx.android.synthetic.main.fragment_hostel_room_type.*
 
@@ -95,7 +96,8 @@ class HostelRoomTypeFragment : Fragment() {
                             " Choose one of the Room Types to Continue", // Message to show
                             Snackbar.LENGTH_LONG // How long to display the message.
                     ).show()
-                }else ->{
+                }
+                else ->{
 
 
 
@@ -160,38 +162,50 @@ class HostelRoomTypeFragment : Fragment() {
                 dialog.show()
 
 
-                when(destin!!){
-                    "hostel"->{
-
-                        val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hostels")
-                        myCollectionReference.get().addOnCompleteListener {task ->
-
-                            if (task.isSuccessful){
-
-                                val objdb=HashMap<String,Any?>()
+                FirebaseAuth.AuthStateListener { usrID ->
 
 
-                                val roomdb=HashMap<String,Any>()
-                                roomdb["roomtype"] =roomtypeArray.toTypedArray().toList()
-                                roomdb["progress"]="10"
-                                mFirebaseFirestore.collection("/user/facilities/hostels")
-                                        .document(task.result.last().id)
-                                        .set(roomdb, SetOptions.merge())
-                                        .addOnSuccessListener {succes->
-                                            dialog.dismiss()
-                                            Navigation.findNavController(it).navigate(R.id.placeAvailability, null)
-                                        }.addOnFailureListener { failure->
-                                            dialog.dismiss()
+                    when(destin!!){
+                        "hostel"->{
 
-                                        }
+                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hostels/"
+                                    +usrID.currentUser!!.uid+"/"+"hostels")
+                            myCollectionReference.get().addOnCompleteListener {task ->
+
+                                if (task.isSuccessful){
+
+                                    val objdb=HashMap<String,Any?>()
 
 
+                                    val roomdb=HashMap<String,Any>()
+                                    roomdb["roomtype"] =roomtypeArray.toTypedArray().toList()
+                                    roomdb["progress"]="10"
+                                    mFirebaseFirestore.collection("/user/facilities/hostels"
+                                            +usrID.currentUser!!.uid+"/"+"hostels")
+                                            .document(task.result.last().id)
+                                            .set(roomdb, SetOptions.merge())
+                                            .addOnSuccessListener {succes->
+                                                dialog.dismiss()
+                                                Navigation.findNavController(it).navigate(R.id.placeAvailability, null)
+                                            }.addOnFailureListener { failure->
+                                                dialog.dismiss()
+
+                                            }
+
+
+                                }
                             }
+
                         }
 
                     }
 
+
+
                 }
+
+
+
 
 
 

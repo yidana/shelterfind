@@ -22,6 +22,7 @@ import androidx.work.*
 import androidx.work.Data
 import kotlinx.android.synthetic.main.fragment_add_place_pictures.*
 import com.afollestad.materialdialogs.MaterialDialog
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
@@ -44,6 +45,7 @@ class AddPlacePicturesFragment : Fragment() {
     val preference_file_key="MYDESTINATION"
     val KEY_IMG_PATH = "IMG_PATH"
     val PHOTO_URL="MYURLS"
+    val USERIDPH="id for upload"
 
     val REQUEST_LOCATION_PERMISSION = 200
 
@@ -119,43 +121,50 @@ class AddPlacePicturesFragment : Fragment() {
 
                 dialog.show()
 
+                FirebaseAuth.AuthStateListener { usrID ->
+
+                    val builder = Data.Builder()
+
+                    val myurls=imgList.map {uriit-> uriit.toString() }.toTypedArray()
+                    builder.putStringArray(KEY_IMG_PATH,myurls )
+                    builder.putString(preference_file_key,destin!!)
+                    builder.putString(USERIDPH,usrID.currentUser!!.uid)
+
+                    val myConstraints = Constraints.Builder()
+                            .setRequiredNetworkType(NetworkType.CONNECTED)
+                            .build()
 
 
-                val builder = Data.Builder()
+                    val work:   OneTimeWorkRequest  =
+                            OneTimeWorkRequest.Builder(CompressAndUploadWorker::class.java)
+                                    .setInputData(builder.build())
+                                    .setConstraints(myConstraints)
+                                    .build()
+                    WorkManager.getInstance().enqueue(work)
 
-                val myurls=imgList.map {uriit-> uriit.toString() }.toTypedArray()
-                builder.putStringArray(KEY_IMG_PATH,myurls )
-                builder.putString(preference_file_key,destin!!)
+                    WorkManager.getInstance().getStatusById(work.id)
+                            .observe(this, Observer {workStatus->
 
-                val myConstraints = Constraints.Builder()
-                        .setRequiredNetworkType(NetworkType.CONNECTED)
-                        .build()
+                                val isWorkFinished = !workStatus?.state!!.isFinished
 
-
-             val work:   OneTimeWorkRequest  =
-                 OneTimeWorkRequest.Builder(CompressAndUploadWorker::class.java)
-                        .setInputData(builder.build())
-                         .setConstraints(myConstraints)
-                        .build()
-                WorkManager.getInstance().enqueue(work)
-
-                WorkManager.getInstance().getStatusById(work.id)
-                        .observe(this, Observer {workStatus->
-
-                            val isWorkFinished = !workStatus?.state!!.isFinished
-
-                            if (isWorkFinished){
+                                if (isWorkFinished){
 
 
-                                dialog.dismiss()
+                                    dialog.dismiss()
 
 
-                                Navigation.findNavController(view).navigate(R.id.amenitiesFragment, null)
+                                    Navigation.findNavController(view).navigate(R.id.amenitiesFragment, null)
 
-                            }else{
-                                Log.v("WORKM","It is Still in Progress")
-                            }
-                        })
+                                }else{
+                                    Log.v("WORKM","It is Still in Progress")
+                                }
+                            })
+
+
+
+
+
+                }
 
 
 
