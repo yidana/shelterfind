@@ -35,22 +35,22 @@ class LiftingStatus : Fragment(),ProgressLiftingAdaptor.OnItemClickListener {
 
         when( data.progress){
 
-            "1"->{ Navigation.findNavController(view!!).navigate(R.id.entryFormoneFragment, null) }
+            "1"->{ Navigation.findNavController(this.view!!).navigate(R.id.entryFormoneFragment, null) }
             "10"->{
-                if (data.type=="home" || data.type=="apartment" || data.type=="hotel") Navigation.findNavController(view!!).navigate(R.id.generalRoomTypeFragment, null)
-                else Navigation.findNavController(view!!).navigate(R.id.hostelRoomTypeFragment, null)
+                if (data.type=="home" || data.type=="apartment" || data.type=="hotel") Navigation.findNavController(this.view!!).navigate(R.id.generalRoomTypeFragment, null)
+                else Navigation.findNavController(this.view!!).navigate(R.id.hostelRoomTypeFragment, null)
             }
-            "30"->{ Navigation.findNavController(view!!).navigate(R.id.placeAvailability, null) }
+            "30"->{ Navigation.findNavController(this.view!!).navigate(R.id.placeAvailability, null) }
             "40"->{
-                if (data.type=="home" || data.type=="apartment") Navigation.findNavController(view!!).navigate(R.id.generalPriceFragment, null)
-                else if (data.type=="hotel")  Navigation.findNavController(view!!).navigate(R.id.hotelGeneralPriceFragment, null)
-                else if (data.type=="hostel")  Navigation.findNavController(view!!).navigate(R.id.priceHostelFragment, null)
+                if (data.type=="home" || data.type=="apartment") Navigation.findNavController(this.view!!).navigate(R.id.generalPriceFragment, null)
+                else if (data.type=="hotel")  Navigation.findNavController(this.view!!).navigate(R.id.hotelGeneralPriceFragment, null)
+                else if (data.type=="hostel")  Navigation.findNavController(this.view!!).navigate(R.id.priceHostelFragment, null)
             }
-            "50"->{ Navigation.findNavController(view!!).navigate(R.id.overviewFragment, null) }
-            "60"->{ Navigation.findNavController(view!!).navigate(R.id.profilePictureFragment, null) }
-            "70"->{ Navigation.findNavController(view!!).navigate(R.id.addPlacePicturesFragment, null) }
-            "80"->{ Navigation.findNavController(view!!).navigate(R.id.amenitiesFragment, null) }
-            "95"->{ Navigation.findNavController(view!!).navigate(R.id.addressFragment, null) }
+            "50"->{ Navigation.findNavController(this.view!!).navigate(R.id.overviewFragment, null) }
+            "60"->{ Navigation.findNavController(this.view!!).navigate(R.id.profilePictureFragment, null) }
+            "70"->{ Navigation.findNavController(this.view!!).navigate(R.id.addPlacePicturesFragment, null) }
+            "80"->{ Navigation.findNavController(this.view!!).navigate(R.id.amenitiesFragment, null) }
+            "95"->{ Navigation.findNavController(this.view!!).navigate(R.id.addressFragment, null) }
 
         }
 

@@ -147,7 +147,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             app:counterMaxLength="140"
-            app:errorEnabled="true">
+            app:errorEnabled="true"
+            >
 
 
             <EditText
@@ -158,6 +159,7 @@
                 android:hint="Your thoughts"
                 android:inputType="textMultiLine"
                 android:lines="8"
+                android:background="@drawable/background_text"
                 android:maxLines="10"
                 android:minLines="6"
                 android:scrollbars="vertical"

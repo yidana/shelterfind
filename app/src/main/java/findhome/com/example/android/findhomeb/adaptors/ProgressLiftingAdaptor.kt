@@ -45,7 +45,7 @@ class ProgressLiftingAdaptor(data: ArrayList<CloudData>, listener: OnItemClickLi
         val moverview=nameData as HashMap<String,String>
 
 
-        holder.mName.text = moverview["title"]
+        holder.mName.text = moverview["title"].plus(" Progress")
         holder. mprogress.text =  currentData.progress
         holder.mprogress_bar.progress =  currentData.progress!!.toInt()
 
