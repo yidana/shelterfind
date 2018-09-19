@@ -33,8 +33,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="@string/search_location"
                 android:textSize="18sp"
-                android:textColor="@color/blacky"
-                android:textStyle="bold"/>
+                android:textColor="@color/blacky"/>
 
         </android.support.design.card.MaterialCardView>
 
@@ -65,8 +64,9 @@
             <android.support.v7.widget.AppCompatAutoCompleteTextView
                 android:id="@+id/place_search_dialog_country_ET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:hint="@string/search_country"
+                android:background="@drawable/background_text"
                 android:imeOptions="actionDone"
                 android:inputType="textCapSentences"
                 android:textColor="@color/blacky"
@@ -100,9 +100,10 @@
             <android.support.v7.widget.AppCompatAutoCompleteTextView
                 android:id="@+id/place_search_dialog_city_ET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:hint="@string/search_city"
                 android:imeOptions="actionDone"
+                android:background="@drawable/background_text"
                 android:inputType="textCapSentences"
                 android:textColor="@color/blacky"
                 android:textColorHint="@color/mt_gray3"
@@ -134,9 +135,10 @@
             <android.support.v7.widget.AppCompatAutoCompleteTextView
                 android:id="@+id/place_search_dialog_street_ET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:hint="@string/search_address"
                 android:imeOptions="actionDone"
+                android:background="@drawable/background_text"
                 android:inputType="textCapSentences"
                 android:textColor="@color/blacky"
                 android:textColorHint="@color/mt_gray3"
