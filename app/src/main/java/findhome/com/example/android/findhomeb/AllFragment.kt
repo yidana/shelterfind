@@ -71,73 +71,66 @@ class AllFragment : Fragment(), HomeRecyclerViewAdaptor.OnItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
 
-        FirebaseAuth.AuthStateListener { auth->
+        dataRecyclerView= rvDataall
+        val dbcloud:ArrayList<CloudData>?= ArrayList()
+        val facilities=HashMap<String,String>()
+        facilities.put("homes","homes")
+        facilities.put("hostels","hostels")
+        facilities.put("hotels","hotels")
+        facilities.put("apartments","apartments")
+
+        for (i:String in   facilities.keys){
+            val mTarget=facilities[i]
+
+            mFirebaseFirestore
+                    .document("user/facilities")
+                    .collection(mTarget!!)
+                    .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+
+                        if (firebaseFirestoreException!=null){
+
+                        }else{
 
 
-            dataRecyclerView= rvDataall
-            val dbcloud:ArrayList<CloudData>?= ArrayList()
-            val facilities=HashMap<String,String>()
-            facilities.put("homes","homes")
-            facilities.put("hostels","hostels")
-            facilities.put("hotels","hotels")
-            facilities.put("apartments","apartments")
+                            for (documentChange: DocumentChange in querySnapshot!!.documentChanges){
 
-            for (i:String in   facilities.keys){
-                val mTarget=facilities[i]
+                                if (documentChange.type== DocumentChange.Type.ADDED){
 
-                mFirebaseFirestore
-                        .document("user/facilities")
-                        .collection(mTarget!!)
-                        .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                                    if (documentChange.document.exists()){
 
-                            if (firebaseFirestoreException!=null){
+                                        mFirebaseFirestore
+                                                .document(documentChange.document.reference.path)
+                                                .collection(mTarget)
+                                                .addSnapshotListener { basequerySnapshot, basefirebaseFirestoreException ->
 
-                            }else{
+                                                    if ( basefirebaseFirestoreException!=null){
 
+                                                    }else {
 
-                                for (documentChange: DocumentChange in querySnapshot!!.documentChanges){
+                                                        for (basedocumentChange: DocumentChange in basequerySnapshot!!.documentChanges) {
 
-                                    if (documentChange.type== DocumentChange.Type.ADDED){
+                                                            if (basedocumentChange.document.exists()){
 
-                                        if (documentChange.document.exists()){
+                                                                if (basedocumentChange.document.getBoolean("statuscomplete")==false){
 
-                                            mFirebaseFirestore
-                                                    .document(documentChange.document.reference.path)
-                                                    .collection(mTarget)
-                                                    .addSnapshotListener { basequerySnapshot, basefirebaseFirestoreException ->
+                                                                    val managerData=basedocumentChange.document.toObject(CloudData::class.java)
 
-                                                        if ( basefirebaseFirestoreException!=null){
+                                                                    dbcloud!!.add(managerData)
 
-                                                        }else {
-
-                                                            for (basedocumentChange: DocumentChange in basequerySnapshot!!.documentChanges) {
-
-                                                                if (basedocumentChange.document.exists()){
-
-                                                                    if (basedocumentChange.document.getBoolean("statuscomplete")==false){
-
-                                                                        val managerData=basedocumentChange.document.toObject(CloudData::class.java)
-
-                                                                        dbcloud!!.add(managerData)
-
-                                                                        mViewModel.getArrayCloudList(dbcloud).observe(this, Observer {cloudata->
+                                                                    mViewModel.getArrayCloudList(dbcloud).observe(this, Observer {cloudata->
 
 
-                                                                            recyclerViewAdapter = HomeRecyclerViewAdaptor(cloudata!!, this)
-                                                                            dataRecyclerView?.layoutManager = LinearLayoutManager(this.context)
-                                                                            dataRecyclerView?.adapter = recyclerViewAdapter
-                                                                            dataRecyclerView?.setEmptyView(empty_view)
+                                                                        recyclerViewAdapter = HomeRecyclerViewAdaptor(cloudata!!, this)
+                                                                        dataRecyclerView?.layoutManager = LinearLayoutManager(this.context)
+                                                                        dataRecyclerView?.adapter = recyclerViewAdapter
+                                                                        dataRecyclerView?.setEmptyView(empty_view)
 
 
 
 
-                                                                        })
+                                                                    })
 
 
-
-
-
-                                                                    }
 
 
 
@@ -145,40 +138,42 @@ class AllFragment : Fragment(), HomeRecyclerViewAdaptor.OnItemClickListener {
 
 
 
-
-
                                                             }
 
 
 
-                                                        }
 
 
                                                         }
 
 
 
+                                                    }
 
-                                            }
+
+                                                }
 
 
 
 
                                     }
 
+
+
+
                                 }
 
                             }
 
-
                         }
 
-            }
 
-
-
+                    }
 
         }
+
+
+
 
 
 
