@@ -39,7 +39,7 @@ class GeneralPriceFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
 
-        mFirebaseFirestore=  (activity as MainActivity).mFirebaseFirestore
+        mFirebaseFirestore=  FirebaseFirestore.getInstance()
 
         val prefs= activity?.getPreferences(Context.MODE_PRIVATE) ?: return
         val destin = prefs.getString(preference_file_key,"none")

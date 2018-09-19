@@ -34,7 +34,7 @@ class OverviewFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mFirebaseFirestore= (activity as MainActivity).mFirebaseFirestore
+        mFirebaseFirestore= FirebaseFirestore.getInstance()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

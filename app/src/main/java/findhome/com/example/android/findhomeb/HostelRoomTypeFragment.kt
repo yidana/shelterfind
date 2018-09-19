@@ -28,7 +28,7 @@ class HostelRoomTypeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mFirebaseFirestore= (activity as MainActivity).mFirebaseFirestore
+        mFirebaseFirestore= FirebaseFirestore.getInstance()
 
         roomtypeArray.clear()
     }

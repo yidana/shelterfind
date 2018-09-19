@@ -68,7 +68,7 @@ class HotelFragment : Fragment(),HotelAdaptor.OnItemClickListener {
 
         mFirebaseFirestore
                 .document("user/facilities")
-                .collection("hotel")
+                .collection("hotels")
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
 
                     if (firebaseFirestoreException!=null){
@@ -79,33 +79,62 @@ class HotelFragment : Fragment(),HotelAdaptor.OnItemClickListener {
 
                             if (documentChange.type== DocumentChange.Type.ADDED){
 
-                                val mstatus=documentChange.document.data.keys
+                                if (documentChange.document.exists()) {
+
+                                    mFirebaseFirestore
+                                            .document(documentChange.document.reference.path)
+                                            .collection("hotels")
+                                            .addSnapshotListener { basequerySnapshot, basefirebaseFirestoreException ->
+
+                                                if ( basefirebaseFirestoreException!=null){
+
+                                                }else {
+
+                                                    for (basedocumentChange: DocumentChange in basequerySnapshot!!.documentChanges) {
+
+                                                        if (basedocumentChange.document.exists()) {
 
 
-                                if (documentChange.document.getBoolean("statuscomplete")==false){
+                                                            if (basedocumentChange.document.getBoolean("statuscomplete")==false){
 
-                                    val managerData=documentChange.document.toObject(CloudData::class.java)
+                                                                val managerData=basedocumentChange.document.toObject(CloudData::class.java)
 
-                                    dbcloud!!.add(managerData)
+                                                                dbcloud!!.add(managerData)
 
-                                    mViewModel.getArrayCloudList(dbcloud).observe(this, Observer {cloudata->
-
-
-                                        recyclerViewAdapter = HotelAdaptor(cloudata!!, this)
-                                        dataRecyclerView?.layoutManager = LinearLayoutManager(this.context)
-                                        dataRecyclerView?.adapter = recyclerViewAdapter
-                                        dataRecyclerView?.setEmptyView(empty_view_hotel)
+                                                                mViewModel.getArrayCloudList(dbcloud).observe(this, Observer {cloudata->
 
 
-
-
-                                    })
+                                                                    recyclerViewAdapter = HotelAdaptor(cloudata!!, this)
+                                                                    dataRecyclerView?.layoutManager = LinearLayoutManager(this.context)
+                                                                    dataRecyclerView?.adapter = recyclerViewAdapter
+                                                                    dataRecyclerView?.setEmptyView(empty_view_hotel)
 
 
 
 
+                                                                })
+
+
+
+
+
+                                                            }
+
+
+
+
+                                                        }
+
+                                                    }
+
+                                                }
+
+
+                                                }
 
                                 }
+
+
 
 
 
