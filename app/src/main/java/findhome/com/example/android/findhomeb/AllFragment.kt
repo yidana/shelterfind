@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import findhome.com.example.android.findhomeb.HomeFragment.Companion.passingDataCloudData
@@ -70,75 +71,115 @@ class AllFragment : Fragment(), HomeRecyclerViewAdaptor.OnItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
 
+        FirebaseAuth.AuthStateListener { auth->
 
 
-        dataRecyclerView= rvDataall
-        val dbcloud:ArrayList<CloudData>?= ArrayList()
-        val facilities=HashMap<String,String>()
-        facilities.put("homes","homes")
-        facilities.put("hostels","hostels")
-        facilities.put("hotels","hotels")
-        facilities.put("apartments","apartments")
+            dataRecyclerView= rvDataall
+            val dbcloud:ArrayList<CloudData>?= ArrayList()
+            val facilities=HashMap<String,String>()
+            facilities.put("homes","homes")
+            facilities.put("hostels","hostels")
+            facilities.put("hotels","hotels")
+            facilities.put("apartments","apartments")
 
-        for (i:String in   facilities.keys){
-            val mTarget=facilities[i]
+            for (i:String in   facilities.keys){
+                val mTarget=facilities[i]
 
-            mFirebaseFirestore
-                    .document("user/facilities")
-                    .collection(mTarget!!)
-                    .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                mFirebaseFirestore
+                        .document("user/facilities")
+                        .collection(mTarget!!)
+                        .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
 
-                        if (firebaseFirestoreException!=null){
+                            if (firebaseFirestoreException!=null){
 
-                        }else{
-
-                            for (documentChange: DocumentChange in querySnapshot!!.documentChanges){
-
-                                if (documentChange.type== DocumentChange.Type.ADDED){
-
-                                    val mstatus=documentChange.document.data.keys
+                            }else{
 
 
-                                    if (documentChange.document.getBoolean("statuscomplete")==false){
+                                for (documentChange: DocumentChange in querySnapshot!!.documentChanges){
 
-                                        val managerData=documentChange.document.toObject(CloudData::class.java)
+                                    if (documentChange.type== DocumentChange.Type.ADDED){
 
-                                        dbcloud!!.add(managerData)
+                                        if (documentChange.document.exists()){
 
-                                        mViewModel.getArrayCloudList(dbcloud).observe(this, Observer {cloudata->
+                                            mFirebaseFirestore
+                                                    .document(documentChange.document.reference.path)
+                                                    .collection(mTarget)
+                                                    .addSnapshotListener { basequerySnapshot, basefirebaseFirestoreException ->
+
+                                                        if ( basefirebaseFirestoreException!=null){
+
+                                                        }else {
+
+                                                            for (basedocumentChange: DocumentChange in basequerySnapshot!!.documentChanges) {
+
+                                                                if (basedocumentChange.document.exists()){
+
+                                                                    if (basedocumentChange.document.getBoolean("statuscomplete")==false){
+
+                                                                        val managerData=basedocumentChange.document.toObject(CloudData::class.java)
+
+                                                                        dbcloud!!.add(managerData)
+
+                                                                        mViewModel.getArrayCloudList(dbcloud).observe(this, Observer {cloudata->
 
 
-                                            recyclerViewAdapter = HomeRecyclerViewAdaptor(cloudata!!, this)
-                                            dataRecyclerView?.layoutManager = LinearLayoutManager(this.context)
-                                            dataRecyclerView?.adapter = recyclerViewAdapter
-                                            dataRecyclerView?.setEmptyView(empty_view)
+                                                                            recyclerViewAdapter = HomeRecyclerViewAdaptor(cloudata!!, this)
+                                                                            dataRecyclerView?.layoutManager = LinearLayoutManager(this.context)
+                                                                            dataRecyclerView?.adapter = recyclerViewAdapter
+                                                                            dataRecyclerView?.setEmptyView(empty_view)
 
 
 
 
-                                        })
+                                                                        })
 
+
+
+
+
+                                                                    }
+
+
+
+                                                                }
+
+
+
+
+
+                                                            }
+
+
+
+                                                        }
+
+
+                                                        }
+
+
+
+
+                                            }
 
 
 
 
                                     }
 
-
-
-
-
-
                                 }
 
                             }
 
+
                         }
 
+            }
 
-                    }
+
+
 
         }
+
 
 
 

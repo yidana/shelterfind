@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import findhome.com.example.android.findhomeb.adaptors.HomeFilterAdaptor
@@ -59,39 +60,75 @@ class HomeFilterFragment : Fragment(),HomeFilterAdaptor.OnItemClickListener {
         val dbcloud:ArrayList<CloudData>?= ArrayList()
 
 
-        mFirebaseFirestore
-                .document("user/facilities")
-                .collection("homes")
-                .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
 
-                    if (firebaseFirestoreException!=null){
-
-                    }else{
-                        for (documentChange: DocumentChange in querySnapshot!!.documentChanges){
-
-                            if (documentChange.type== DocumentChange.Type.ADDED){
-
-                                val mstatus=documentChange.document.data.keys
+        FirebaseAuth.AuthStateListener { auth ->
 
 
-                                if (documentChange.document.getBoolean("statuscomplete")==false){
+            mFirebaseFirestore
+                    .document("user/facilities")
+                    .collection("homes")
+                    .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
 
-                                    val managerData=documentChange.document.toObject(CloudData::class.java)
+                        if (firebaseFirestoreException!=null){
 
-                                    dbcloud!!.add(managerData)
+                        }else{
+                            for (documentChange: DocumentChange in querySnapshot!!.documentChanges){
 
-                                    mViewModel.getArrayCloudList(dbcloud).observe(this, Observer {cloudata->
-
-
-                                        recyclerViewAdapter = HomeFilterAdaptor(cloudata!!, this)
-                                        dataRecyclerView?.layoutManager = LinearLayoutManager(this.context)
-                                        dataRecyclerView?.adapter = recyclerViewAdapter
-                                        dataRecyclerView?.setEmptyView(empty_view_homefilter)
+                                if (documentChange.type== DocumentChange.Type.ADDED){
 
 
 
+                                    mFirebaseFirestore
+                                            .document(documentChange.document.reference.path)
+                                            .collection("homes")
+                                            .addSnapshotListener { basequerySnapshot, basefirebaseFirestoreException ->
 
-                                    })
+                                                if ( basefirebaseFirestoreException!=null){
+
+                                                }else {
+
+                                                    for (basedocumentChange: DocumentChange in basequerySnapshot!!.documentChanges) {
+
+                                                        if (basedocumentChange.document.exists()) {
+
+
+                                                            if (basedocumentChange.document.getBoolean("statuscomplete")==false){
+
+                                                                val managerData=basedocumentChange.document.toObject(CloudData::class.java)
+
+                                                                dbcloud!!.add(managerData)
+
+                                                                mViewModel.getArrayCloudList(dbcloud).observe(this, Observer {cloudata->
+
+
+                                                                    recyclerViewAdapter = HomeFilterAdaptor(cloudata!!, this)
+                                                                    dataRecyclerView?.layoutManager = LinearLayoutManager(this.context)
+                                                                    dataRecyclerView?.adapter = recyclerViewAdapter
+                                                                    dataRecyclerView?.setEmptyView(empty_view_homefilter)
+
+
+
+
+                                                                })
+
+
+
+
+
+                                                            }
+
+                                                        }
+
+                                                    }
+
+                                                }
+
+
+                                            }
+
+
+
+
 
 
 
@@ -99,21 +136,20 @@ class HomeFilterFragment : Fragment(),HomeFilterAdaptor.OnItemClickListener {
 
                                 }
 
-
-
-
-
-
                             }
 
+
                         }
+
 
 
                     }
 
 
 
-                }
+        }
+
+
 
 
     }
