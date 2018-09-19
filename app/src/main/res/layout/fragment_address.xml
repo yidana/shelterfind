@@ -48,8 +48,7 @@
             android:fontFamily="sans-serif-smallcaps"
             android:text="@string/locate_your_place_for_guests"
             android:textColor="@color/blacky"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/progressBar" />

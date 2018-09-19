@@ -65,7 +65,7 @@ class PlaceAvailability : Fragment() {
         val destin = prefs.getString(preference_file_key,"none")
 
 
-        val toolbar = view.findViewById<android.widget.Toolbar>(R.id.my_toolbar) as android.widget.Toolbar
+        val toolbar = view.findViewById<android.widget.Toolbar>(R.id.my_toolbar) as Toolbar
 
 
 

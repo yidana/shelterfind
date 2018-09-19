@@ -64,7 +64,7 @@ class HostelFragment : Fragment(), HostelAdaptor.OnItemClickListener {
 
         mFirebaseFirestore
                 .document("user/facilities")
-                .collection("hostel")
+                .collection("hostels")
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
 
                     if (firebaseFirestoreException!=null){
@@ -74,33 +74,76 @@ class HostelFragment : Fragment(), HostelAdaptor.OnItemClickListener {
 
                             if (documentChange.type== DocumentChange.Type.ADDED){
 
-                                val mstatus=documentChange.document.data.keys
+                                if (documentChange.document.exists()) {
 
+                                    mFirebaseFirestore
+                                            .document(documentChange.document.reference.path)
+                                            .collection("hostels")
+                                            .addSnapshotListener { basequerySnapshot, basefirebaseFirestoreException ->
 
-                                if (documentChange.document.getBoolean("statuscomplete")==false){
+                                                if ( basefirebaseFirestoreException!=null){
 
-                                    val managerData=documentChange.document.toObject(CloudData::class.java)
+                                                }else {
 
-                                    dbcloud!!.add(managerData)
+                                                    for (basedocumentChange: DocumentChange in basequerySnapshot!!.documentChanges) {
 
-                                    mViewModel.getArrayCloudList(dbcloud).observe(this, Observer {cloudata->
-
-
-                                        recyclerViewAdapter = HostelAdaptor(cloudata!!, this)
-                                        dataRecyclerView?.layoutManager = LinearLayoutManager(this.context)
-                                        dataRecyclerView?.adapter = recyclerViewAdapter
-                                        dataRecyclerView?.setEmptyView(empty_view_hostel)
-
+                                                        if (basedocumentChange.document.exists()) {
 
 
 
-                                    })
+                                                            val mstatus=documentChange.document.data.keys
 
 
+                                                            if (basedocumentChange.document.getBoolean("statuscomplete")==false){
+
+                                                                val managerData=basedocumentChange.document.toObject(CloudData::class.java)
+
+                                                                dbcloud!!.add(managerData)
+
+                                                                mViewModel.getArrayCloudList(dbcloud).observe(this, Observer {cloudata->
+
+
+                                                                    recyclerViewAdapter = HostelAdaptor(cloudata!!, this)
+                                                                    dataRecyclerView?.layoutManager = LinearLayoutManager(this.context)
+                                                                    dataRecyclerView?.adapter = recyclerViewAdapter
+                                                                    dataRecyclerView?.setEmptyView(empty_view_hostel)
+
+
+
+
+                                                                })
+
+
+
+
+
+                                                            }
+
+
+
+
+
+                                                        }
+
+
+                                                    }
+
+
+
+
+                                                        }
+
+
+
+
+                                            }
 
 
 
                                 }
+
+
+
 
 
 

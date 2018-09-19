@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import findhome.com.example.android.findhomeb.adaptors.HomeFilterAdaptor
@@ -71,33 +72,58 @@ class HomeFilterFragment : Fragment(),HomeFilterAdaptor.OnItemClickListener {
 
                             if (documentChange.type== DocumentChange.Type.ADDED){
 
-                                val mstatus=documentChange.document.data.keys
 
 
-                                if (documentChange.document.getBoolean("statuscomplete")==false){
+                                mFirebaseFirestore
+                                        .document(documentChange.document.reference.path)
+                                        .collection("homes")
+                                        .addSnapshotListener { basequerySnapshot, basefirebaseFirestoreException ->
 
-                                    val managerData=documentChange.document.toObject(CloudData::class.java)
+                                            if ( basefirebaseFirestoreException!=null){
 
-                                    dbcloud!!.add(managerData)
+                                            }else {
 
-                                    mViewModel.getArrayCloudList(dbcloud).observe(this, Observer {cloudata->
+                                                for (basedocumentChange: DocumentChange in basequerySnapshot!!.documentChanges) {
 
-
-                                        recyclerViewAdapter = HomeFilterAdaptor(cloudata!!, this)
-                                        dataRecyclerView?.layoutManager = LinearLayoutManager(this.context)
-                                        dataRecyclerView?.adapter = recyclerViewAdapter
-                                        dataRecyclerView?.setEmptyView(empty_view_homefilter)
-
+                                                    if (basedocumentChange.document.exists()) {
 
 
+                                                        if (basedocumentChange.document.getBoolean("statuscomplete")==false){
 
-                                    })
+                                                            val managerData=basedocumentChange.document.toObject(CloudData::class.java)
+
+                                                            dbcloud!!.add(managerData)
+
+                                                            mViewModel.getArrayCloudList(dbcloud).observe(this, Observer {cloudata->
+
+
+                                                                recyclerViewAdapter = HomeFilterAdaptor(cloudata!!, this)
+                                                                dataRecyclerView?.layoutManager = LinearLayoutManager(this.context)
+                                                                dataRecyclerView?.adapter = recyclerViewAdapter
+                                                                dataRecyclerView?.setEmptyView(empty_view_homefilter)
+
+
+
+
+                                                            })
 
 
 
 
 
-                                }
+                                                        }
+
+                                                    }
+
+                                                }
+
+                                            }
+
+
+                                        }
+
+
+
 
 
 
@@ -114,6 +140,9 @@ class HomeFilterFragment : Fragment(),HomeFilterAdaptor.OnItemClickListener {
 
 
                 }
+
+
+
 
 
     }

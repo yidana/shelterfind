@@ -29,7 +29,7 @@
         android:text="@string/set_the_title_and_description_of_your_place"
         android:textAlignment="center"
         android:textColor="@color/blacky"
-        android:textSize="25sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar" />
@@ -39,26 +39,27 @@
         android:id="@+id/inputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:errorEnabled="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="15dp"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" >
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
 
         <EditText
             android:id="@+id/title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:background="@drawable/background_text"
             android:fontFamily="sans-serif-smallcaps"
             android:hint="@string/write_a_title"
             android:inputType="text"
             android:textColor="@color/blacky"
-            android:textSize="20sp"
             android:textColorHint="@color/blacky"
-            />
+            android:textSize="18sp" />
 
 
     </android.support.design.widget.TextInputLayout>
@@ -67,12 +68,13 @@
     <android.support.design.widget.TextInputLayout
         android:id="@+id/inputLayout1"
         android:layout_width="match_parent"
-        android:layout_height="174dp"
+        android:layout_height="142dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         app:counterMaxLength="140"
         app:errorEnabled="true"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,6 +85,7 @@
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/background_text"
             android:fontFamily="sans-serif-smallcaps"
             android:hint="@string/write_a_short_description_of_your_place"
             android:inputType="textMultiLine"
@@ -102,23 +105,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="10dp"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputLayout1" >
+        app:layout_constraintTop_toBottomOf="@+id/inputLayout1">
 
         <EditText
             android:id="@+id/phonenumber"
             android:layout_width="362dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="11dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="24dp"
-            android:textColorHint="@color/blacky"
             android:layout_marginEnd="11dp"
+            android:background="@drawable/background_text"
             android:hint="@string/enter_phone_number"
             android:inputType="phone"
-            />
+            android:textColorHint="@color/blacky" />
     </android.support.design.widget.TextInputLayout>
 
 

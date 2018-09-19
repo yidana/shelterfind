@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import findhome.com.example.android.findhomeb.HomeFragment.Companion.passingDataCloudData
@@ -70,8 +71,6 @@ class AllFragment : Fragment(), HomeRecyclerViewAdaptor.OnItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
 
-
-
         dataRecyclerView= rvDataall
         val dbcloud:ArrayList<CloudData>?= ArrayList()
         val facilities=HashMap<String,String>()
@@ -92,39 +91,72 @@ class AllFragment : Fragment(), HomeRecyclerViewAdaptor.OnItemClickListener {
 
                         }else{
 
+
                             for (documentChange: DocumentChange in querySnapshot!!.documentChanges){
 
                                 if (documentChange.type== DocumentChange.Type.ADDED){
 
-                                    val mstatus=documentChange.document.data.keys
+                                    if (documentChange.document.exists()){
+
+                                        mFirebaseFirestore
+                                                .document(documentChange.document.reference.path)
+                                                .collection(mTarget)
+                                                .addSnapshotListener { basequerySnapshot, basefirebaseFirestoreException ->
+
+                                                    if ( basefirebaseFirestoreException!=null){
+
+                                                    }else {
+
+                                                        for (basedocumentChange: DocumentChange in basequerySnapshot!!.documentChanges) {
+
+                                                            if (basedocumentChange.document.exists()){
+
+                                                                if (basedocumentChange.document.getBoolean("statuscomplete")==false){
+
+                                                                    val managerData=basedocumentChange.document.toObject(CloudData::class.java)
+
+                                                                    dbcloud!!.add(managerData)
+
+                                                                    mViewModel.getArrayCloudList(dbcloud).observe(this, Observer {cloudata->
 
 
-                                    if (documentChange.document.getBoolean("statuscomplete")==false){
-
-                                        val managerData=documentChange.document.toObject(CloudData::class.java)
-
-                                        dbcloud!!.add(managerData)
-
-                                        mViewModel.getArrayCloudList(dbcloud).observe(this, Observer {cloudata->
-
-
-                                            recyclerViewAdapter = HomeRecyclerViewAdaptor(cloudata!!, this)
-                                            dataRecyclerView?.layoutManager = LinearLayoutManager(this.context)
-                                            dataRecyclerView?.adapter = recyclerViewAdapter
-                                            dataRecyclerView?.setEmptyView(empty_view)
+                                                                        recyclerViewAdapter = HomeRecyclerViewAdaptor(cloudata!!, this)
+                                                                        dataRecyclerView?.layoutManager = LinearLayoutManager(this.context)
+                                                                        dataRecyclerView?.adapter = recyclerViewAdapter
+                                                                        dataRecyclerView?.setEmptyView(empty_view)
 
 
 
 
-                                        })
+                                                                    })
 
+
+
+
+
+                                                                }
+
+
+
+                                                            }
+
+
+
+
+
+                                                        }
+
+
+
+                                                    }
+
+
+                                                }
 
 
 
 
                                     }
-
-
 
 
 
@@ -139,6 +171,10 @@ class AllFragment : Fragment(), HomeRecyclerViewAdaptor.OnItemClickListener {
                     }
 
         }
+
+
+
+
 
 
 

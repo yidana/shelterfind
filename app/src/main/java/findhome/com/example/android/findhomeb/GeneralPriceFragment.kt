@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.navigation.Navigation
 import com.afollestad.materialdialogs.MaterialDialog
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import kotlinx.android.synthetic.main.fragment_general_price.*
@@ -39,94 +40,110 @@ class GeneralPriceFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
 
-        mFirebaseFirestore=  (activity as MainActivity).mFirebaseFirestore
+        mFirebaseFirestore=  FirebaseFirestore.getInstance()
 
         val prefs= activity?.getPreferences(Context.MODE_PRIVATE) ?: return
         val destin = prefs.getString(preference_file_key,"none")
         val dateList= (activity as MainActivity).peroidavailable
 
         dateChoose = dateList?.toString() ?: "Always"
-        when((destin!!)){
-            "house"->{
-                val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes")
 
 
-                myCollectionReference.get().addOnCompleteListener {task ->
 
-                    if (task.isSuccessful){
+        FirebaseAuth.AuthStateListener { usrID ->
 
-
-                        val roomavailabiliydb=HashMap<String,String>()
-                        roomavailabiliydb["roomavailability"] =dateChoose
-                        Log.e("FailureCloud",roomavailabiliydb.toString())
-                        mFirebaseFirestore.collection("/user/facilities/homes")
-                                .document(task.result.last().id)
-                                .set(roomavailabiliydb as Map<String, Any>, SetOptions.merge())
-                                .addOnSuccessListener {succes->
-
-                                }.addOnFailureListener { failure->
-
-                                    Log.e("FailureCloud",failure.toString())
-                                }
+            when((destin!!)){
+                "house"->{
+                    val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes/"
+                            +usrID.currentUser!!.uid+"/"+"homes")
 
 
+                    myCollectionReference.get().addOnCompleteListener {task ->
+
+                        if (task.isSuccessful){
+
+
+                            val roomavailabiliydb=HashMap<String,String>()
+                            roomavailabiliydb["roomavailability"] =dateChoose
+                            Log.e("FailureCloud",roomavailabiliydb.toString())
+                            mFirebaseFirestore.collection("/user/facilities/homes/"
+                                    +usrID.currentUser!!.uid+"/"+"homes")
+                                    .document(task.result.last().id)
+                                    .set(roomavailabiliydb as Map<String, Any>, SetOptions.merge())
+                                    .addOnSuccessListener {succes->
+
+                                    }.addOnFailureListener { failure->
+
+                                        Log.e("FailureCloud",failure.toString())
+                                    }
+
+
+                        }
                     }
+
                 }
+                "apartment"->{
 
-            }
-            "apartment"->{
-
-                val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/apartments")
-
+                    val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/apartments/"
+                            +usrID.currentUser!!.uid+"/"+"apartments")
 
 
-                myCollectionReference.get().addOnCompleteListener {task ->
 
-                    if (task.isSuccessful){
+                    myCollectionReference.get().addOnCompleteListener {task ->
 
-                        val roomavailabiliydb=HashMap<String,String>()
-                        roomavailabiliydb["roomavailability"] =dateChoose
+                        if (task.isSuccessful){
 
-                        mFirebaseFirestore.collection("/user/facilities/apartments")
-                                .document(task.result.last().id)
-                                .set(roomavailabiliydb as Map<String, Any>, SetOptions.merge())
-                                .addOnSuccessListener {succes->
-                                }.addOnFailureListener { failure->
+                            val roomavailabiliydb=HashMap<String,String>()
+                            roomavailabiliydb["roomavailability"] =dateChoose
 
-                                    Log.e("FailureCloud",failure.toString())
-                                }
+                            mFirebaseFirestore.collection("/user/facilities/apartments/"
+                                    +usrID.currentUser!!.uid+"/"+"apartments")
+                                    .document(task.result.last().id)
+                                    .set(roomavailabiliydb as Map<String, Any>, SetOptions.merge())
+                                    .addOnSuccessListener {succes->
+                                    }.addOnFailureListener { failure->
+
+                                        Log.e("FailureCloud",failure.toString())
+                                    }
 
 
+                        }
                     }
+
                 }
-
-            }
-            "hotel"->{
-                val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hotels")
-
-
-                myCollectionReference.get().addOnCompleteListener {task ->
-
-                    if (task.isSuccessful){
+                "hotel"->{
+                    val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hotels/"
+                            +usrID.currentUser!!.uid+"/"+"hotels")
 
 
-                        val roomavailabiliydb=HashMap<String,String>()
-                        roomavailabiliydb["roomavailability"] =dateChoose
-                        mFirebaseFirestore.collection("/user/facilities/hotels")
-                                .document(task.result.last().id)
-                                .set(roomavailabiliydb as Map<String, Any>, SetOptions.merge())
-                                .addOnSuccessListener {succes->
-                                }.addOnFailureListener { failure->
+                    myCollectionReference.get().addOnCompleteListener {task ->
 
-                                    Log.e("FailureCloud",failure.toString())
-                                }
+                        if (task.isSuccessful){
 
 
+                            val roomavailabiliydb=HashMap<String,String>()
+                            roomavailabiliydb["roomavailability"] =dateChoose
+                            mFirebaseFirestore.collection("/user/facilities/hotels/"
+                                    +usrID.currentUser!!.uid+"/"+"hotels")
+                                    .document(task.result.last().id)
+                                    .set(roomavailabiliydb as Map<String, Any>, SetOptions.merge())
+                                    .addOnSuccessListener {succes->
+                                    }.addOnFailureListener { failure->
+
+                                        Log.e("FailureCloud",failure.toString())
+                                    }
+
+
+                        }
                     }
+
+
                 }
-
-
             }
+
+
+
+
         }
 
 
@@ -147,7 +164,7 @@ class GeneralPriceFragment : Fragment() {
 
 
 
-        val toolbar = view.findViewById<android.widget.Toolbar>(R.id.my_toolbar) as android.widget.Toolbar
+        val toolbar = view.findViewById<android.widget.Toolbar>(R.id.my_toolbar) as Toolbar
 
 
      toolbar.setNavigationOnClickListener {
@@ -187,73 +204,90 @@ class GeneralPriceFragment : Fragment() {
                 }
 
                 else->{
-                    when((destin!!)){
-                        "house"->{
-                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes")
 
 
-                            myCollectionReference.get().addOnCompleteListener {task ->
-
-                                if (task.isSuccessful){
+                    FirebaseAuth.AuthStateListener { usrID ->
 
 
-                                    val objdb=HashMap<String,Any>()
-                                    objdb["amount"]=general_price.text.toString().toInt()
-                                    objdb["peroid"]=peroid_spinner.selectedItem.toString()
-
-                                    val roompricedb=HashMap<String,Any>()
-                                    roompricedb["roomtypeprice"] =objdb
-                                    roompricedb["progress"]="40"
-                                    mFirebaseFirestore.collection("/user/facilities/homes")
-                                            .document(task.result.last().id)
-                                            .set(roompricedb, SetOptions.merge())
-                                            .addOnSuccessListener {succes->
-                                                dialog.dismiss()
-                                                Navigation.findNavController(it).navigate(R.id.overviewFragment, null)
-                                            }.addOnFailureListener { failure->
-                                                dialog.dismiss()
-                                                Log.e("FailureCloud",failure.toString())
-                                            }
+                        when((destin!!)){
+                            "house"->{
+                                val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes/"
+                                        +usrID.currentUser!!.uid+"/"+"homes")
 
 
+                                myCollectionReference.get().addOnCompleteListener {task ->
+
+                                    if (task.isSuccessful){
+
+
+                                        val objdb=HashMap<String,Any>()
+                                        objdb["amount"]=general_price.text.toString().toInt()
+                                        objdb["peroid"]=peroid_spinner.selectedItem.toString()
+
+                                        val roompricedb=HashMap<String,Any>()
+                                        roompricedb["roomtypeprice"] =objdb
+                                        roompricedb["progress"]="40"
+                                        mFirebaseFirestore.collection("/user/facilities/homes/"
+                                                +usrID.currentUser!!.uid+"/"+"homes")
+                                                .document(task.result.last().id)
+                                                .set(roompricedb, SetOptions.merge())
+                                                .addOnSuccessListener {succes->
+                                                    dialog.dismiss()
+                                                    Navigation.findNavController(it).navigate(R.id.overviewFragment, null)
+                                                }.addOnFailureListener { failure->
+                                                    dialog.dismiss()
+                                                    Log.e("FailureCloud",failure.toString())
+                                                }
+
+
+                                    }
                                 }
+
                             }
+                            "apartment"->{
 
-                        }
-                        "apartment"->{
-
-                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/apartments")
-
+                                val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/apartments/"
+                                        +usrID.currentUser!!.uid+"/"+"apartments")
 
 
-                            myCollectionReference.get().addOnCompleteListener {task ->
 
-                                if (task.isSuccessful){
+                                myCollectionReference.get().addOnCompleteListener {task ->
 
-                                    val objdb=HashMap<String,Any>()
-                                    objdb["amount"]=general_price.text.toString().toInt()
-                                    objdb["peroid"]=peroid_spinner.selectedItem.toString()
+                                    if (task.isSuccessful){
 
-                                    val roompricedb=HashMap<String,Any>()
-                                    roompricedb["roomtypeprice"] = objdb
-                                    roompricedb["progress"]="40"
-                                    mFirebaseFirestore.collection("/user/facilities/apartments")
-                                            .document(task.result.last().id)
-                                            .set(roompricedb, SetOptions.merge())
-                                            .addOnSuccessListener {succes->
-                                                dialog.dismiss()
-                                                Navigation.findNavController(it).navigate(R.id.overviewFragment, null)
-                                            }.addOnFailureListener { failure->
-                                                dialog.dismiss()
-                                                Log.e("FailureCloud",failure.toString())
-                                            }
+                                        val objdb=HashMap<String,Any>()
+                                        objdb["amount"]=general_price.text.toString().toInt()
+                                        objdb["peroid"]=peroid_spinner.selectedItem.toString()
+
+                                        val roompricedb=HashMap<String,Any>()
+                                        roompricedb["roomtypeprice"] = objdb
+                                        roompricedb["progress"]="40"
+                                        mFirebaseFirestore.collection("/user/facilities/apartments/"
+                                                +usrID.currentUser!!.uid+"/"+"apartments")
+                                                .document(task.result.last().id)
+                                                .set(roompricedb, SetOptions.merge())
+                                                .addOnSuccessListener {succes->
+                                                    dialog.dismiss()
+                                                    Navigation.findNavController(it).navigate(R.id.overviewFragment, null)
+                                                }.addOnFailureListener { failure->
+                                                    dialog.dismiss()
+                                                    Log.e("FailureCloud",failure.toString())
+                                                }
 
 
+                                    }
                                 }
-                            }
 
+                            }
                         }
+
+
+
+
                     }
+
+
+
                 }
             }
 

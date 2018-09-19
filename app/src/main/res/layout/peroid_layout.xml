@@ -1,36 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <com.alespero.expandablecardview.ExpandableCardView
-        android:id="@+id/yearly"
+<TableLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    >
+
+    <TableRow android:id="@+id/priceperperiod_row" android:background="#807f7f" >
+        <CheckBox
+            android:id="@+id/priceperperiod_checkbox"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/price_per_period"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:buttonTint="@color/white"
+            android:paddingStart="100dp"
+            android:paddingEnd="0dp"
+            android:layout_gravity="center"
+
+            />
+
+
+
+
+    </TableRow>
+
+    <TableRow
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:title="Yearly"
-        app:inner_view="@layout/yearly_layout"
-        app:expandOnClick="true"
-        app:animationDuration="300"
-        app:startExpanded="false"
-        android:elevation="4dp"
-        android:layout_margin="15dp"/>
+        android:id="@+id/monthly_row" android:background="#ffffff"
+        android:elevation="5dp">
+
+        <CheckBox
+            android:id="@+id/monthly_checkbox"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/monthly"
+            android:textColor="@color/blacky"
+            android:textSize="15sp"
+            android:buttonTint="@color/blacky"
+            android:paddingEnd="0dp"
+            android:layout_gravity="center"
+
+            />
 
 
+    </TableRow>
 
-    <com.alespero.expandablecardview.ExpandableCardView
-        android:id="@+id/monthly"
+    <include layout="@layout/monthly_layout"/>
+
+    <TableRow
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:title="Monthly"
-        android:layout_margin="15dp"
-        app:inner_view="@layout/monthly_layout"
-        app:expandOnClick="true"
-        android:elevation="4dp"
-        app:animationDuration="300"
-        app:startExpanded="false"/>
+        android:id="@+id/yearly_row" android:background="#ffffff"
+        android:elevation="5dp">
+
+        <CheckBox
+            android:id="@+id/yearly_checkbox"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/yearly"
+            android:textColor="@color/blacky"
+            android:textSize="15sp"
+            android:buttonTint="@color/blacky"
+            android:paddingEnd="0dp"
+            android:layout_gravity="center"
+
+            />
 
 
-</LinearLayout>
+    </TableRow>
+
+
+    <include layout="@layout/yearly_layout"/>
+
+
+
+
+</TableLayout>
+
+
+</ScrollView>

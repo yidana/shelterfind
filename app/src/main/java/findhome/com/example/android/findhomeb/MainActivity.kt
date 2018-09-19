@@ -130,7 +130,7 @@ private val ROOM_AVB="roomavailability"
 
 
         val docpath:DocumentReference=    mFirebaseFirestore.
-                collection("user").document("userinfo")
+                collection("user").document(user.uid)
 
         docpath.get().addOnCompleteListener { task ->
             if (task.isSuccessful &&  task.result.data!!["name"]!=mUsername ){

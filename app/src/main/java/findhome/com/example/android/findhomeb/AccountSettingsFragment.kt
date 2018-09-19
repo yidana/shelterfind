@@ -17,6 +17,7 @@ import android.widget.EditText
 import androidx.navigation.Navigation
 import androidx.work.*
 import androidx.work.Data
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
@@ -63,29 +64,32 @@ class AccountSettingsFragment : Fragment() {
         if (networkInfo.isConnected){
 
 
+            FirebaseAuth.AuthStateListener { userID->
+
+                mFirebaseFirestore.document("/user/"+userID.currentUser!!.uid).get().addOnSuccessListener {doc->
+
+                    val imgurl=doc.getString("photourl")
+                    val mname=doc.getString("name")
+                    val email=doc.getString("email")
+                    val country=doc.getString("country")
+                    welcome_text.text="Hello, " + mname
+
+                    if (!imgurl!!.isEmpty()){
 
 
-            mFirebaseFirestore.document("/user/userinfo").get().addOnSuccessListener {doc->
+                        Picasso.get().load( Uri.parse(imgurl)).fit().into(app_bar_image)
 
-                val imgurl=doc.getString("photourl")
-                val mname=doc.getString("name")
-                val email=doc.getString("email")
-                val country=doc.getString("country")
-                welcome_text.text="Hello, " + mname
-
-                if (!imgurl!!.isEmpty()){
+                    }
 
 
-                    Picasso.get().load( Uri.parse(imgurl)).fit().into(app_bar_image)
+                    view.profile_name.setText(mname)
+                    view.profile_email.setText(email)
+                    view. profile_country.setText(country)
+
+
+
 
                 }
-
-
-                view.profile_name.setText(mname)
-                view.profile_email.setText(email)
-                view. profile_country.setText(country)
-
-
 
 
             }
@@ -94,25 +98,33 @@ class AccountSettingsFragment : Fragment() {
 
 
 
+
         }
 
         else{
-            mFirebaseFirestore.document("/user/userinfo").get().addOnSuccessListener {doc->
 
-
-                val mname=doc.getString("name")
-                val email=doc.getString("email")
-                val country=doc.getString("country")
-
-                welcome_text.text="Hello, " + mname
-
-
-                view.profile_name.setText(mname)
-                view.profile_email.setText(email)
-                view. profile_country.setText(country)
+            FirebaseAuth.AuthStateListener { userID ->
 
 
 
+                mFirebaseFirestore.document("/user/"+userID.currentUser!!.uid).get().addOnSuccessListener {doc->
+
+
+                    val mname=doc.getString("name")
+                    val email=doc.getString("email")
+                    val country=doc.getString("country")
+
+                    welcome_text.text="Hello, " + mname
+
+
+                    view.profile_name.setText(mname)
+                    view.profile_email.setText(email)
+                    view. profile_country.setText(country)
+
+
+
+
+                }
 
             }
 
@@ -166,106 +178,113 @@ class AccountSettingsFragment : Fragment() {
                     if (mimageuri!=null){
 
 
-                        mFirebaseFirestore.document("/user/userinfo").get().addOnSuccessListener {doc->
+                        FirebaseAuth.AuthStateListener { userID ->
 
-                            val imgurl=doc.getString("photourl")
+                            mFirebaseFirestore.document("/user/"+userID.currentUser!!.uid).get().addOnSuccessListener {doc->
 
-                            if (imgurl!!.isNotEmpty()){
+                                val imgurl=doc.getString("photourl")
 
-                                mFirebaseStorage.getReferenceFromUrl(imgurl)
-                                        .delete().addOnSuccessListener {
+                                if (imgurl!!.isNotEmpty()){
 
-
-                                            Log.e("firebasestorage", "onSuccess: deleted file")
-
-
-                                            val builder = Data.Builder()
-                                            builder.putString(KEY_IMG_PATH,mimageuri.toString() )
-
-                                            val myConstraints = Constraints.Builder()
-                                                    .setRequiredNetworkType(NetworkType.CONNECTED)
-                                                    .build()
+                                    mFirebaseStorage.getReferenceFromUrl(imgurl)
+                                            .delete().addOnSuccessListener {
 
 
-                                            val work: OneTimeWorkRequest =
-                                                    OneTimeWorkRequest.Builder(ComUploadSingleImage::class.java)
-                                                            .setInputData(builder.build())
-                                                            .setConstraints(myConstraints)
-                                                            .build()
-                                            WorkManager.getInstance().enqueue(work)
-
-                                            WorkManager.getInstance().getStatusById(work.id)
-                                                    .observe(this, Observer {workStatus->
-
-                                                        val isWorkFinished = !workStatus?.state!!.isFinished
-
-                                                        if (isWorkFinished){
+                                                Log.e("firebasestorage", "onSuccess: deleted file")
 
 
-                                                            mFirebaseFirestore.document("/user/userinfo").get().addOnSuccessListener {doc->
+                                                val builder = Data.Builder()
+                                                builder.putString(KEY_IMG_PATH,mimageuri.toString() )
 
-                                                                val mimgurl=doc.getString("photourl")
+                                                val myConstraints = Constraints.Builder()
+                                                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                                                        .build()
 
-                                                                Picasso.get().load( Uri.parse(mimgurl)).fit().into(app_bar_image)
+
+                                                val work: OneTimeWorkRequest =
+                                                        OneTimeWorkRequest.Builder(ComUploadSingleImage::class.java)
+                                                                .setInputData(builder.build())
+                                                                .setConstraints(myConstraints)
+                                                                .build()
+                                                WorkManager.getInstance().enqueue(work)
+
+                                                WorkManager.getInstance().getStatusById(work.id)
+                                                        .observe(this, Observer {workStatus->
+
+                                                            val isWorkFinished = !workStatus?.state!!.isFinished
+
+                                                            if (isWorkFinished){
+
+
+                                                                mFirebaseFirestore.document("/user/userinfo").get().addOnSuccessListener {doc->
+
+                                                                    val mimgurl=doc.getString("photourl")
+
+                                                                    Picasso.get().load( Uri.parse(mimgurl)).fit().into(app_bar_image)
+                                                                }
+
+                                                            }else{
+
                                                             }
-
-                                                        }else{
-
-                                                        }
-                                                    })
+                                                        })
 
 
 
 
 
-
-                                        }
-                            }
-                            else{
-
-
-                                val builder = Data.Builder()
-                                builder.putString(KEY_IMG_PATH,mimageuri.toString() )
-
-                                val myConstraints = Constraints.Builder()
-                                        .setRequiredNetworkType(NetworkType.CONNECTED)
-                                        .build()
-
-
-                                val work: OneTimeWorkRequest =
-                                        OneTimeWorkRequest.Builder(ComUploadSingleImage::class.java)
-                                                .setInputData(builder.build())
-                                                .setConstraints(myConstraints)
-                                                .build()
-                                WorkManager.getInstance().enqueue(work)
-
-                                WorkManager.getInstance().getStatusById(work.id)
-                                        .observe(this, Observer {workStatus->
-
-                                            val isWorkFinished = !workStatus?.state!!.isFinished
-
-                                            if (isWorkFinished){
-
-
-
-                                                mFirebaseFirestore.document("/user/userinfo").get().addOnSuccessListener {doc->
-
-                                                    val nimgurl=doc.getString("photourl")
-
-                                                    Picasso.get().load( Uri.parse(nimgurl)).fit().into(app_bar_image)
-                                                }
-
-                                            }else{
 
                                             }
-                                        })
+                                }
+                                else{
 
+
+                                    val builder = Data.Builder()
+                                    builder.putString(KEY_IMG_PATH,mimageuri.toString() )
+
+                                    val myConstraints = Constraints.Builder()
+                                            .setRequiredNetworkType(NetworkType.CONNECTED)
+                                            .build()
+
+
+                                    val work: OneTimeWorkRequest =
+                                            OneTimeWorkRequest.Builder(ComUploadSingleImage::class.java)
+                                                    .setInputData(builder.build())
+                                                    .setConstraints(myConstraints)
+                                                    .build()
+                                    WorkManager.getInstance().enqueue(work)
+
+                                    WorkManager.getInstance().getStatusById(work.id)
+                                            .observe(this, Observer {workStatus->
+
+                                                val isWorkFinished = !workStatus?.state!!.isFinished
+
+                                                if (isWorkFinished){
+
+
+
+                                                    mFirebaseFirestore.document("/user/userinfo").get().addOnSuccessListener {doc->
+
+                                                        val nimgurl=doc.getString("photourl")
+
+                                                        Picasso.get().load( Uri.parse(nimgurl)).fit().into(app_bar_image)
+                                                    }
+
+                                                }else{
+
+                                                }
+                                            })
+
+
+
+                                }
 
 
                             }
 
 
                         }
+
+
 
 
 
