@@ -123,10 +123,9 @@ class EntryFormoneFragment : Fragment() {
 
                                     if (dbcount==0||dbcount==null ){
 
-
                                         val objdb=HashMap<String,Any?>()
                                         objdb["type"]="hostels"
-                                        objdb["userID"]=myuserID
+                                        objdb["userID"]=usrID.currentUser!!.uid
                                         objdb["progress"]="1"
                                         mFirebaseFirestore.collection("/user/facilities/hostels")
                                                 .document("hostel1"+usrID.currentUser!!.uid)
@@ -142,7 +141,7 @@ class EntryFormoneFragment : Fragment() {
 
                                         val objdb=HashMap<String,Any?>()
                                         objdb["type"]="hostels"
-                                        objdb["userID"]=myuserID
+                                        objdb["userID"]=usrID.currentUser!!.uid
                                         objdb["progress"]="1"
                                         mFirebaseFirestore.collection("/user/facilities/hostels")
                                                 .document("hostel"+dbcount.toString()+ usrID.currentUser!!.uid)
@@ -188,7 +187,7 @@ class EntryFormoneFragment : Fragment() {
 
                                         val objdb=HashMap<String,Any?>()
                                         objdb["type"]="homes"
-                                        objdb["userID"]=myuserID
+                                        objdb["userID"]=usrID.currentUser!!.uid
                                         objdb["progress"]="1"
                                         mFirebaseFirestore.collection("/user/facilities/homes")
                                                 .document("home1"+usrID.currentUser!!.uid)
@@ -207,7 +206,7 @@ class EntryFormoneFragment : Fragment() {
 
                                         val objdb=HashMap<String,Any?>()
                                         objdb["type"]="homes"
-                                        objdb["userID"]=myuserID
+                                        objdb["userID"]=usrID.currentUser!!.uid
                                         objdb["progress"]="1"
                                         mFirebaseFirestore.collection("/user/facilities/homes")
                                                 .document("home"+dbcount.toString()+ usrID.currentUser!!.uid)
@@ -255,7 +254,7 @@ class EntryFormoneFragment : Fragment() {
 
                                         val objdb=HashMap<String,Any?>()
                                         objdb["type"]="apartments"
-                                        objdb["userID"]=myuserID
+                                        objdb["userID"]=usrID.currentUser!!.uid
                                         objdb["progress"]="1"
                                         mFirebaseFirestore.collection("/user/facilities/apartments")
                                                 .document("apartment1"+usrID.currentUser!!.uid)
@@ -278,7 +277,7 @@ class EntryFormoneFragment : Fragment() {
 
                                         val objdb=HashMap<String,Any?>()
                                         objdb["type"]="apartments"
-                                        objdb["userID"]=myuserID
+                                        objdb["userID"]=usrID.currentUser!!.uid
                                         objdb["progress"]="1"
                                         mFirebaseFirestore.collection("/user/facilities/apartments")
                                                 .document("apartment"+dbcount.toString()+ usrID.currentUser!!.uid)
@@ -330,7 +329,7 @@ class EntryFormoneFragment : Fragment() {
 
                                         val objdb=HashMap<String,Any?>()
                                         objdb["type"]="hotels"
-                                        objdb["userID"]=myuserID
+                                        objdb["userID"]=usrID.currentUser!!.uid
                                         objdb["progress"]="1"
                                         mFirebaseFirestore.collection("/user/facilities/hotels")
                                                 .document("hotel1"+usrID.currentUser!!.uid)
@@ -353,7 +352,7 @@ class EntryFormoneFragment : Fragment() {
 
                                         val objdb=HashMap<String,Any?>()
                                         objdb["type"]="hotels"
-                                        objdb["userID"]=myuserID
+                                        objdb["userID"]=usrID.currentUser!!.uid
                                         objdb["progress"]="1"
                                         mFirebaseFirestore.collection("/user/facilities/hotels")
                                                 .document("hotel"+dbcount.toString()+ usrID.currentUser!!.uid)
