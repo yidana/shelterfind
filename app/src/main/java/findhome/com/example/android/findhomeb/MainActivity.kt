@@ -129,19 +129,20 @@ private val ROOM_AVB="roomavailability"
         userinfo["photourl"]=""
 
 
-        val docpath:DocumentReference=    mFirebaseFirestore.
-                collection("user").document(user.uid)
+        val docpath=
+                mFirebaseFirestore.
+                        collection("user").document(user.uid)
 
-        docpath.get().addOnCompleteListener { task ->
-            if (task.isSuccessful &&  task.result.data!!["name"]!=mUsername ){
 
-                docpath.set(userinfo as Map<String, Any>, SetOptions.merge())
+        docpath.get().addOnSuccessListener { doc->
 
+            if (doc==null){
+                mFirebaseFirestore.
+                        collection("user").document(user.uid).set(userinfo as Map<String, Any>, SetOptions.merge())
 
             }
 
         }
-
 
 
 
@@ -154,7 +155,6 @@ private val ROOM_AVB="roomavailability"
     override fun onResume() {
         super.onResume()
 
-
 mFirebaseAuth.addAuthStateListener(mAuthStateListener)
 
     }
@@ -164,7 +164,6 @@ mFirebaseAuth.addAuthStateListener(mAuthStateListener)
         super.onPause()
 
             mFirebaseAuth.removeAuthStateListener(mAuthStateListener)
-
 
     }
 
