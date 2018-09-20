@@ -77,7 +77,6 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
 
-    implementation  'com.alespero:expandable-cardview:0.8'
     //jetpack
     implementation "android.arch.work:work-runtime:1.0.0-alpha08"
     implementation "android.arch.lifecycle:viewmodel:1.1.1"

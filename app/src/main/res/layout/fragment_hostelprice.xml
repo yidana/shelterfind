@@ -77,6 +77,10 @@
                 android:id="@+id/per_night_lt"
                 layout="@layout/price_per_night_layout" />
 
+ <include
+                android:id="@+id/per_night_lt"
+                layout="@layout/peroid_layout" />
+
 
 
         </LinearLayout>
