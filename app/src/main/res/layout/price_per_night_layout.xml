@@ -11,9 +11,31 @@
         android:id="@+id/price_rooms"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+<TableRow android:id="@+id/pricepernight_row" android:background="#807f7f" >
+<CheckBox
+    android:id="@+id/pricepernight_checkbox"
+    android:layout_width="0dip"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:text="@string/price_per_night"
+    android:textColor="@color/white"
+    android:textSize="20sp"
+    android:buttonTint="@color/white"
+    android:paddingStart="100dp"
+    android:paddingEnd="0dp"
+    android:layout_gravity="center"
+
+    />
+
+
+
+
+</TableRow>
+
+
 
         <TableRow
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -44,7 +66,7 @@
 
 
         <TableRow
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -76,7 +98,7 @@
 
 
         <TableRow
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -107,7 +129,7 @@
 
 
         <TableRow
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -138,7 +160,7 @@
 
 
         <TableRow
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -169,7 +191,7 @@
 
 
         <TableRow
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -200,7 +222,7 @@
 
 
         <TableRow
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -230,7 +252,7 @@
         </TableRow>
 
         <TableRow
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

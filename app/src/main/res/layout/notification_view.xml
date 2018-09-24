@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="15dp"
+    android:background="@color/white">
+
+
+
+    <TextView
+        android:id="@+id/notification_title"
+        android:layout_width="wrap_content"
+        android:paddingTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="15sp"
+        android:textColor="@color/blacky"/>
+
+
+    <TextView
+        android:id="@+id/notification_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:text="Once this change is made, we can send a new push message(Firebase Cloud Messaging) notification and it should appear in a dialog window on our device like on the picture below"
+        android:textAlignment="viewStart"
+        android:textColor="@color/blacky"
+        android:textSize="15sp" />
+
+</LinearLayout>

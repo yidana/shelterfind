@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.navigation.Navigation
 import com.afollestad.materialdialogs.MaterialDialog
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
@@ -36,7 +37,7 @@ class GeneralRoomTypeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mFirebaseFirestore= (activity as MainActivity).mFirebaseFirestore
+        mFirebaseFirestore= FirebaseFirestore.getInstance()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +52,7 @@ class GeneralRoomTypeFragment : Fragment() {
 
 
 
-        val toolbar = view.findViewById<android.widget.Toolbar>(R.id.my_toolbar) as android.widget.Toolbar
+        val toolbar = view.findViewById<android.widget.Toolbar>(R.id.my_toolbar) as Toolbar
 
 
         toolbar.setNavigationOnClickListener {
@@ -99,139 +100,166 @@ class GeneralRoomTypeFragment : Fragment() {
 
 
                     return@setOnClickListener
-                }
-            }
-
-            val prefs= activity?.getPreferences(Context.MODE_PRIVATE) ?: return@setOnClickListener
+                }else->{
 
 
-            val destin = prefs.getString(preference_file_key,"none")
+
+                FirebaseAuth.AuthStateListener { usrID ->
 
 
 
 
-
-            val balcstatus= balcony_switch.isChecked
-            val mainhallstatus=main_hall_switch.isChecked
+                    val prefs= activity?.getPreferences(Context.MODE_PRIVATE)
 
 
-            when((destin!!)){
-                "house"->{
-                    val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes")
-
-                    val bedroom=bedroom_count_text.text.trim().toString().toInt()
-
-                    val bathroom=bathroom_count_text.text.trim().toString().toInt()
+                    val destin = prefs!!.getString(preference_file_key,"none")
 
 
-                  myCollectionReference.get().addOnCompleteListener {task ->
-
-                      if (task.isSuccessful){
-
-                          val objdb=HashMap<String,Any>()
-                          objdb["bedrooms"]=bedroom
-                          objdb["bathrooms"]=bathroom
-                          objdb["balcony"]=balcstatus
-                          objdb["mainhall"]=mainhallstatus
-
-                          val roomdb=HashMap<String,Any>()
-                          roomdb["roomtype"] =objdb
-                          roomdb["progress"]="10"
-                          Log.e("FailureCloud",roomdb.toString())
-                          mFirebaseFirestore.collection("/user/facilities/homes")
-                                  .document(task.result.last().id)
-                                  .set(roomdb, SetOptions.merge())
-                                  .addOnSuccessListener {succes->
-                                      dialog.dismiss()
-                                      Navigation.findNavController(it).navigate(R.id.placeAvailability, null)
-                                  }.addOnFailureListener { failure->
-                                      dialog.dismiss()
-                                      Log.e("FailureCloud",failure.toString())
-                                  }
 
 
-                      }
-                  }
 
-                }
-                "apartment"->{
-
-                    val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/apartments")
-
-                    val bedroom=bedroom_count_text.text.trim().toString().toInt()
-
-                    val bathroom=bathroom_count_text.text.trim().toString().toInt()
+                    val balcstatus= balcony_switch.isChecked
+                    val mainhallstatus=main_hall_switch.isChecked
 
 
-                    myCollectionReference.get().addOnCompleteListener {task ->
+                    when((destin!!)){
+                        "house"->{
+                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes/"
+                                    +usrID.currentUser!!.uid+"/"+"homes")
 
-                        if (task.isSuccessful){
+                            val bedroom=bedroom_count_text.text.trim().toString().toInt()
 
-                            val objdb=HashMap<String,Any>()
-                            objdb["bedrooms"]=bedroom
-                            objdb["bathrooms"]=bathroom
-                            objdb["balcony"]=balcstatus
-                            objdb["mainhall"]=mainhallstatus
+                            val bathroom=bathroom_count_text.text.trim().toString().toInt()
 
-                            val roomdb=HashMap<String,Any>()
-                            roomdb["roomtype"] =objdb
-                            roomdb["progress"]="10"
-                            Log.e("FailureCloud",roomdb.toString())
-                            mFirebaseFirestore.collection("/user/facilities/apartments")
-                                    .document(task.result.last().id)
-                                    .set(roomdb, SetOptions.merge())
-                                    .addOnSuccessListener {succes->
-                                        dialog.dismiss()
-                                        Navigation.findNavController(it).navigate(R.id.placeAvailability, null)
-                                    }.addOnFailureListener { failure->
-                                        dialog.dismiss()
-                                        Log.e("FailureCloud",failure.toString())
-                                    }
+
+                            myCollectionReference.get().addOnCompleteListener {task ->
+
+                                if (task.isSuccessful){
+
+                                    val objdb=HashMap<String,Any>()
+                                    objdb["bedrooms"]=bedroom
+                                    objdb["bathrooms"]=bathroom
+                                    objdb["balcony"]=balcstatus
+                                    objdb["mainhall"]=mainhallstatus
+
+                                    val roomdb=HashMap<String,Any>()
+                                    roomdb["roomtype"] =objdb
+                                    roomdb["progress"]="10"
+                                    Log.e("FailureCloud",roomdb.toString())
+                                    mFirebaseFirestore.collection("/user/facilities/homes/"
+                                            +usrID.currentUser!!.uid+"/"+"homes")
+                                            .document(task.result.last().id)
+                                            .set(roomdb, SetOptions.merge())
+                                            .addOnSuccessListener {succes->
+                                                dialog.dismiss()
+                                                Navigation.findNavController(it).navigate(R.id.placeAvailability, null)
+                                            }.addOnFailureListener { failure->
+                                                dialog.dismiss()
+                                                Log.e("FailureCloud",failure.toString())
+                                            }
+
+
+                                }
+                            }
+
+                        }
+                        "apartment"->{
+
+                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/apartments/"
+                                    +usrID.currentUser!!.uid+"/"+"apartments")
+
+                            val bedroom=bedroom_count_text.text.trim().toString().toInt()
+
+                            val bathroom=bathroom_count_text.text.trim().toString().toInt()
+
+
+                            myCollectionReference.get().addOnCompleteListener {task ->
+
+                                if (task.isSuccessful){
+
+                                    val objdb=HashMap<String,Any>()
+                                    objdb["bedrooms"]=bedroom
+                                    objdb["bathrooms"]=bathroom
+                                    objdb["balcony"]=balcstatus
+                                    objdb["mainhall"]=mainhallstatus
+
+                                    val roomdb=HashMap<String,Any>()
+                                    roomdb["roomtype"] =objdb
+                                    roomdb["progress"]="10"
+                                    Log.e("FailureCloud",roomdb.toString())
+                                    mFirebaseFirestore.collection("/user/facilities/apartments/"
+                                            +usrID.currentUser!!.uid+"/"+"apartments")
+                                            .document(task.result.last().id)
+                                            .set(roomdb, SetOptions.merge())
+                                            .addOnSuccessListener {succes->
+                                                dialog.dismiss()
+                                                Navigation.findNavController(it).navigate(R.id.placeAvailability, null)
+                                            }.addOnFailureListener { failure->
+                                                dialog.dismiss()
+                                                Log.e("FailureCloud",failure.toString())
+                                            }
+
+
+                                }
+                            }
+
+                        }
+                        "hotel"->{
+                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hotels/"
+                                    +usrID.currentUser!!.uid+"/"+"hotels")
+
+                            val bedroom=bedroom_count_text.text.trim().toString().toInt()
+
+                            val bathroom=bathroom_count_text.text.trim().toString().toInt()
+
+
+
+                            myCollectionReference.get().addOnCompleteListener {task ->
+
+                                if (task.isSuccessful){
+
+                                    val objdb=HashMap<String,Any>()
+                                    objdb["bedrooms"]=bedroom
+                                    objdb["bathrooms"]=bathroom
+                                    objdb["balcony"]=balcstatus
+                                    objdb["mainhall"]=mainhallstatus
+                                    val roomdb=HashMap<String,Any>()
+                                    roomdb["roomtype"] =objdb
+                                    roomdb["progress"]="10"
+                                    mFirebaseFirestore.collection("/user/facilities/hotels/"
+                                            +usrID.currentUser!!.uid+"/"+"hotels")
+                                            .document(task.result.last().id)
+                                            .set(roomdb, SetOptions.merge())
+                                            .addOnSuccessListener {succes->
+                                                dialog.dismiss()
+                                                Navigation.findNavController(it).navigate(R.id.placeAvailability, null)
+                                            }.addOnFailureListener { failure->
+                                                dialog.dismiss()
+                                                Log.e("FailureCloud",failure.toString())
+                                            }
+
+
+                                }
+                            }
 
 
                         }
                     }
 
-                }
-                "hotel"->{
-                    val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hotels")
-
-                    val bedroom=bedroom_count_text.text.trim().toString().toInt()
-
-                    val bathroom=bathroom_count_text.text.trim().toString().toInt()
 
 
-
-                    myCollectionReference.get().addOnCompleteListener {task ->
-
-                        if (task.isSuccessful){
-
-                            val objdb=HashMap<String,Any>()
-                            objdb["bedrooms"]=bedroom
-                            objdb["bathrooms"]=bathroom
-                            objdb["balcony"]=balcstatus
-                            objdb["mainhall"]=mainhallstatus
-                            val roomdb=HashMap<String,Any>()
-                            roomdb["roomtype"] =objdb
-                            roomdb["progress"]="10"
-                            mFirebaseFirestore.collection("/user/facilities/hotels")
-                                    .document(task.result.last().id)
-                                    .set(roomdb, SetOptions.merge())
-                                    .addOnSuccessListener {succes->
-                                        dialog.dismiss()
-                                        Navigation.findNavController(it).navigate(R.id.placeAvailability, null)
-                                    }.addOnFailureListener { failure->
-                                        dialog.dismiss()
-                                        Log.e("FailureCloud",failure.toString())
-                                    }
-
-
-                        }
-                    }
 
 
                 }
+
+
+
+
+
             }
+            }
+
+
 
 
 

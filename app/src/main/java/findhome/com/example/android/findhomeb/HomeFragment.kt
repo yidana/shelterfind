@@ -71,7 +71,7 @@ class HomeFragment : Fragment() {
 
         places_fab.setOnClickListener {
 
-           // Navigation.findNavController(view).navigate(R.id.placesFragment, null)
+            Navigation.findNavController(view).navigate(R.id.placesFragment, null)
 
         }
 

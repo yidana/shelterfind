@@ -29,7 +29,7 @@
         android:fontFamily="sans-serif-smallcaps"
         android:text="@string/select_the_room_types_available_in_your_hostel"
         android:textColor="@color/blacky"
-        android:textSize="25sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -40,7 +40,7 @@
               android:layout_gravity="center"
               android:layout_marginTop="70dp"
               android:textSize="20sp"
-              android:textColor="@color/white"/>
+              android:textColor="@color/blacky"/>
 
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -138,6 +138,35 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="50dp"
                     app:srcCompat="@drawable/ic_house" />
+
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:id="@+id/profile_payments"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payments"
+                    android:textSize="15sp"
+                    android:textColor="@color/blacky"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="2" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="50dp"
+                    app:srcCompat="@drawable/ic_credit_card" />
 
 
             </LinearLayout>

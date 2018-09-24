@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.Navigation
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -85,6 +87,15 @@ class PlacesFragment : Fragment(), PlacesRecyclerViewAdaptor.OnItemClickListener
         recyclerViewAdapter = PlacesRecyclerViewAdaptor(listmyData!!, this)
         dataRecyclerView?.layoutManager = LinearLayoutManager(this.context,LinearLayoutManager.HORIZONTAL,false)
         dataRecyclerView?.adapter = recyclerViewAdapter
+
+
+
+        val toolbar = view.findViewById<Toolbar>(R.id.my_toolbar) as Toolbar
+
+        toolbar.setNavigationOnClickListener {
+
+            Navigation.findNavController(it).navigate(R.id.homeFragment, null)
+        }
 
 
     }

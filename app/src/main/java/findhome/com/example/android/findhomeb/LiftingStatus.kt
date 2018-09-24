@@ -1,10 +1,13 @@
 package findhome.com.example.android.findhomeb
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,22 +16,61 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import findhome.com.example.android.findhomeb.adaptors.HomeRecyclerViewAdaptor
+import findhome.com.example.android.findhomeb.adaptors.ProgressLiftingAdaptor
 import findhome.com.example.android.findhomeb.model.CloudData
+import findhome.com.example.android.findhomeb.viewmodel.MyViewModel
+import findhome.com.example.android.findhomeb.viewmodel.ProgressViewModel
 import kotlinx.android.synthetic.main.fragment_account_settings.*
 import kotlinx.android.synthetic.main.fragment_all.*
 import kotlinx.android.synthetic.main.fragment_lifting_status.*
 
 
-class LiftingStatus : Fragment() {
+class LiftingStatus : Fragment(),ProgressLiftingAdaptor.OnItemClickListener {
+
+
+
+    override fun onItemClick(data: CloudData) {
+
+
+
+        when( data.progress){
+
+            "1"->{ Navigation.findNavController(this.view!!).navigate(R.id.entryFormoneFragment, null) }
+            "10"->{
+                if (data.type=="home" || data.type=="apartment" || data.type=="hotel") Navigation.findNavController(this.view!!).navigate(R.id.generalRoomTypeFragment, null)
+                else Navigation.findNavController(this.view!!).navigate(R.id.hostelRoomTypeFragment, null)
+            }
+            "30"->{ Navigation.findNavController(this.view!!).navigate(R.id.placeAvailability, null) }
+            "40"->{
+                if (data.type=="home" || data.type=="apartment") Navigation.findNavController(this.view!!).navigate(R.id.generalPriceFragment, null)
+                else if (data.type=="hotel")  Navigation.findNavController(this.view!!).navigate(R.id.hotelGeneralPriceFragment, null)
+                else if (data.type=="hostel")  Navigation.findNavController(this.view!!).navigate(R.id.priceHostelFragment, null)
+            }
+            "50"->{ Navigation.findNavController(this.view!!).navigate(R.id.overviewFragment, null) }
+            "60"->{ Navigation.findNavController(this.view!!).navigate(R.id.profilePictureFragment, null) }
+            "70"->{ Navigation.findNavController(this.view!!).navigate(R.id.addPlacePicturesFragment, null) }
+            "80"->{ Navigation.findNavController(this.view!!).navigate(R.id.amenitiesFragment, null) }
+            "95"->{ Navigation.findNavController(this.view!!).navigate(R.id.addressFragment, null) }
+
+        }
+
+
+
+    }
 
     var  lift_userID=""
     lateinit var mFirebaseFirestore: FirebaseFirestore
-    var liftprogress=""
-    var lifttype=""
+    private var dataRecyclerView:RecyclerView?=null
+    private var recyclerViewAdapter: ProgressLiftingAdaptor? = null
+    lateinit var mViewModel: ProgressViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mFirebaseFirestore= FirebaseFirestore.getInstance()
+        mViewModel= ViewModelProviders.of(this).get(ProgressViewModel::class.java)
+
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -45,65 +87,117 @@ class LiftingStatus : Fragment() {
         FirebaseAuth.AuthStateListener { firebaseAuth ->
             lift_userID=firebaseAuth.uid!!
 
-        }
+            dataRecyclerView= progress_recycleview
+            val dbcloud:ArrayList<CloudData>?= ArrayList()
+            val facilities=HashMap<String,String>()
+            facilities.put("homes","homes")
+            facilities.put("hostels","hostels")
+            facilities.put("hotels","hotels")
+            facilities.put("apartments","apartments")
+
+            for (i:String in   facilities.keys){
+                val mTarget=facilities[i]
+
+                mFirebaseFirestore
+                        .document("user/facilities")
+                        .collection(mTarget!!)
+                        .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+
+                            if (firebaseFirestoreException!=null){
+
+                            }else{
 
 
-        val facilities=HashMap<String,String>()
-        facilities["homes"] = "homes"
-        facilities["hostels"] = "hostels"
-        facilities["hotels"] = "hotels"
-        facilities["apartments"] = "apartments"
+                                for (documentChange: DocumentChange in querySnapshot!!.documentChanges){
 
-        for (i:String in   facilities.keys){
-            val mTarget=facilities[i]
+                                    if (documentChange.type== DocumentChange.Type.ADDED){
 
-            mFirebaseFirestore
-                    .document("user/facilities")
-                    .collection(mTarget!!)
-                    .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                                        if (documentChange.document.exists()){
 
-                        if (firebaseFirestoreException!=null){
+                                            if(documentChange.document.id==firebaseAuth.currentUser!!.uid  ){
 
-                        }else{
+                                                mFirebaseFirestore
+                                                        .document(documentChange.document.reference.path)
+                                                        .collection(mTarget)
+                                                        .addSnapshotListener { basequerySnapshot, basefirebaseFirestoreException ->
 
-                            for (documentChange: DocumentChange in querySnapshot!!.documentChanges){
+                                                            if ( basefirebaseFirestoreException!=null){
 
-                                if (documentChange.type== DocumentChange.Type.ADDED){
+                                                            }else {
+
+                                                                for (basedocumentChange: DocumentChange in basequerySnapshot!!.documentChanges) {
+
+                                                                    if (basedocumentChange.document.exists()){
+
+                                                                        if (basedocumentChange.document.getBoolean("statuscomplete")==false){
+
+                                                                            val managerData=basedocumentChange.document.toObject(CloudData::class.java)
+
+                                                                            dbcloud!!.add(managerData)
+
+                                                                            mViewModel.getArrayCloudList(dbcloud).observe(this, Observer {cloudata->
 
 
-                                    if ( documentChange.document.getString("userID")== lift_userID   &&  documentChange.document.getBoolean("statuscomplete")==false  ){
+                                                                                recyclerViewAdapter = ProgressLiftingAdaptor(cloudata!!, this)
+                                                                                dataRecyclerView?.layoutManager = LinearLayoutManager(this.context)
+                                                                                dataRecyclerView?.adapter = recyclerViewAdapter
 
-                                        liftprogress= documentChange.document.getString("progress")!!
-                                        val managerData=documentChange.document.toObject(CloudData::class.java)
 
-                                        liftingStatus_progress.progress = documentChange.document.getString("progress")!!.toInt()
-                                        progressbar_number.text=documentChange.document.getString("progress").plus("%")
 
-                                     val mgt=     managerData.overview as HashMap<String,Any>
 
-                                        lifttype=managerData.type!!
 
-                                        liftprogress_question.text= getString(R.string.continue_from_where_you_started, mgt["title"])
+                                                                            })
+
+
+
+
+
+                                                                        }
+
+
+
+                                                                    }
+
+
+
+
+
+                                                                }
+
+
+
+                                                            }
+
+
+                                                        }
+
+
+
+                                            }
+
+
+
+                                        }
+
+
+
 
                                     }
-
-
-
-
-
 
                                 }
 
                             }
 
+
                         }
 
+            }
 
-                    }
+
+
+
 
         }
-
-
 
 
 
@@ -122,40 +216,6 @@ class LiftingStatus : Fragment() {
         }
 
 
-        btn_continue.setOnClickListener {
-
-
-            when( liftprogress){
-
-                "1"->{ Navigation.findNavController(it).navigate(R.id.entryFormoneFragment, null) }
-                "10"->{
-                    if (lifttype=="home" || lifttype=="apartment" || lifttype=="hotel") Navigation.findNavController(it).navigate(R.id.generalRoomTypeFragment, null)
-                    else Navigation.findNavController(it).navigate(R.id.hostelRoomTypeFragment, null)
-                }
-                "30"->{ Navigation.findNavController(it).navigate(R.id.placeAvailability, null) }
-                "40"->{
-                    if (lifttype=="home" || lifttype=="apartment") Navigation.findNavController(it).navigate(R.id.generalPriceFragment, null)
-                    else if (lifttype=="hotel")  Navigation.findNavController(it).navigate(R.id.hotelGeneralPriceFragment, null)
-                    else if (lifttype=="hostel")  Navigation.findNavController(it).navigate(R.id.priceHostelFragment, null)
-                }
-                "50"->{ Navigation.findNavController(it).navigate(R.id.overviewFragment, null) }
-                "60"->{ Navigation.findNavController(it).navigate(R.id.profilePictureFragment, null) }
-                "70"->{ Navigation.findNavController(it).navigate(R.id.addPlacePicturesFragment, null) }
-                "80"->{ Navigation.findNavController(it).navigate(R.id.amenitiesFragment, null) }
-                "95"->{ Navigation.findNavController(it).navigate(R.id.addressFragment, null) }
-
-            }
-
-
-
-
-
-
-
-
-
-
-        }
     }
 
     companion object {

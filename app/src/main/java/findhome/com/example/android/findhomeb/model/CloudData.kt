@@ -19,6 +19,7 @@ public class CloudData{
  var statuscomplete:Boolean?=null
  var type:String?=null
  var userID:String?=null
+ var progress:String?=null
 
 
 
@@ -26,7 +27,7 @@ public class CloudData{
 
     constructor(roomtype: Any?, roomtypeprice: Any?, roomavailability: String?, overview: Any?,
                 captionurl: String?, photourl: List<String>?, amenities: List<String>?,
-                address: Any?, statuscomplete: Boolean?,type:String?,userID:String?) {
+                address: Any?, statuscomplete: Boolean?,type:String?,userID:String?,progress:String?) {
 
     }
     

@@ -42,7 +42,7 @@ import android.text.Spanned
 import android.util.Log
 import android.widget.LinearLayout
 import android.widget.Toast
-import android.widget.Toolbar
+import android.support.v7.widget.Toolbar
 import androidx.work.Constraints
 import androidx.work.Data
 import androidx.work.NetworkType

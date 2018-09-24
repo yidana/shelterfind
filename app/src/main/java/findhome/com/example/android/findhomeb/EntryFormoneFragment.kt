@@ -60,7 +60,7 @@ class EntryFormoneFragment : Fragment() {
 
 
 
-        val toolbar = view.findViewById<android.widget.Toolbar>(R.id.my_toolbar) as android.widget.Toolbar
+        val toolbar = view.findViewById<android.widget.Toolbar>(R.id.my_toolbar) as Toolbar
 
 
 
@@ -97,173 +97,311 @@ class EntryFormoneFragment : Fragment() {
 
             }else{
 
-                FirebaseAuth.AuthStateListener {firebaseAuth ->
-                    myuserID=firebaseAuth.uid!!
+
+                FirebaseAuth.AuthStateListener { usrID ->
+
+
+                    when (radioGroup?.checkedRadioButtonId) {
+
+
+                        R.id.facility_hostel -> {
+
+                            val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)!!
+
+                            with(sharedPref.edit()) {
+                                putString(preference_file_key, "hostel")
+                                apply()
+                            }
+
+
+                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hostels/"
+                                    +usrID.currentUser!!.uid+"/"+"hostels")
+                            myCollectionReference.get().addOnCompleteListener {task ->
+
+                                if (task.isSuccessful){
+
+                                    val dbcount=    task.result.size()
+
+                                    if (dbcount==0){
+
+                                        val objdb=HashMap<String,Any?>()
+                                        objdb["type"]="hostels"
+                                        objdb["userID"]=usrID.currentUser!!.uid
+                                        objdb["progress"]="1"
+                                        mFirebaseFirestore.collection("/user/facilities/hostels/"
+                                                +usrID.currentUser!!.uid+"/"+"hostels")
+                                                .document("hostel1")
+                                                .set(objdb, SetOptions.merge())
+                                                .addOnSuccessListener {succes->
+
+                                                    Navigation.findNavController(it).navigate(R.id.hostelRoomTypeFragment, null)
+                                                }.addOnFailureListener { failure->
+                                                    Log.e("FailureCloud",failure.toString())
+                                                }
+
+                                    }else{
+
+                                        val objdb=HashMap<String,Any?>()
+                                        objdb["type"]="hostels"
+                                        objdb["userID"]=usrID.currentUser!!.uid
+                                        objdb["progress"]="1"
+                                        mFirebaseFirestore.collection("/user/facilities/hostels/"+usrID.currentUser!!.uid+"/"+"hostels")
+                                                .document("hostel"+dbcount.toString())
+                                                .set(objdb, SetOptions.merge())
+                                                .addOnSuccessListener {succes->
+
+                                                    Navigation.findNavController(it).navigate(R.id.hostelRoomTypeFragment, null)
+                                                }.addOnFailureListener { failure->
+                                                    Log.e("FailureCloud",failure.toString())
+                                                }
+
+
+
+                                    }
+
+                                }
+                            }
+
+
+
+
+                        }
+
+                        R.id.facility_house -> {
+
+
+                            val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)!!
+                            with(sharedPref.edit()) {
+                                putString(preference_file_key, "house")
+                                apply()
+                            }
+
+                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes/"
+                                    +usrID.currentUser!!.uid+"/"+"homes")
+                            myCollectionReference.get().addOnCompleteListener {task ->
+
+                                if (task.isSuccessful){
+
+
+                                    val dbcount=    task.result.size()
+
+                                    if (dbcount==0 ) {
+
+
+                                        val objdb=HashMap<String,Any?>()
+                                        objdb["type"]="homes"
+                                        objdb["userID"]=usrID.currentUser!!.uid
+                                        objdb["progress"]="1"
+                                        mFirebaseFirestore.collection("/user/facilities/homes/"
+                                                +usrID.currentUser!!.uid+"/"+"homes")
+                                                .document("home1")
+                                                .set(objdb, SetOptions.merge())
+                                                .addOnSuccessListener {succes->
+
+                                                    Navigation.findNavController(it).navigate(R.id.generalRoomTypeFragment, null)
+
+                                                }.addOnFailureListener { failure->
+                                                    Log.e("FailureCloud",failure.toString())
+                                                }
+
+
+
+                                    }else{
+
+                                        val objdb=HashMap<String,Any?>()
+                                        objdb["type"]="homes"
+                                        objdb["userID"]=usrID.currentUser!!.uid
+                                        objdb["progress"]="1"
+                                        mFirebaseFirestore.collection("/user/facilities/homes/"
+                                                +usrID.currentUser!!.uid+"/"+"homes")
+                                                .document("home"+dbcount.toString())
+                                                .set(objdb, SetOptions.merge())
+                                                .addOnSuccessListener {succes->
+
+                                                    Navigation.findNavController(it).navigate(R.id.generalRoomTypeFragment, null)
+
+                                                }.addOnFailureListener { failure->
+                                                    Log.e("FailureCloud",failure.toString())
+                                                }
+
+
+
+
+
+                                    }
+
+
+                                }
+                            }
+
+                        }
+
+                        R.id.facility_apartment -> {
+
+                            val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)!!
+                            with(sharedPref.edit()) {
+                                putString(preference_file_key, "apartment")
+                                apply()
+                            }
+
+
+
+                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/apartments/"
+                                    +usrID.currentUser!!.uid+"/"+"apartments")
+                            myCollectionReference.get().addOnCompleteListener {task ->
+
+                                if (task.isSuccessful){
+
+
+                                    val dbcount=    task.result.size()
+
+                                    if (dbcount==0 ) {
+
+
+                                        val objdb=HashMap<String,Any?>()
+                                        objdb["type"]="apartments"
+                                        objdb["userID"]=usrID.currentUser!!.uid
+                                        objdb["progress"]="1"
+                                        mFirebaseFirestore.collection("/user/facilities/apartments/"
+                                                +usrID.currentUser!!.uid+"/"+"apartments")
+                                                .document("apartment1")
+                                                .set(objdb, SetOptions.merge())
+                                                .addOnSuccessListener {succes->
+
+                                                    Navigation.findNavController(it).navigate(R.id.generalRoomTypeFragment, null)
+
+                                                }.addOnFailureListener { failure->
+                                                    Log.e("FailureCloud",failure.toString())
+                                                }
+
+
+
+
+
+                                    }else{
+
+
+
+                                        val objdb=HashMap<String,Any?>()
+                                        objdb["type"]="apartments"
+                                        objdb["userID"]=usrID.currentUser!!.uid
+                                        objdb["progress"]="1"
+                                        mFirebaseFirestore.collection("/user/facilities/apartments/"
+                                                +usrID.currentUser!!.uid+"/"+"apartments")
+                                                .document("apartment"+dbcount.toString())
+                                                .set(objdb, SetOptions.merge())
+                                                .addOnSuccessListener {succes->
+
+                                                    Navigation.findNavController(it).navigate(R.id.generalRoomTypeFragment, null)
+
+                                                }.addOnFailureListener { failure->
+                                                    Log.e("FailureCloud",failure.toString())
+                                                }
+
+
+
+
+                                    }
+
+
+
+                                }
+                            }
+
+
+
+
+                        }
+
+                        R.id.facility_hotel -> {
+
+                            val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)!!
+                            with(sharedPref.edit()) {
+                                putString(preference_file_key, "hotel")
+                                apply()
+                            }
+
+
+
+                            val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hotels/"
+                                    +usrID.currentUser!!.uid+"/"+"hotels")
+                            myCollectionReference.get().addOnCompleteListener {task ->
+
+                                if (task.isSuccessful){
+
+
+                                    val dbcount=    task.result.size()
+
+                                    if (dbcount==0 ) {
+
+
+
+                                        val objdb=HashMap<String,Any?>()
+                                        objdb["type"]="hotels"
+                                        objdb["userID"]=usrID.currentUser!!.uid
+                                        objdb["progress"]="1"
+                                        mFirebaseFirestore.collection("/user/facilities/hotels/"
+                                                +usrID.currentUser!!.uid+"/"+"hotels")
+                                                .document("hotel1")
+                                                .set(objdb, SetOptions.merge())
+                                                .addOnSuccessListener {succes->
+
+                                                    Navigation.findNavController(it).navigate(R.id.generalRoomTypeFragment, null)
+
+                                                }.addOnFailureListener { failure->
+                                                    Log.e("FailureCloud",failure.toString())
+                                                }
+
+
+
+
+                                    }else{
+
+
+
+
+                                        val objdb=HashMap<String,Any?>()
+                                        objdb["type"]="hotels"
+                                        objdb["userID"]=usrID.currentUser!!.uid
+                                        objdb["progress"]="1"
+                                        mFirebaseFirestore.collection("/user/facilities/hotels"
+                                                +usrID.currentUser!!.uid+"/"+"hotels")
+                                                .document("hotel"+dbcount.toString())
+                                                .set(objdb, SetOptions.merge())
+                                                .addOnSuccessListener {succes->
+
+                                                    Navigation.findNavController(it).navigate(R.id.generalRoomTypeFragment, null)
+
+                                                }.addOnFailureListener { failure->
+                                                    Log.e("FailureCloud",failure.toString())
+                                                }
+
+
+
+
+
+                                    }
+
+
+                                }
+                            }
+
+
+
+
+                        }
+
+
+                    }
+
+
+
+
+
+
+
                 }
-                when (radioGroup?.checkedRadioButtonId) {
 
-                    R.id.facility_hostel -> {
-
-                        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-                                ?: return@setOnClickListener
-                        with(sharedPref.edit()) {
-                            putString(preference_file_key, "hostel")
-                            apply()
-                        }
-
-
-
-
-
-
-
-                        val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hostels")
-                        myCollectionReference.get().addOnCompleteListener {task ->
-
-                            if (task.isSuccessful){
-
-                                val objdb=HashMap<String,Any?>()
-                                objdb["type"]="hostels"
-                                objdb["userID"]=myuserID
-                                objdb["progress"]="1"
-                                mFirebaseFirestore.collection("/user/facilities/hostels")
-                                        .document(task.result.last().id)
-                                        .set(objdb, SetOptions.merge())
-                                        .addOnSuccessListener {succes->
-
-                                            Navigation.findNavController(it).navigate(R.id.hostelRoomTypeFragment, null)
-                                        }.addOnFailureListener { failure->
-                                            Log.e("FailureCloud",failure.toString())
-                                        }
-
-
-                            }
-                        }
-
-
-
-
-
-                    }
-
-                    R.id.facility_house -> {
-
-
-                        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-                                ?: return@setOnClickListener
-                        with(sharedPref.edit()) {
-                            putString(preference_file_key, "house")
-                            apply()
-                        }
-
-                        val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/homes")
-                        myCollectionReference.get().addOnCompleteListener {task ->
-
-                            if (task.isSuccessful){
-
-                                val objdb=HashMap<String,Any?>()
-                                objdb["type"]="homes"
-                                objdb["userID"]=myuserID
-                                objdb["progress"]="1"
-                                mFirebaseFirestore.collection("/user/facilities/homes")
-                                        .document(task.result.last().id)
-                                        .set(objdb, SetOptions.merge())
-                                        .addOnSuccessListener {succes->
-
-                                            Navigation.findNavController(it).navigate(R.id.generalRoomTypeFragment, null)
-
-                                        }.addOnFailureListener { failure->
-                                            Log.e("FailureCloud",failure.toString())
-                                        }
-
-
-                            }
-                        }
-
-                    }
-
-                    R.id.facility_apartment -> {
-
-                        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-                                ?: return@setOnClickListener
-                        with(sharedPref.edit()) {
-                            putString(preference_file_key, "apartment")
-                            apply()
-                        }
-
-
-
-                        val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/apartments")
-                        myCollectionReference.get().addOnCompleteListener {task ->
-
-                            if (task.isSuccessful){
-
-                                val objdb=HashMap<String,Any?>()
-                                objdb["type"]="apartments"
-                                objdb["userID"]=myuserID
-                                objdb["progress"]="1"
-                                mFirebaseFirestore.collection("/user/facilities/apartments")
-                                        .document(task.result.last().id)
-                                        .set(objdb, SetOptions.merge())
-                                        .addOnSuccessListener {succes->
-
-                                            Navigation.findNavController(it).navigate(R.id.generalRoomTypeFragment, null)
-
-                                        }.addOnFailureListener { failure->
-                                            Log.e("FailureCloud",failure.toString())
-                                        }
-
-
-                            }
-                        }
-
-
-
-
-                    }
-
-                    R.id.facility_hotel -> {
-
-                        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-                                ?: return@setOnClickListener
-                        with(sharedPref.edit()) {
-                            putString(preference_file_key, "hotel")
-                            apply()
-                        }
-
-
-
-                        val myCollectionReference=mFirebaseFirestore.collection("/user/facilities/hotels")
-                        myCollectionReference.get().addOnCompleteListener {task ->
-
-                            if (task.isSuccessful){
-
-                                val objdb=HashMap<String,Any?>()
-                                objdb["type"]="hotels"
-                                objdb["userID"]=myuserID
-                                objdb["progress"]="1"
-                                mFirebaseFirestore.collection("/user/facilities/hotels")
-                                        .document(task.result.last().id)
-                                        .set(objdb, SetOptions.merge())
-                                        .addOnSuccessListener {succes->
-
-                                            Navigation.findNavController(it).navigate(R.id.generalRoomTypeFragment, null)
-
-                                        }.addOnFailureListener { failure->
-                                            Log.e("FailureCloud",failure.toString())
-                                        }
-
-
-                            }
-                        }
-
-
-
-
-                    }
-
-
-                }
 
 
             }
